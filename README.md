@@ -1,5 +1,5 @@
-Build status
-------------
+BUILD STATUS
+=======
 
 [![Build Status](https://api.travis-ci.org/kalvinmoraes/mahoney.png)](http://travis-ci.org/kalvinmoraes/mahoney)
 
