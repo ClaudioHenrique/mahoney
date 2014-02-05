@@ -1,0 +1,28 @@
+{
+    "name": "mahoney",
+    "description": "Clean and simple system based on CakePHP that helps you to create many kinds of applications",
+    "type": "library",
+    "keywords": ["framework"],
+    "homepage": "http://mahoney.io",
+    "license": "MPL",
+    "authors": [
+        {
+            "name": "Mahoney Community",
+            "homepage": "https://github.com/kalvinmoraes/mahoney"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/kalvinmoraes/mahoney"
+    },
+    "require": {
+        "php": ">=5.2.8",
+        "ext-mcrypt": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "cakephp/debug_kit" : "2.2.*"
+    },
+    "bin": [
+        "lib/Cake/Console/cake"
+    ]
+}
