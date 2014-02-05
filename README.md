@@ -1,3 +1,8 @@
+Build status
+------------
+
+[![Build Status](https://api.travis-ci.org/kalvinmoraes/mahoney.png)](http://travis-ci.org/kalvinmoraes/mahoney)
+
 MAHONEY
 =======
 
