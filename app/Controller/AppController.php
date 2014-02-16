@@ -31,4 +31,64 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+    public $components = array(
+        'Session',
+        'Auth' => array(
+            'loginRedirect' => array(
+                'plugin' => 'system',
+                'controller' => '',
+                'action' => 'index'
+            ),
+            'logoutRedirect' => array(
+                'plugin' => false,
+                'controller' => 'site',
+                'action' => 'index'
+            ),
+            'loginAction' => array(
+                'controller' => '',
+                'action' => 'index',
+                'plugin' => 'system'
+            ),
+            'unauthorizedRedirect' => array(
+                'plugin' => false,
+                'controller' => 'site',
+                'action' => 'index'
+            ),
+            'loginError' => 'Oops. Wrong credentials',
+            'authError' => 'Did you really think you are allowed to see that?',
+            'authenticate' => array(
+                'Form' => array(
+                    'userModel' => 'System.User'
+                )
+            ),
+            'authorize' => array('Controller')
+        )
+    );
+    
+    function beforeRender() {
+        if ($this->Session->check('Message.flash')) {
+            $flash = $this->Session->read('Message.flash');
+
+            if ($flash['element'] == 'default') {
+                $flash['element'] = 'flashError';
+                $this->Session->write('Message.flash', $flash);
+            }
+        }
+    }
+    
+    function beforeFilter() {
+        if(!file_exists(APP . 'Config' . DS . 'installed') && $this->params['controller'] != 'install'):
+            $this->redirect('/install');
+        endif;
+        $this->set('authUser', $this->Auth->user());
+    }
+    
+    public function isAuthorized($user) {
+        if (isset($user['role']) && $user['role'] >= '4') {
+            return true;
+        }
+        return false;
+    }
+
 }

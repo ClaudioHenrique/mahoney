@@ -1,0 +1,23 @@
+{
+    "name": "Blog for Mahoney",
+    "type": "Blog",
+    "version": "0.1.0",
+    "description": "A common blog plugin with minimal options.",
+    "author": "Alexandre Moraes <kalvinmoraes@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kalvinmoraes/blog-for-mahoney.git"
+    },
+    "homepage": "http://github.com/kalvinmoraes/blog-for-mahoney",
+    "config": {
+        "menu": {
+            "Blog": {
+                "List_Posts": "/system/blog/posts",
+                "Add_Post": "/system/blog/posts/add",
+                "Categories": "/system/blog/categories",
+                "Comments": "/system/blog/comments",
+                "Config": "/system/blog/config"
+            }
+        }
+    }
+}

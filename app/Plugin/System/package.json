@@ -1,0 +1,26 @@
+{
+    "name": "Mahoney",
+    "type": "Core",
+    "version": "0.1.0",
+    "description": "The brain over the edge.",
+    "author": "Alexandre Moraes <kalvinmoraes@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kalvinmoraes/mahoney.git"
+    },
+    "homepage": "http://github.com/kalvinmoraes/mahoney",
+    "config": {
+        "menu": {
+            "Dashboard": "/system",
+            "Options": {
+                "General": "/system/config",
+                "Plugins": "/system/plugins"
+            },
+            "Users": {
+                "List_Users": "/system/users",
+                "Add_Users": "/system/users/add",
+                "Manage_Roles": "/system/users/roles"
+            }
+        }
+    }
+}

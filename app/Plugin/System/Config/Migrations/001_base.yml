@@ -1,0 +1,35 @@
+UP: 
+  create_table:  
+    system_config:
+      global:
+        type: string 
+        length: 25
+      section:
+        type: string 
+        length: 25
+      type:
+        type: string 
+        length: 25
+      value:
+        type: string 
+        length: 50
+    system_users:
+      email:
+        type: string 
+        length: 50
+      name:
+        type: string 
+        length: 50
+      username:
+        type: string 
+        length: 50
+      password:
+        type: string 
+        length: 50
+      role:
+        type: string 
+        length: 20
+DOWN:
+  drop_table:
+    - system_config
+    - system_users

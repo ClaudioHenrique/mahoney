@@ -69,7 +69,14 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
-
+$pluginFolder = scandir(APP . 'plugin' . DS);
+foreach ($pluginFolder as $plugin):
+    if(is_dir(APP . 'plugin' . DS . $plugin) && ($plugin != '..' && $plugin != '.')):
+        if(is_file(APP . 'plugin' . DS . $plugin . DS . 'active')):
+            CakePlugin::load($plugin);
+        endif;
+    endif;
+endforeach;
 /**
  * You can attach event listeners to the request lifecycle as Dispatcher Filter. By default CakePHP bundles two filters:
  *
@@ -96,12 +103,19 @@ Configure::write('Dispatcher.filters', array(
  */
 App::uses('CakeLog', 'Log');
 CakeLog::config('debug', array(
-	'engine' => 'File',
+	'engine' => 'Syslog',
 	'types' => array('notice', 'info', 'debug'),
 	'file' => 'debug',
 ));
 CakeLog::config('error', array(
-	'engine' => 'File',
+	'engine' => 'Syslog',
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+// Bootstrap for the different environments
+if (is_file(APP . 'Config' . DS . 'Environment' . DS . php_uname('n') . '.php')) {
+    Configure::load('Environment/' . php_uname('n'));
+} else {
+    Configure::load('Environment/default');
+}

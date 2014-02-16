@@ -1,0 +1,35 @@
+system_users:
+  1: 
+    username: god 
+    password: c34f4a7240f73361ea1c969665752a8ccbeb7522
+    role: 5
+  2: 
+    username: admin
+    password: 7598ef7bd861419589cb065a6efff889f2140e79
+    role: 4
+system_config:
+  1:
+    global: config
+    section: role
+    type: God
+    value: 5
+  2:
+    global: config
+    section: role
+    type: Admin
+    value: 4
+  3:
+    global: config
+    section: role
+    type: User
+    value: 1
+  4:
+    global: config
+    section: siteinfo
+    type: sitename
+    value: Mahoney
+  5:
+    global: config
+    section: siteinfo
+    type: siteurl
+    value: "http://localhost:8282/Mahoney/"
