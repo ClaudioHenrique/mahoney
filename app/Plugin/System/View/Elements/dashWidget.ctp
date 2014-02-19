@@ -29,7 +29,7 @@
                         'div' => false,
                         'error' => false
                     ),
-                    'url' => '/system/users/add'
+                    'url' => '/system/users/add/quick'
                 );
                 echo $this->Form->create('User', $options);
                 ?>

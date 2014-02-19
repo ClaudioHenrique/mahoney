@@ -93,10 +93,15 @@ class InstallController extends SystemAppController {
                     foreach ($this->request->data["Config"] as $key => $value):
                         if ($key != "name" && $key != "databasepassword"):
                             if ($value == ""):
-                                $erRay = array(
-                                    $key => "You must fill this field"
-                                );
-                                array_push($inputErrors, $erRay);
+                                $inputErrors[$key] = __("This field must not be empty.");
+                            endif;
+                            if(strlen($value) > 25 || strlen($value) < 4):
+                                $inputErrors[$key] = __("The characters length for this field must be between 4 and 25.");
+                            endif;
+                            if($key == "email"):
+                                if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                                    $inputErrors[$key] = __("Put a valid email address.");
+                                }
                             endif;
                         endif;
                     endforeach;

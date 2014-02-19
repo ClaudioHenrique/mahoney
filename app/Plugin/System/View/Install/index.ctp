@@ -1,4 +1,5 @@
 <?php
+
 $this->Html->addCrumb(__('Config'), '/system/config');
 $this->Html->addCrumb(__('Install'), '/system/config/install');
 ?>
@@ -19,63 +20,71 @@ $this->Html->addCrumb(__('Install'), '/system/config/install');
     echo $this->Form->create('Config', $options);
     ?>
     <div class="page-header text-left"><h4>Admin account</h4></div>
-    <div class="form-group <?php echo (isset($inputErrors) && (array_key_exists("username", $inputErrors) || array_key_exists("password", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputUsername" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The admin login'); ?>"><?php echo __('Username'); ?></label>
-        <div class="col-sm-3">
-            <?php echo $this->Form->input('username', array('class' => 'form-control', 'placeholder' => 'admin', 'id' => 'inputUsername', 'required' => true, 'value' => 'admin')); ?>
-            <?php
-            if (isset($inputErrors) && array_key_exists("username", $inputErrors)):
-                ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+    <div class="form-group">
+        <div class="<?php echo (isset($inputErrors) && (array_key_exists("username", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
+            <label for="inputUsername" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The admin login'); ?>"><?php echo __('Username'); ?></label>
+            <div class="col-sm-3">
+                <?php echo $this->Form->input('username', array('class' => 'form-control', 'placeholder' => 'admin', 'id' => 'inputUsername', 'value' => !empty($this->request->data["Config"]["username"]) ? $this->request->data["Config"]["username"] : 'admin')); ?>
                 <?php
-            endif;
-            ?>
+                if (isset($inputErrors) && array_key_exists("username", $inputErrors)):
+                    ?>
+                <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["username"]); ?>"></span>
+                    <?php
+                endif;
+                ?>
+            </div>
         </div>
-        <label for="inputPassword" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The admin password'); ?>"><?php echo __('Password'); ?></label>
-        <div class="col-sm-3">
-            <?php echo $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __('Password'), 'id' => 'inputPassword', 'required' => true)); ?>
+        <div class="<?php echo (isset($inputErrors) && (array_key_exists("password", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
+            <label for="inputPassword" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The admin password'); ?>"><?php echo __('Password'); ?></label>
+            <div class="col-sm-3">
+            <?php echo $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __('Password'), 'id' => 'inputPassword')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("password", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["password"]); ?>"></span>
                 <?php
             endif;
             ?>
+            </div>
         </div>
     </div>
-    <div class="form-group <?php echo (isset($inputErrors) && (array_key_exists("name", $inputErrors) || array_key_exists("email", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputName" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Your name'); ?>"><?php echo __('Name'); ?></label>
-        <div class="col-sm-3">
-            <?php echo $this->Form->input('name', array('class' => 'form-control', 'placeholder' => 'Cuzco, The Emperor', 'id' => 'inputName', 'required' => false)); ?>
+    <div class="form-group">
+        <div class="<?php echo (isset($inputErrors) && (array_key_exists("name", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
+            <label for="inputName" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Your name'); ?>"><?php echo __('Name'); ?></label>
+            <div class="col-sm-3">
+            <?php echo $this->Form->input('name', array('class' => 'form-control', 'placeholder' => 'Cuzco, The Emperor', 'id' => 'inputName', 'required' => false, 'value' => !empty($this->request->data["Config"]["name"]) ? $this->request->data["Config"]["name"] : '')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("name", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["name"]); ?>"></span>
                 <?php
             endif;
             ?>
+            </div>
         </div>
-        <label for="inputEmail" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Your email, for password recover and stuff'); ?>"><?php echo __('Email'); ?></label>
-        <div class="col-sm-3">
-            <?php echo $this->Form->input('email', array('class' => 'form-control', 'placeholder' => __('Email'), 'id' => 'inputEmail', 'required' => true)); ?>
+        <div class="<?php echo (isset($inputErrors) && (array_key_exists("email", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
+            <label for="inputEmail" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Your email, for password recover and stuff'); ?>"><?php echo __('Email'); ?></label>
+            <div class="col-sm-3">
+            <?php echo $this->Form->input('email', array('class' => 'form-control', 'placeholder' => __('Email'), 'id' => 'inputEmail', 'required' => true, 'value' => !empty($this->request->data["Config"]["email"]) ? $this->request->data["Config"]["email"] : '')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("email", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["email"]); ?>"></span>
                 <?php
             endif;
             ?>
+            </div>
         </div>
     </div>
     <div class="page-header text-left"><h4>Core Configuration</h4></div>
     <div class="form-group <?php echo (isset($inputErrors) && array_key_exists("hostname", $inputErrors)) ? 'has-error has-feedback' : ''; ?>">
         <label for="inputHostname" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Your computer name. For environment based configuration.'); ?>"><?php echo __('Hostname'); ?></label>
         <div class="col-sm-8">
-            <?php echo $this->Form->input('hostname', array('class' => 'form-control', 'placeholder' => __('Hostname'), 'id' => 'inputHostname', 'required' => true, 'value' => php_uname('n'))); ?>
+            <?php echo $this->Form->input('hostname', array('class' => 'form-control', 'placeholder' => __('Hostname'), 'id' => 'inputHostname', 'required' => true, 'value' => !empty($this->request->data["Config"]["hostname"]) ? $this->request->data["Config"]["hostname"] : php_uname('n'))); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("hostname", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["hostname"]); ?>"></span>
                 <?php
             endif;
             ?>
@@ -84,11 +93,11 @@ $this->Html->addCrumb(__('Install'), '/system/config/install');
     <div class="form-group <?php echo (isset($inputErrors) && array_key_exists("databasehost", $inputErrors)) ? 'has-error has-feedback' : ''; ?>">
         <label for="inputDatabasehost" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Database host. Usually: localhost'); ?>"><?php echo __('DB Host'); ?></label>
         <div class="col-sm-8">
-            <?php echo $this->Form->input('databasehost', array('class' => 'form-control', 'placeholder' => __('localhost'), 'id' => 'inputDatabasehost', 'required' => true, 'value' => 'localhost')); ?>
+            <?php echo $this->Form->input('databasehost', array('class' => 'form-control', 'placeholder' => __('localhost'), 'id' => 'inputDatabasehost', 'required' => true, 'value' => !empty($this->request->data["Config"]["databasehost"]) ? $this->request->data["Config"]["databasehost"] : 'localhost')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("databasehost", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["databasehost"]); ?>"></span>
                 <?php
             endif;
             ?>
@@ -97,48 +106,52 @@ $this->Html->addCrumb(__('Install'), '/system/config/install');
     <div class="form-group <?php echo (isset($inputErrors) && array_key_exists("databasename", $inputErrors)) ? 'has-error has-feedback' : ''; ?>">
         <label for="inputDatabaseName" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Database name. Usually: Mahoney'); ?>"><?php echo __('DB Name'); ?></label>
         <div class="col-sm-8">
-            <?php echo $this->Form->input('databasename', array('class' => 'form-control', 'placeholder' => __('mahoney'), 'id' => 'inputDatabaseName', 'required' => true, 'value' => 'mahoney')); ?>
+            <?php echo $this->Form->input('databasename', array('class' => 'form-control', 'placeholder' => __('mahoney'), 'id' => 'inputDatabaseName', 'required' => true, 'value' => !empty($this->request->data["Config"]["databasename"]) ? $this->request->data["Config"]["databasename"] : 'mahoney')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("databasename", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["databasename"]); ?>"></span>
                 <?php
             endif;
             ?>
         </div>
     </div>
-    <div class="form-group <?php echo (isset($inputErrors) && (array_key_exists("databaseuser", $inputErrors) || array_key_exists("databasepassword", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputDatabaseUser" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The username of database'); ?>"><?php echo __('DB Username'); ?></label>
-        <div class="col-sm-3">
-            <?php echo $this->Form->input('databaseuser', array('class' => 'form-control', 'placeholder' => 'root', 'id' => 'inputDatabaseUser', 'required' => false, 'value' => 'root')); ?>
+    <div class="form-group">
+        <div class="<?php echo (isset($inputErrors) && (array_key_exists("databaseuser", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
+            <label for="inputDatabaseUser" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The username of database'); ?>"><?php echo __('DB Username'); ?></label>
+            <div class="col-sm-3">
+            <?php echo $this->Form->input('databaseuser', array('class' => 'form-control', 'placeholder' => 'root', 'id' => 'inputDatabaseUser', 'required' => false, 'value' => !empty($this->request->data["Config"]["databaseuser"]) ? $this->request->data["Config"]["databaseuser"] : 'root')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("databaseuser", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["databaseuser"]); ?>"></span>
                 <?php
             endif;
             ?>
+            </div>
         </div>
-        <label for="inputDatabasePassword" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The password of database'); ?>"><?php echo __('DB Password'); ?></label>
-        <div class="col-sm-3">
+        <div class="<?php echo (isset($inputErrors) && (array_key_exists("databasepassword", $inputErrors))) ? 'has-error has-feedback' : ''; ?>">
+            <label for="inputDatabasePassword" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('The password of database'); ?>"><?php echo __('DB Password'); ?></label>
+            <div class="col-sm-3">
             <?php echo $this->Form->input('databasepassword', array('type' => 'password', 'class' => 'form-control', 'id' => 'inputDatabasePassword')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("databasepassword", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["databasepassword"]); ?>"></span>
                 <?php
             endif;
             ?>
+            </div>
         </div>
     </div>
     <div class="form-group <?php echo (isset($inputErrors) && array_key_exists("sitename", $inputErrors)) ? 'has-error has-feedback' : ''; ?>">
         <label for="inputSitename" class="col-sm-2 control-label tooltipElement" data-toggle="tooltip" data-placement="right" title="<?php echo __('Your application name'); ?>"><?php echo __('Application Name'); ?></label>
         <div class="col-sm-8">
-            <?php echo $this->Form->input('sitename', array('class' => 'form-control', 'placeholder' => "Mahoney", 'id' => 'inputSitename', 'required' => true, "value" => "Mahoney")); ?>
+            <?php echo $this->Form->input('sitename', array('class' => 'form-control', 'placeholder' => "Mahoney", 'id' => 'inputSitename', 'required' => true, 'value' => !empty($this->request->data["Config"]["sitename"]) ? $this->request->data["Config"]["sitename"] : 'Mahoney')); ?>
             <?php
             if (isset($inputErrors) && array_key_exists("sitename", $inputErrors)):
                 ?>
-                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback tooltipElement" data-toggle="tooltip" data-placement="left" title="<?php echo __($inputErrors["sitename"]); ?>"></span>
                 <?php
             endif;
             ?>

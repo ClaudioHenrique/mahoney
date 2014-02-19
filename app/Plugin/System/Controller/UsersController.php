@@ -24,7 +24,6 @@ class UsersController extends SystemAppController {
     }
 
     public function index() {
-
         $siteName = "Mahoney";
 
         $render = "index";
@@ -82,7 +81,7 @@ class UsersController extends SystemAppController {
         }
     }
 
-    public function add() {
+    public function add($type = null) {
 
         $siteName = "Mahoney";
         $render = "add";
@@ -100,6 +99,10 @@ class UsersController extends SystemAppController {
 
         $this->set(compact('siteName', 'pageTitle'));
 
+        if($type == "quick"):
+            $this->redirect($this->referer());
+        endif;
+        
         try {
             $this->render($render);
         } catch (MissingViewException $e) {
@@ -134,14 +137,24 @@ class UsersController extends SystemAppController {
             throw new MethodNotAllowedException();
         endif;
         $this->User->id = $id;
-        if (!$this->User->exists()):
-            throw new NotFoundException(__('Invalid user'));
-        endif;
-        if ($this->User->delete()):
-            CakeLog::write('activity', $this->Auth->user()['username'] . ' deleted an existing user #' . $id."");
-            $this->Session->setFlash(__('User deleted'));
+        $userId = $this->Auth->user();
+        if ($id == 1):
+            $this->Session->setFlash(__('Are you freaking insane? You cannot delete god.'));
         else:
-            $this->Session->setFlash(__('User was not deleted'));
+            if (!$this->User->exists()):
+                throw new NotFoundException(__('Invalid user'));
+            endif;
+            if ($this->User->delete()):
+                CakeLog::write('activity', $this->Auth->user()['username'] . ' deleted an existing user #' . $id . "");
+                $this->Session->setFlash(__('User deleted'));
+            else:
+                $this->Session->setFlash(__('User was not deleted'));
+            endif;
+            if ($userId["id"] == $id):
+                $this->Session->setFlash(__('It was good fight by your side young padawan.'));
+                $this->Auth->logout();
+                $this->redirect($this->Auth->loginAction); 
+            endif;
         endif;
         $this->redirect($this->referer());
     }
@@ -156,7 +169,7 @@ class UsersController extends SystemAppController {
                 CakeLog::write('activity', $this->Auth->user()['username'] . ' has logged in under IP ' . $_SERVER["REMOTE_ADDR"]);
                 $this->redirect($this->referer());
             else:
-                CakeLog::write('activity', $_SERVER["REMOTE_ADDR"] . ' failed attempting to login (Username used: ' . $this->request->data['User']['username'].')');
+                CakeLog::write('activity', $_SERVER["REMOTE_ADDR"] . ' failed attempting to login (Username used: ' . $this->request->data['User']['username'] . ')');
                 $this->Session->setFlash(__('Invalid username or password, try again'));
                 $this->redirect($this->Auth->redirect());
             endif;
