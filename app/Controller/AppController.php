@@ -34,6 +34,7 @@ class AppController extends Controller {
 
     public $components = array(
         'Session',
+        'Cookie',
         'Auth' => array(
             'loginRedirect' => array(
                 'plugin' => 'system',
@@ -78,7 +79,7 @@ class AppController extends Controller {
     }
     
     function beforeFilter() {
-        if(!file_exists(APP . 'Config' . DS . 'installed') && $this->params['controller'] != 'install'):
+        if(!file_exists(APP . 'Config' . DS . 'installed') && $this->params['controller'] != 'install' && $this->params['action'] != 'setupdb'):
             $this->redirect('/install');
         endif;
         $this->set('authUser', $this->Auth->user());

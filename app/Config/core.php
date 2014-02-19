@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is core configuration file.
  *
@@ -215,19 +216,22 @@
  * the cake shell command: cake schema create Sessions
  *
  */
-	Configure::write('Session', array(
-		'defaults' => 'php'
-	));
+	Configure::write('Security.cookie', 'cakephpfdebackend');
+        Configure::write('Session.cookieTimeout', 0);
+        Configure::write('Session.checkAgent', false);
+        Configure::write('Session.cookie_secure',false);
+        Configure::write('Session.referer_check' ,false);
+        Configure::write('Session.defaults', 'php');
 
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', '48s9s7da4a8s8zx14x8x8a8sa9ads7ds8da48asd');
+	Configure::write('Security.salt', 'fJ4ckp3CsYKaQh8rdFFxMZk3hAz3UioaosetXV4z');
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-	Configure::write('Security.cipherSeed', '5454679865321546076754988');
+	Configure::write('Security.cipherSeed', '18235498696860104194011723192');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).

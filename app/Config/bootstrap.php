@@ -117,5 +117,9 @@ CakeLog::config('error', array(
 if (is_file(APP . 'Config' . DS . 'Environment' . DS . php_uname('n') . '.php')) {
     Configure::load('Environment/' . php_uname('n'));
 } else {
-    Configure::load('Environment/default');
+    if(is_file(APP . 'Config' . DS . 'Environment' . DS . 'default.php')):
+        Configure::load('Environment/default');
+    else:
+        
+    endif;
 }

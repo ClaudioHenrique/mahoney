@@ -2,16 +2,14 @@
 
 App::uses('System.SystemAppController', 'Controller');
 
-App::uses('Migrations', 'Vendor');
-App::uses('Fixtures', 'Vendor');
-
 class ConfigController extends SystemAppController {
 
-    public $uses = array('System.config');
+    public $uses = array('System.Config', 'System.User');
     public $components = array('System.Plugin', 'System.FileManager');
 
     public function beforeFilter() {
         parent::beforeFilter();
+        $this->Auth->allow('setupdb');
     }
 
     /**
@@ -46,19 +44,4 @@ class ConfigController extends SystemAppController {
             throw new NotFoundException();
         }
     }
-
-    public function setupdb() {
-        if($this->referer() === "/install"):
-            $migrations = new Migrations();
-            $migrations->load(APP . 'plugin' . DS . 'System' . DS . 'Config' . DS . 'Migrations' . DS . '001_base.yml');
-            $migrations->down();
-            $migrations->up();
-            $oFixtures = new Fixtures(); 
-            $oFixtures->import(APP . 'plugin' . DS . 'System' . DS . 'Config' . DS . 'Fixtures' . DS . '001_base.yml');
-            $this->redirect("/");
-        else:
-            $this->redirect($this->referer());
-        endif;
-    }
-
 }

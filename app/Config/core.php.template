@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is core configuration file.
  *
@@ -215,9 +216,12 @@
  * the cake shell command: cake schema create Sessions
  *
  */
-	Configure::write('Session', array(
-		'defaults' => 'php'
-	));
+	Configure::write('Security.cookie', 'cakephpfdebackend');
+        Configure::write('Session.cookieTimeout', 0);
+        Configure::write('Session.checkAgent', false);
+        Configure::write('Session.cookie_secure',false);
+        Configure::write('Session.referer_check' ,false);
+        Configure::write('Session.defaults', 'php');
 
 /**
  * A random string used in security hashing methods.

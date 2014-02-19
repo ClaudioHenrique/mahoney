@@ -13,14 +13,24 @@ class FileManagerComponent extends Component {
         unlink($file);
     }
     
-    public function templateFile($file, $template) {
+    public function generateFile($file) {
+        
+    }
+    
+    public function templateFile($file, $template, $filename = null) {
         if(is_file($file . ".template")):
             $fileContent = file_get_contents($file . ".template");
             foreach($template as $key => $value):
-                str_replace($key, $value, $fileContent);
+                if(strpos($fileContent, $key) !== false):
+                    $fileContent = str_replace($key, $value, $fileContent);
+                endif;
             endforeach;
             try {
-                file_put_contents($file, $fileContent, LOCK_EX);
+                if($filename):
+                    file_put_contents($filename, $fileContent, LOCK_EX);
+                else:
+                    file_put_contents($file, $fileContent, LOCK_EX);
+                endif;
                 return true;
             } catch(Exception $ex) {
                 return false;
