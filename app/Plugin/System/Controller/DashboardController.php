@@ -12,7 +12,6 @@ class DashboardController extends SystemAppController {
     
     public function index() {
         
-        $siteName = "Mahoney";
         if (AuthComponent::user('id')):
             $render = "index";
             $pageTitle = __('Dashboard');
@@ -23,13 +22,6 @@ class DashboardController extends SystemAppController {
         
         $this->set(compact('siteName', 'pageTitle'));
         
-        try {
-            $this->render($render);
-        } catch (MissingViewException $e) {
-            if (Configure::read('debug')) {
-                throw $e;
-            }
-            throw new NotFoundException();
-        }
+        $this->render($render);
     }    
 }

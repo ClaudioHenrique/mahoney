@@ -22,12 +22,18 @@ $this->Html->addCrumb(__('Plugins'), '/system/plugins');
                 </div>
                 <div class="highlight">
                     <div class="row">
-                        <div class="col-md-6">
-                            <?php echo ($plugin['active'] == 1) ? $this->HTML->link(__('Disable'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'disable', $plugin['name']), array('class' => 'btn btn-default')) : $this->HTML->link(__('Enable'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'enable', $plugin['name']), array('class' => 'btn btn-success')); ?> 
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <?php echo $this->HTML->link(__('Reset'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'disable', $plugin['name']), array('class' => 'btn btn-default', 'confirm' => __('Are you sure you want to reset this plugin?'))); ?> <?php echo $this->HTML->link(__('Delete'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'delete', $plugin['name']), array('class' => 'btn btn-danger', 'confirm' => __('Are you sure you want to delete this plugin?'))); ?>
-                        </div>
+                        <?php
+                        if($plugin['name'] != "System"):
+                        ?>
+                            <div class="col-md-6">
+                                <?php echo ($plugin['active'] == 1) ? $this->HTML->link(__('Disable'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'disable', $plugin['name']), array('class' => 'btn btn-default')) : $this->HTML->link(__('Enable'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'enable', $plugin['name']), array('class' => 'btn btn-success')); ?> 
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <?php echo $this->HTML->link(__('Reset'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'disable', $plugin['name']), array('class' => 'btn btn-default', 'confirm' => __('Are you sure you want to reset this plugin?'))); ?> <?php echo $this->HTML->link(__('Delete'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'delete', $plugin['name']), array('class' => 'btn btn-danger', 'confirm' => __('Are you sure you want to delete this plugin?'))); ?>
+                            </div>
+                        <?php
+                        endif;
+                        ?>
                     </div>
                 </div>
             </div>

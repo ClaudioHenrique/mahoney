@@ -2,18 +2,29 @@
 
 App::uses('System.SystemAppController', 'Controller');
 
+App::uses('Migrations', 'Vendor');
+App::uses('Fixtures', 'Vendor');
+
 class PluginsController extends SystemAppController {
 
-    public $uses = array();
+    public $uses = array('System.Schema');
     public $components = array('System.Plugin', 'System.FileManager');
 
     public function beforeFilter() {
         parent::beforeFilter();
     }
 
+    public function update($plugin = null) {
+        
+    }
+    
     public function disable($plugin) {
-        unlink(APP . 'Plugin' . DS . $plugin . DS . 'active');
-        CakeLog::write('activity', $this->Auth->user()['username'] . " disabled " . $plugin . " plugin");
+        if($plugin != "System"):
+            unlink(APP . 'Plugin' . DS . $plugin . DS . 'active');
+            CakeLog::write('activity', $this->Auth->user()['username'] . " disabled " . $plugin . " plugin");
+        else:
+            $this->Session->setFlash(__("You cannot disable Mahoney Core"));
+        endif;
         $this->redirect($this->referer());
     }
 

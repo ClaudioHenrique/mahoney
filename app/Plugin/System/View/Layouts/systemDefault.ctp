@@ -21,7 +21,11 @@
     <head>
         <?php echo $this->Html->charset(); ?>
         <title>
-            <?php echo $pageTitle . " | " . $siteName; ?>
+            <?php
+                echo (isset($appOptions["sitename"])) ? $appOptions["sitename"] : $siteName;
+                echo " | ";
+                echo $pageTitle;
+            ?>
         </title>
         <?php
         echo $this->Html->meta('icon');

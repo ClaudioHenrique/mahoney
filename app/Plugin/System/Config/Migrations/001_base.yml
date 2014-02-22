@@ -1,5 +1,12 @@
 UP: 
-  create_table:  
+  create_table:
+    system_schema:
+      plugin:
+        type: string
+        length: 25
+      version:
+        type: string
+        length: 25
     system_config:
       global:
         type: string 
@@ -31,5 +38,6 @@ UP:
         length: 20
 DOWN:
   drop_table:
+    - system_schema
     - system_config
     - system_users

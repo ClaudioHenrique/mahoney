@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application level Controller
  *
@@ -18,7 +19,6 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 App::uses('Controller', 'Controller');
 
 /**
@@ -32,7 +32,9 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
+    public $uses = array();
     public $components = array(
+        'System.Plugin',
         'Session',
         'Cookie',
         'Auth' => array(
@@ -66,7 +68,7 @@ class AppController extends Controller {
             'authorize' => array('Controller')
         )
     );
-    
+
     function beforeRender() {
         if ($this->Session->check('Message.flash')) {
             $flash = $this->Session->read('Message.flash');
@@ -77,14 +79,27 @@ class AppController extends Controller {
             }
         }
     }
-    
+
     function beforeFilter() {
-        if(!file_exists(APP . 'Config' . DS . 'installed') && $this->params['controller'] != 'install' && $this->params['action'] != 'setupdb'):
+        if (!file_exists(APP . 'Config' . DS . 'installed') && $this->params['controller'] != 'install' && $this->params['action'] != 'db'):
             $this->redirect('/install');
+        endif;
+        if (file_exists(APP . 'Config' . DS . 'installed')):
+            $siteOptions = array();
+            $this->uses = array("System.Config");
+            foreach ($this->Config->find('all') as $key => $value):
+                if($value["Config"]["section"] == "siteinfo")
+                $siteOptions[$value["Config"]["type"]] = $value["Config"]["value"];
+            endforeach;
+            $this->set('appOptions', $siteOptions);
+        endif;
+        if($this->Auth->user()):
+            $this->Plugin->getPlugins();
+            $this->set('mahoneyPlugins', $this->Plugin->PLUGINS);
         endif;
         $this->set('authUser', $this->Auth->user());
     }
-    
+
     public function isAuthorized($user) {
         if (isset($user['role']) && $user['role'] >= '4') {
             return true;

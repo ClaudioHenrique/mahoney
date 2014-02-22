@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Plugin component has common tasks for plugin management
  */
@@ -7,6 +8,7 @@ class PluginComponent extends Component {
     private $PLUGIN_FOLDER;
     public $DENY_LIST = array('.', '..', 'System', 'DebugKit');
     public $PLUGINS;
+    public $Schema;
 
     function __construct() {
         $this->PLUGIN_FOLDER = APP . 'plugin' . DS;
@@ -21,7 +23,46 @@ class PluginComponent extends Component {
 
         $this->PLUGINS = array($actualPlugin);
     }
-    
+
+    public function updatePlugin($plugin = null) {
+
+        $migrationFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Migrations' . DS;
+        $fixtureFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Fixtures' . DS;
+
+        if ($plugin != "System" && $updateTo != null):
+            $this->Schema = ClassRegistry::init('System.Schema');
+            $schemaRequest = $this->Schema->find("all", array(
+                "fields" => array("Schema.version"),
+                "conditions" => array(
+                    "Schema.plugin" => $plugin
+                )
+                    )
+            );
+            $vInstalled = $schemaRequest[0]["Schema"]["version"];
+        else:
+            $vInstalled = '000';
+        endif;
+
+        $vList = array_diff(scandir($migrationFolder), array('.', '..'));
+        $lastV = null;
+
+        $migrations = new Migrations();
+        $fixtures = new Fixtures();
+
+        foreach ($vList as $key => $value):
+            if(substr($value, 0, 3) > $vInstalled):
+                $migrations->load($migrationFolder . $value);
+                $migrations->down();
+                $migrations->up();
+                $fixtures->import($fixtureFolder . $value);
+                
+                $lastV = substr($value, 0, 3);
+            endif;
+        endforeach;
+        
+        
+    }
+
     /**
      * Return an array with informations about all App plugins.
      * 

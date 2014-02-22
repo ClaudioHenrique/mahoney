@@ -9,7 +9,7 @@ App::uses('Fixtures', 'Vendor');
 class InstallController extends SystemAppController {
 
     public $uses = array();
-    public $components = array('System.Security', 'System.FileManager');
+    public $components = array('System.Security', 'System.FileManager', 'System.Plugin');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -30,12 +30,7 @@ class InstallController extends SystemAppController {
                 else:
                     $this->uses = array('System.Config', 'System.User');
                 
-                    $migrations = new Migrations();
-                    $migrations->load(APP . 'plugin' . DS . 'System' . DS . 'Config' . DS . 'Migrations' . DS . '001_base.yml');
-                    $migrations->down();
-                    $migrations->up();
-                    $oFixtures = new Fixtures();
-                    $oFixtures->import(APP . 'plugin' . DS . 'System' . DS . 'Config' . DS . 'Fixtures' . DS . '001_base.yml');
+                    $this->Plugin->update("System");
 
                     $requestData = $this->Session->read('installData');
                     $this->Session->delete('installData');
@@ -82,7 +77,9 @@ class InstallController extends SystemAppController {
                 $this->Session->write('seed', $this->Security->genrandom(29, "0123456789"));
 
                 $siteName = "Mahoney";
+                
                 $pageTitle = __('Installation');
+                
                 $salt = $this->Session->read('salt');
                 $seed = $this->Session->read('seed');
                 $this->set(compact('siteName', 'pageTitle', 'salt', 'seed'));
