@@ -13,10 +13,6 @@ class PluginsController extends SystemAppController {
     public function beforeFilter() {
         parent::beforeFilter();
     }
-
-    public function update($plugin = null) {
-        
-    }
     
     public function disable($plugin) {
         if($plugin != "System"):
@@ -36,9 +32,11 @@ class PluginsController extends SystemAppController {
     }
 
     public function delete($plugin) {
-        $this->FileManager->recursiveExclude(APP . 'Plugin' . DS . $plugin);
-        CakeLog::write('activity', $this->Auth->user()['username'] . " deleted " . $plugin . " plugin");
-
+        if($this->Plugin->uninstall($plugin)):
+            $this->FileManager->recursiveExclude(APP . 'Plugin' . DS . $plugin);
+            CakeLog::write('activity', $this->Auth->user()['username'] . " deleted " . $plugin . " plugin");
+        endif;
+        
         $this->redirect($this->referer());
     }
 

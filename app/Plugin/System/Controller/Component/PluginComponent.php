@@ -22,15 +22,71 @@ class PluginComponent extends Component {
         );
 
         $this->PLUGINS = array($actualPlugin);
+
+        $this->Schema = ClassRegistry::init('System.Schema');
     }
 
-    public function updatePlugin($plugin = null) {
+    public function uninstall($plugin = null) {
+        if (!is_dir(APP . 'plugin' . DS . $plugin)):
+            throw new Exception(__("Selected plugin does not exist"));
+        endif;
+
+        $migrationFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Migrations' . DS;
+
+        if (!is_dir($migrationFolder)):
+            throw new Exception(__("Selected plugin does not have Migrations Folder"));
+        endif;
+
+        $schemaRequest = $this->Schema->find("all", array(
+            "fields" => array("Schema.version"),
+            "conditions" => array(
+                "Schema.plugin" => $plugin
+            )
+                )
+        );
+        $vInstalled = $schemaRequest[0]["Schema"]["version"];
+
+        $vList = array_reverse(array_diff(scandir($migrationFolder), array('.', '..')));
+
+        $startUninstall = false;
+
+        foreach ($vList as $key => $value):
+            if (substr($value, 0, 3) == $vInstalled):
+                $startUninstall = true;
+                $migrations->load($migrationFolder . $value);
+                $migrations->down();
+            endif;
+            if ($startUninstall == true):
+                $migrations->load($migrationFolder . $value);
+                $migrations->down();
+                $lastV = substr($value, 0, 3);
+            endif;
+        endforeach;
+
+        $saveSchema = array(
+            "Schema" => array(
+                "plugin" => $plugin,
+                "version" => $lastV
+            )
+        );
+
+        $this->Schema->save($saveSchema);
+    }
+
+    public function update($plugin = null) {
+
+        if (!is_dir(APP . 'plugin' . DS . $plugin)):
+            throw new Exception(__("Selected plugin does not exist"));
+        endif;
 
         $migrationFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Migrations' . DS;
         $fixtureFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Fixtures' . DS;
 
-        if ($plugin != "System" && $updateTo != null):
-            $this->Schema = ClassRegistry::init('System.Schema');
+        if (!is_dir($migrationFolder) && !is_dir($fixtureFolder)):
+            throw new Exception(__("Selected plugin does not have Migrations Folder"));
+        endif;
+
+        try {
             $schemaRequest = $this->Schema->find("all", array(
                 "fields" => array("Schema.version"),
                 "conditions" => array(
@@ -38,29 +94,47 @@ class PluginComponent extends Component {
                 )
                     )
             );
-            $vInstalled = $schemaRequest[0]["Schema"]["version"];
-        else:
+            if (!empty($schemaRequest)):
+                $vInstalled = $schemaRequest[0]["Schema"]["version"];
+            else:
+                $vInstalled = '000';
+            endif;
+        } catch (Exception $ex) {
             $vInstalled = '000';
-        endif;
+        }
 
         $vList = array_diff(scandir($migrationFolder), array('.', '..'));
-        $lastV = null;
+        $lastV = substr(end($vList), 0, 3);
 
-        $migrations = new Migrations();
-        $fixtures = new Fixtures();
+        if ($lastV > $vInstalled):
 
-        foreach ($vList as $key => $value):
-            if(substr($value, 0, 3) > $vInstalled):
-                $migrations->load($migrationFolder . $value);
-                $migrations->down();
-                $migrations->up();
-                $fixtures->import($fixtureFolder . $value);
-                
-                $lastV = substr($value, 0, 3);
-            endif;
-        endforeach;
-        
-        
+            $migrations = new Migrations();
+            $fixtures = new Fixtures();
+
+            foreach ($vList as $key => $value):
+                if (substr($value, 0, 3) > $vInstalled):
+                    $migrations->load($migrationFolder . $value);
+                    $migrations->down();
+                    $migrations->up();
+                    $fixtures->import($fixtureFolder . $value);
+
+                    $lastV = substr($value, 0, 3);
+                endif;
+            endforeach;
+
+            $saveSchema = array(
+                "Schema" => array(
+                    "plugin" => $plugin,
+                    "version" => $lastV
+                )
+            );
+
+            $this->Schema->save($saveSchema);
+
+            return true;
+        else:
+            return false;
+        endif;
     }
 
     /**

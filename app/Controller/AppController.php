@@ -93,10 +93,8 @@ class AppController extends Controller {
             endforeach;
             $this->set('appOptions', $siteOptions);
         endif;
-        if($this->Auth->user()):
-            $this->Plugin->getPlugins();
-            $this->set('mahoneyPlugins', $this->Plugin->PLUGINS);
-        endif;
+        $this->Plugin->getPlugins();
+        $this->set('mahoneyPlugins', $this->Plugin->PLUGINS);
         $this->set('authUser', $this->Auth->user());
     }
 

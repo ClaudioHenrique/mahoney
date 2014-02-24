@@ -14,7 +14,3 @@ system_config:
     section: role
     type: User
     value: 1
-system_schema:
-  1:
-    plugin: System
-    version: 001

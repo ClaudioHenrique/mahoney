@@ -30,7 +30,10 @@ class InstallController extends SystemAppController {
                 else:
                     $this->uses = array('System.Config', 'System.User');
                 
-                    $this->Plugin->update("System");
+                    if(!$this->Plugin->update("System")):
+                        $this->Session->setFlash(__("Unable to install database. Try again."));
+                        $this->redirect("/install");
+                    endif;
 
                     $requestData = $this->Session->read('installData');
                     $this->Session->delete('installData');
