@@ -36,8 +36,22 @@ UP:
       role:
         type: string 
         length: 20
+      status:
+        type: integer 
+        length: 1
+    system_tokens:
+      user_id:
+        type: integer 
+        length: 10
+      token:
+        type: string 
+        length: 50
+      type:
+        type: string 
+        length: 25
 DOWN:
   drop_table:
+    - system_tokens
     - system_schema
     - system_config
     - system_users

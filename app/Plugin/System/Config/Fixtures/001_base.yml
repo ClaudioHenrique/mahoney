@@ -14,3 +14,9 @@ system_config:
     section: role
     type: User
     value: 1
+  4:
+    global: config
+    section: user
+    type: initialStatus
+    value: 1
+

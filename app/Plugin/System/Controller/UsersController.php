@@ -1,18 +1,98 @@
 <?php
 
 App::uses('System.SystemAppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 class UsersController extends SystemAppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'login');
+        $this->Auth->allow('login', 'recover');
         if ($this->Auth->user()):
             $this->set('userRoles', $this->Config->find('list', array('fields' => array('value', 'type'), 'conditions' => array('section' => 'role'))));
         endif;
     }
 
-    public $uses = array('System.User', 'System.Config');
+    public $uses = array('System.User');
+    public $components = array('System.Security');
+
+    public function recover() {
+        /**
+         * TODO: NEED TO UNDERSTAND WHY CAN'T ADD MULTIPLE MODELS IN ONE CONTROLLER
+         */
+        $this->Token = ClassRegistry::init('System.Token');
+
+        if (!AuthComponent::user()):
+            if (!isset($this->request->query['get'])):
+                if ($this->request->is("post")):
+                    $userToRecovery = $this->User->find('first', array('conditions' => array('User.email' => $this->request->data["Recover"]["email"])));
+                    if (!empty($userToRecovery)):
+
+                        $tokenToSave = array(
+                            "Token" => array(
+                                "user_id" => $userToRecovery["User"]["id"],
+                                "token" => $this->Security->genRandom(50),
+                                "type" => "pwrecovery"
+                            )
+                        );
+
+                        if ($this->Token->save($tokenToSave)):
+                            $Email = new CakeEmail();
+                            $Email->template("System.recover","System.recover");
+                            $Email->emailFormat('html');
+                            $Email->viewVars(array(
+                                'username' => $userToRecovery["User"]["username"],
+                                'recoverLink' => "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",
+                                'token' => $tokenToSave["Token"]["token"]
+                                ));
+                            $Email->config('gmail');
+                            $Email->from(array('kalvinmoraes@gmail.com' => 'App'));
+                            $Email->to('kalvinmoraes@gmail.com');
+                            $Email->subject('About your password change');
+                            $Email->send();
+                            $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
+                        else:
+                            $this->Session->setFlash(__("Sorry, for some reason we cannot create a token for you. Can you try again?"));
+                        endif;
+                    else:
+                        CakeLog::write('activity', 'Warning: ' . $_SERVER['REMOTE_ADDR'] . ' has requested email recovery for a unknow address: ' . $this->request->data["Recover"]["email"]);
+                        $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
+                    endif;
+                endif;
+            else:
+                if (isset($this->request->query['token'])):
+                    $this->request->data["Recover"]["token"] = $this->request->query['token'];
+                endif;
+                if ($this->request->is("post")):
+                    $tokenRequest = $this->Token->find('first', array('conditions' => array('Token.token' => $this->request->data["Recover"]["token"], 'Token.created >' => date('Y-m-d H:i:s', strtotime("-1 days")))));
+                    if (!empty($tokenRequest)):
+                        $updateUserPw = array(
+                            "User" => array(
+                                "id" => $tokenRequest["User"]["id"],
+                                "password" => $this->request->data["Recover"]["password"]
+                            )
+                        );
+
+                        if ($this->User->save($updateUserPw)):
+                            try {
+                                $this->Token->delete($tokenRequest["Token"]["id"]);
+                                $this->Session->setFlash(__("Password successfully recovered. Login to continue."));
+                                $this->redirect(array("plugin" => "system", "controller" => "dashboard", "action" => "index"));
+                            } catch (Exception $ex) {
+                                $this->Session->setFlash(__("There was a problem saving your new password. Can you recover it again?") . " err: " . $ex->getMessage());
+                            }
+                        else:
+                            $this->Session->setFlash(__("There was a problem saving your new password. Can you recover it again?"));
+                        endif;
+                    else:
+                        $this->Session->setFlash(__("Sorry, we can't find any request with that token code."));
+                    endif;
+                endif;
+            endif;
+        else:
+            $this->redirect($this->Auth->loginAction);
+        endif;
+    }
 
     public function widgetdata() {
         $usersInfo = array(
@@ -99,10 +179,10 @@ class UsersController extends SystemAppController {
 
         $this->set(compact('siteName', 'pageTitle'));
 
-        if($type == "quick"):
+        if ($type == "quick"):
             $this->redirect($this->referer());
         endif;
-        
+
         try {
             $this->render($render);
         } catch (MissingViewException $e) {
@@ -153,7 +233,7 @@ class UsersController extends SystemAppController {
             if ($userId["id"] == $id):
                 $this->Session->setFlash(__('It was good fight by your side young padawan.'));
                 $this->Auth->logout();
-                $this->redirect($this->Auth->loginAction); 
+                $this->redirect($this->Auth->loginAction);
             endif;
         endif;
         $this->redirect($this->referer());

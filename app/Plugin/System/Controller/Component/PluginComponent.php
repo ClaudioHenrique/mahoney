@@ -103,8 +103,7 @@ class PluginComponent extends Component {
         $vList = array_diff(scandir(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER)), array('.', '..'));
         $lastV = substr(end($vList), 0, 3);
         $schemaV = $this->schema($plugin);
-
-        if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) < intval($lastV)):
+        if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) <= intval($lastV)):
             foreach ($vList as $key => $value):
                 if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) <= intval(substr($value, 0, 3))):
                     try {
@@ -134,7 +133,6 @@ class PluginComponent extends Component {
                 throw new Exception(__("There is an error trying to save schema for") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
             }
         endif;
-
         return false;
     }
 

@@ -3,9 +3,6 @@
 App::uses('System.SystemAppController', 'Controller');
 App::uses('ConnectionManager', 'Model');
 
-App::uses('Migrations', 'Vendor');
-App::uses('Fixtures', 'Vendor');
-
 class InstallController extends SystemAppController {
 
     public $uses = array();
