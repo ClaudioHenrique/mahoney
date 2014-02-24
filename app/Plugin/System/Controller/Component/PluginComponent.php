@@ -1,17 +1,31 @@
 <?php
 
+App::uses('Migrations', 'Vendor');
+App::uses('Fixtures', 'Vendor');
+
 /**
  * The Plugin component has common tasks for plugin management
  */
 class PluginComponent extends Component {
 
-    private $PLUGIN_FOLDER;
-    public $DENY_LIST = array('.', '..', 'System', 'DebugKit');
+    public $DENY_LIST;
     public $PLUGINS;
+    public $PLUGIN_FOLDER;
+    public $MIGRATION_FOLDER;
+    public $FIXTURE_FOLDER;
+    public $ACTIVE_PLUGIN_FILE;
+    public $PACKAGE_FILE;
+    public $Migrations;
+    public $Fixtures;
     public $Schema;
 
     function __construct() {
+        $this->DENY_LIST = array('.', '..', 'System', 'DebugKit');
         $this->PLUGIN_FOLDER = APP . 'plugin' . DS;
+        $this->PACKAGE_FILE = $this->PLUGIN_FOLDER . "{plugin}" . DS . "package.json";
+        $this->ACTIVE_PLUGIN_FILE = $this->PLUGIN_FOLDER . "{plugin}" . DS . "active";
+        $this->MIGRATION_FOLDER = $this->PLUGIN_FOLDER . "{plugin}" . DS . 'Config' . DS . 'Migrations' . DS;
+        $this->FIXTURE_FOLDER = $this->PLUGIN_FOLDER . "{plugin}" . DS . 'Config' . DS . 'Fixtures' . DS;
 
         $actualPlugin = array(
             'name' => 'System',
@@ -24,123 +38,151 @@ class PluginComponent extends Component {
         $this->PLUGINS = array($actualPlugin);
 
         $this->Schema = ClassRegistry::init('System.Schema');
+        $this->Migrations = new Migrations();
+        $this->Fixtures = new Fixtures();
     }
 
-    public function uninstall($plugin = null) {
-        if (!is_dir(APP . 'plugin' . DS . $plugin)):
-            throw new Exception(__("Selected plugin does not exist"));
-        endif;
-
-        $migrationFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Migrations' . DS;
-
-        if (!is_dir($migrationFolder)):
-            throw new Exception(__("Selected plugin does not have Migrations Folder"));
-        endif;
-
-        $schemaRequest = $this->Schema->find("all", array(
-            "fields" => array("Schema.version"),
-            "conditions" => array(
-                "Schema.plugin" => $plugin
-            )
-                )
-        );
-        $vInstalled = $schemaRequest[0]["Schema"]["version"];
-
-        $vList = array_reverse(array_diff(scandir($migrationFolder), array('.', '..')));
-
-        $startUninstall = false;
-
-        foreach ($vList as $key => $value):
-            if (substr($value, 0, 3) == $vInstalled):
-                $startUninstall = true;
-                $migrations->load($migrationFolder . $value);
-                $migrations->down();
-            endif;
-            if ($startUninstall == true):
-                $migrations->load($migrationFolder . $value);
-                $migrations->down();
-                $lastV = substr($value, 0, 3);
-            endif;
-        endforeach;
-
-        $saveSchema = array(
-            "Schema" => array(
-                "plugin" => $plugin,
-                "version" => $lastV
-            )
-        );
-
-        $this->Schema->save($saveSchema);
-    }
-
-    public function update($plugin = null) {
-
-        if (!is_dir(APP . 'plugin' . DS . $plugin)):
-            throw new Exception(__("Selected plugin does not exist"));
-        endif;
-
-        $migrationFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Migrations' . DS;
-        $fixtureFolder = APP . 'plugin' . DS . $plugin . DS . 'Config' . DS . 'Fixtures' . DS;
-
-        if (!is_dir($migrationFolder) && !is_dir($fixtureFolder)):
-            throw new Exception(__("Selected plugin does not have Migrations Folder"));
-        endif;
-
+    /**
+     * Return an array with informations about the plugin schema in database.
+     * 
+     * @param String The plugin to return database schema
+     * @return List Schema array with "PLUGIN" and "VERSION" information about
+     * plugin in database.
+     */
+    public function schema($plugin) {
         try {
             $schemaRequest = $this->Schema->find("all", array(
-                "fields" => array("Schema.version"),
                 "conditions" => array(
                     "Schema.plugin" => $plugin
                 )
                     )
             );
-            if (!empty($schemaRequest)):
-                $vInstalled = $schemaRequest[0]["Schema"]["version"];
-            else:
-                $vInstalled = '000';
-            endif;
+            return $schemaRequest;
         } catch (Exception $ex) {
-            $vInstalled = '000';
+
+            CakeLog::write('activity', "Warning, trying to retrieve '" . $plugin . "' schema from database.");
+
+            $schemaRequest = [
+                "Schema" => array(
+                    "plugin" => $plugin,
+                    "version" => "000"
+                )
+            ];
+            return $schemaRequest;
         }
+    }
 
-        $vList = array_diff(scandir($migrationFolder), array('.', '..'));
+    /**
+     * Check if a specific plugin is outdated
+     * (Database Schema Version < Migration Folder Last Version YML).
+     * 
+     * @param String The plugin to verify
+     * @return Boolean TRUE if plugin is outdated. FALSE if not.
+     */
+    public function isOutdated($plugin = null) {
+        $schemaV = $this->schema($plugin);
+        $a = str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER);
+        if (is_dir($a)):
+            $b = scandir($a);
+            $c = array_diff($b, array('.', '..'));
+            $lastV = substr(end($c), 0, 3);
+            return intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) < intval($lastV);
+        else:
+            throw new Exception("Error");
+        endif;
+    }
+
+    /**
+     * Updates an plugin based on Migration files.
+     * 
+     * @param String The plugin to update
+     * @return boolean The operation result
+     * @throws Exception If operation fails
+     */
+    public function update($plugin) {
+        $vList = array_diff(scandir(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER)), array('.', '..'));
         $lastV = substr(end($vList), 0, 3);
+        $schemaV = $this->schema($plugin);
 
-        if ($lastV > $vInstalled):
-
-            $migrations = new Migrations();
-            $fixtures = new Fixtures();
-
+        if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) < intval($lastV)):
             foreach ($vList as $key => $value):
-                if (substr($value, 0, 3) > $vInstalled):
-                    $migrations->load($migrationFolder . $value);
-                    $migrations->down();
-                    $migrations->up();
-                    $fixtures->import($fixtureFolder . $value);
-
+                if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) <= intval(substr($value, 0, 3))):
+                    try {
+                        $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $value);
+                        $this->Migrations->down();
+                        $this->Migrations->up();
+                        $this->Fixtures->import(str_replace("{plugin}", $plugin, $this->FIXTURE_FOLDER) . $value);
+                    } catch(Exception $ex) {
+                        return false;
+                    }
                     $lastV = substr($value, 0, 3);
                 endif;
             endforeach;
+            
+            try {
+                $updateSchema = array(
+                    "Schema" => array(
+                        "id" => (isset($schemaV[0]["Schema"]["id"]) && !empty($schemaV[0]["Schema"]["id"])) ? $schemaV[0]["Schema"]["id"] : "",
+                        "plugin" => $plugin,
+                        "version" => $lastV
+                    )
+                );
+                $this->Schema->save($updateSchema);
 
-            $saveSchema = array(
-                "Schema" => array(
-                    "plugin" => $plugin,
-                    "version" => $lastV
-                )
-            );
-
-            $this->Schema->save($saveSchema);
-
-            return true;
-        else:
-            return false;
+                return true;
+            } catch (Exception $ex) {
+                throw new Exception(__("There is an error trying to save schema for") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+            }
         endif;
+
+        return false;
+    }
+
+    /**
+     * Uninstall a plugin from database.
+     * 
+     * @param String The plugin to uninstall from database
+     * @return boolean The operation result
+     * @throws Exception If operation fails
+     */
+    public function uninstall($plugin) {
+
+        $vList = array_reverse(array_diff(scandir(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER)), array('.', '..')));
+        $lastV = substr(end($vList), 0, 3);
+        $schemaV = $this->schema($plugin);
+
+        if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) >= intval($lastV)):
+            foreach ($vList as $key => $value):
+                try {
+                    if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) >= intval(substr($value, 0, 3))):
+                        $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $value);
+                        $this->Migrations->down();
+                        $lastV = substr($value, 0, 3);
+                    endif;
+                } catch (Exception $ex) {
+                    throw new Exception(__("There is an error trying to uninstall") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+                }
+            endforeach;
+
+            try {
+
+                if (isset($schemaV[0]["Schema"]["id"]) && !empty($schemaV[0]["Schema"]["id"])):
+                    $this->Schema->delete($schemaV[0]["Schema"]["id"]);
+                endif;
+
+                return true;
+            } catch (Exception $ex) {
+                throw new Exception(__("There is an error trying to save schema for") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+            }
+        endif;
+
+        return false;
     }
 
     /**
      * Return an array with informations about all App plugins.
      * 
-     * This array can be accessed anywhere by $mahoneyPlugin
+     * This array can be accessed anywhere by `$mahoneyPlugin`
      */
     public function getPlugins() {
         $pluginFolder = scandir($this->PLUGIN_FOLDER);
@@ -150,7 +192,8 @@ class PluginComponent extends Component {
                     'name' => $plugin,
                     'data' => $this->generatePluginInfo($plugin),
                     'path' => $this->PLUGIN_FOLDER . $plugin,
-                    'active' => (is_file($this->PLUGIN_FOLDER . $plugin . DS . 'active')) ? true : false,
+                    'outdated' => $this->isOutdated($plugin),
+                    'active' => (is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE))) ? true : false,
                     'menu' => $this->generatePluginMenu($plugin)
                 );
                 array_push($this->PLUGINS, $actualPlugin);
@@ -162,12 +205,12 @@ class PluginComponent extends Component {
      * Generates an array based in menu.yml file from inside specified plugin
      * folder.
      * 
-     * @param string The plugin to read the menu.yml
-     * @return array Used to generate the menus. 
+     * @param String The plugin to read the package.json
+     * @return Array Used to generate the menus
      */
-    public function generatePluginMenu($plugin) {
-        if (is_file($this->PLUGIN_FOLDER . $plugin . DS . 'package.json')):
-            $array = json_decode(file_get_contents($this->PLUGIN_FOLDER . $plugin . DS . 'package.json'), true);
+    public function generatePluginMenu($plugin = null) {
+        if (is_file(str_replace("{plugin}", $plugin, $this->PACKAGE_FILE))):
+            $array = json_decode(file_get_contents(str_replace("{plugin}", $plugin, $this->PACKAGE_FILE)), true);
             return $array["config"]["menu"];
         else:
             return 0;
@@ -178,12 +221,12 @@ class PluginComponent extends Component {
      * Generates an array based in info.yml file from inside specified plugin
      * folder.
      * 
-     * @param string The plugin to read the info.yml
-     * @return array Used to fetch plugin information
+     * @param String The plugin to read the package.json
+     * @return Array Used to fetch plugin information
      */
     public function generatePluginInfo($plugin) {
-        if (is_file($this->PLUGIN_FOLDER . $plugin . DS . 'package.json')):
-            $tempArray = json_decode(file_get_contents($this->PLUGIN_FOLDER . $plugin . DS . 'package.json'), true);
+        if (is_file(str_replace("{plugin}", $plugin, $this->PACKAGE_FILE))):
+            $tempArray = json_decode(file_get_contents(str_replace("{plugin}", $plugin, $this->PACKAGE_FILE)), true);
             $array = array(
                 "name" => $tempArray["name"],
                 "type" => $tempArray["type"],

@@ -2,12 +2,9 @@
 
 App::uses('System.SystemAppController', 'Controller');
 
-//App::uses('Migrations', 'Vendor');
-//App::uses('Fixtures', 'Vendor');
-
 class ConfigController extends SystemAppController {
 
-    public $uses = array('System.Config', 'Blog.Post');
+    public $uses = array("Blog.Post", "System.Config");
     public $components = array('System.Plugin', 'System.FileManager');
 
     public function beforeFilter() {

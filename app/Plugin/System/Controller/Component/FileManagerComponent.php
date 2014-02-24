@@ -13,10 +13,6 @@ class FileManagerComponent extends Component {
         unlink($file);
     }
     
-    public function generateFile($file) {
-        
-    }
-    
     public function templateFile($file, $template, $filename = null) {
         if(is_file($file . ".template")):
             $fileContent = file_get_contents($file . ".template");
@@ -46,15 +42,18 @@ class FileManagerComponent extends Component {
      * @param string The directory to recursively exclude
      */
     public function recursiveExclude($dir) {
-        foreach (glob($dir . '/*') as $file):
-            if (is_dir($file)):
-                $this->recursiveExclude($file);
-            else:
-                unlink($file);
-            endif;
-        endforeach;
-        rmdir($dir);
-        CakeLog::write('activity', $this->Auth->user()['username'] . " deleted the folder '".$dir."'");
+        try {
+            foreach (glob($dir . '/*') as $file):
+                if (is_dir($file)):
+                    $this->recursiveExclude($file);
+                else:
+                    unlink($file);
+                endif;
+            endforeach;
+            rmdir($dir);
+        } catch(Exception $ex) {
+            throw new Exception("Error trying to delete");
+        }
     }
 
 }
