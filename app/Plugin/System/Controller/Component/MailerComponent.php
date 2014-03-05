@@ -39,6 +39,7 @@ class MailerComponent extends Component {
             $this->Email->subject($subject);
             $this->Email->send();
         } catch(Exception $ex) {
+            CakeLog::write('activity', "Error: Trying to send email for '" . $to . "'.");
             throw new Exception($ex->getMessage());
         }
     }
