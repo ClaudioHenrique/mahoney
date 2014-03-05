@@ -197,6 +197,7 @@ class PluginComponent extends Component {
                 array_push($this->PLUGINS, $actualPlugin);
             endif;
         endforeach;
+        return $this->PLUGINS;
     }
 
     /**

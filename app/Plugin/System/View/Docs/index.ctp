@@ -58,14 +58,14 @@ $this->Html->addCrumb(__('Users'), '/system/users');
                 </td>
                 <td>
                     <?php
-                    if($authUser['role'] >= $user['User']['role']):
+                    if(AuthComponent::user()['role'] >= $user['User']['role']):
                         echo $this->HTML->link(__('Edit'), array('plugin' => 'system','controller' => 'users', 'action' => 'edit', $user['User']['id']));
                     endif;
                     ?>
                 </td>
                 <td>
                     <?php 
-                    if($authUser['role'] >= $user['User']['role']):
+                    if(AuthComponent::user()['role'] >= $user['User']['role']):
                         if($user['User']['email'] == null):
                             ?>
                             <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?php echo __('This user requires an email to reset his password'); ?>"><?php echo __('Reset password'); ?></span>
@@ -78,7 +78,7 @@ $this->Html->addCrumb(__('Users'), '/system/users');
                 </td>
                 <td>
                     <?php
-                    if($authUser['role'] >= $user['User']['role']):
+                    if(AuthComponent::user()['role'] >= $user['User']['role']):
                         echo $this->HTML->link(__('Delete'), array('plugin' => 'system','controller' => 'users', 'action' => 'delete', $user['User']['id']));
                     endif;
                     ?>

@@ -27,7 +27,7 @@ $this->Html->addCrumb(__('Add user'), '/system/users/add');
         <div class="col-sm-3">
             <?php
             foreach ($userRoles as $key => $value):
-                if ($authUser['role'] < $key):
+                if (AuthComponent::user()['role'] < $key):
                     unset($userRoles[$key]);
                 endif;
             endforeach;

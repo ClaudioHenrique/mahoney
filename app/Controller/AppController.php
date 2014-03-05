@@ -88,10 +88,7 @@ class AppController extends Controller {
         endif;
         if (file_exists(APP . 'Config' . DS . 'installed')):
             // Load Plugins Informations
-            $this->Plugin->getPlugins();
-            $this->set('mahoneyPlugins', $this->Plugin->PLUGINS);
-            // Get the authUser
-            $this->set('authUser', $this->Auth->user());
+            $this->set('mahoneyPlugins', $this->Plugin->getPlugins());
             // Load config data from database
             $this->Configurer->loadMahoneyConf();
         endif;

@@ -43,7 +43,7 @@
         <!-- Wrap all page content here -->
         <div class="wrap">
             <?php
-            if ($authUser):
+            if (AuthComponent::user()):
                 ?>
                 <!-- Fixed navbar -->
                 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,9 +67,9 @@
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $authUser['username']; ?> <b class="caret"></b></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo AuthComponent::user()['username']; ?> <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
-                                        <li><?php echo $this->Html->link('My profile',array('plugin'=>'system','controller'=>'users','action'=>'detail', $authUser['id'])); ?></li>
+                                        <li><?php echo $this->Html->link('My profile',array('plugin'=>'system','controller'=>'users','action'=>'detail', AuthComponent::user()['id'])); ?></li>
                                         <li class="divider"></li>
                                         <li><?php echo $this->Html->link('Logout',array('plugin'=>'system','controller'=>'users','action'=>'logout')); ?></li>
                                     </ul>
@@ -93,7 +93,7 @@
             <?php echo $this->Session->flash(); ?>
             <?php echo $this->fetch('content'); ?>
         </div>
-        <?php if($authUser): ?>
+        <?php if(AuthComponent::user()): ?>
         <footer class="footer">
             <div class="container">
                 <div class="row">
