@@ -83,12 +83,14 @@ class AppController extends Controller {
     }
 
     function beforeFilter() {
+        // Load Plugins Informations
+        $this->set('mahoneyPlugins', $this->Plugin->getPlugins());
+        // If user have not installed Mahoney
         if (!file_exists(APP . 'Config' . DS . 'installed') && $this->params['controller'] != 'install' && $this->params['action'] != 'db'):
             $this->redirect('/install');
         endif;
+        // If mahoney is installed
         if (file_exists(APP . 'Config' . DS . 'installed')):
-            // Load Plugins Informations
-            $this->set('mahoneyPlugins', $this->Plugin->getPlugins());
             // Load config data from database
             $this->Configurer->loadMahoneyConf();
         endif;

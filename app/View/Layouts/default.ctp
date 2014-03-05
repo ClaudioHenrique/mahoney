@@ -4,7 +4,7 @@
         <?php echo $this->Html->charset(); ?>
         <title>
             <?php
-                echo (Configure::read("Siteinfo.sitename")) ? Configure::read("Siteinfo.sitename") : $sitename;
+                echo (Configure::read("Siteinfo.sitename")) ? Configure::read("Siteinfo.sitename") : $siteName;
                 echo " | ";
                 echo $pageTitle;
             ?>

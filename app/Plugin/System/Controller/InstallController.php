@@ -21,6 +21,11 @@ class InstallController extends SystemAppController {
     }
 
     public function index($type = null) {
+        
+        $siteName = "Mahoney";
+        $pageTitle = __('Installation');
+        $this->set(compact('siteName', 'pageTitle'));
+        
         if (file_exists(APP . 'Config' . DS . 'installed')):
             $this->redirect($this->Auth->logoutRedirect);
         else:
@@ -134,13 +139,9 @@ class InstallController extends SystemAppController {
                 $this->Session->write('salt', $this->Security->genRandom(40));
                 $this->Session->write('seed', $this->Security->genrandom(29, "0123456789"));
 
-                $siteName = "Mahoney";
-
-                $pageTitle = __('Installation');
-
                 $salt = $this->Session->read('salt');
                 $seed = $this->Session->read('seed');
-                $this->set(compact('siteName', 'pageTitle', 'salt', 'seed'));
+                $this->set(compact('salt', 'seed'));
                 if ($this->request->is('post')):
 
                     $inputErrors = array();
@@ -180,7 +181,6 @@ class InstallController extends SystemAppController {
                             );
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . 'default.php');
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . $this->request->data["Config"]["hostname"] . '.php');
-                            $this->FileManager->templateFile(APP . 'Config' . DS . 'database.php', $databaseTemplate);
                         } catch (Exception $ex) {
                             array_push($formErrors, __("Unable to create database config files."));
                         }

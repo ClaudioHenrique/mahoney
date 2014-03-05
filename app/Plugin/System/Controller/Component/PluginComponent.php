@@ -59,7 +59,6 @@ class PluginComponent extends Component {
             );
             return $schemaRequest;
         } catch (Exception $ex) {
-
             CakeLog::write('activity', "Warning, trying to retrieve '" . $plugin . "' schema from database.");
 
             $schemaRequest = [
@@ -183,20 +182,22 @@ class PluginComponent extends Component {
      * This array can be accessed anywhere by `$mahoneyPlugin`
      */
     public function getPlugins() {
-        $pluginFolder = scandir($this->PLUGIN_FOLDER);
-        foreach ($pluginFolder as $plugin):
-            if (is_dir($this->PLUGIN_FOLDER . $plugin) && !in_array($plugin, $this->DENY_LIST)):
-                $actualPlugin = array(
-                    'name' => $plugin,
-                    'data' => $this->generatePluginInfo($plugin),
-                    'path' => $this->PLUGIN_FOLDER . $plugin,
-                    'outdated' => $this->isOutdated($plugin),
-                    'active' => (is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE))) ? true : false,
-                    'menu' => $this->generatePluginMenu($plugin)
-                );
-                array_push($this->PLUGINS, $actualPlugin);
-            endif;
-        endforeach;
+        if(file_exists(APP . 'Config' . DS . 'installed')):
+            $pluginFolder = scandir($this->PLUGIN_FOLDER);
+            foreach ($pluginFolder as $plugin):
+                if (is_dir($this->PLUGIN_FOLDER . $plugin) && !in_array($plugin, $this->DENY_LIST)):
+                    $actualPlugin = array(
+                        'name' => $plugin,
+                        'data' => $this->generatePluginInfo($plugin),
+                        'path' => $this->PLUGIN_FOLDER . $plugin,
+                        'outdated' => $this->isOutdated($plugin),
+                        'active' => (is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE))) ? true : false,
+                        'menu' => $this->generatePluginMenu($plugin)
+                    );
+                    array_push($this->PLUGINS, $actualPlugin);
+                endif;
+            endforeach;
+        endif;
         return $this->PLUGINS;
     }
 
