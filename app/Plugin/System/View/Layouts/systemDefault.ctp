@@ -22,7 +22,7 @@
         <?php echo $this->Html->charset(); ?>
         <title>
             <?php
-                echo (isset($appOptions["sitename"])) ? $appOptions["sitename"] : $siteName;
+                echo (Configure::read("Siteinfo.sitename")) ? Configure::read("Siteinfo.sitename") : $sitename;
                 echo " | ";
                 echo $pageTitle;
             ?>

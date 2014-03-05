@@ -49,13 +49,13 @@
                     <label for="inputRole" class="col-sm-3 control-label"><small><?php echo __('Role'); ?></small></label>
                     <div class="col-sm-9">
                         <?php
-                        foreach ($userWidgetData['userRoles'] as $key => $value):
-                            if ($authUser['role'] < $key):
-                                unset($userWidgetData['userRoles'][$key]);
+                        foreach (Configure::read("Role") as $key => $value):
+                            if (AuthComponent::user()['role'] < $value):
+                                Configure::delete("Role.".$key);
                             endif;
                         endforeach;
                         echo $this->Form->input('role', array(
-                            'options' => $userWidgetData['userRoles'],
+                            'options' => array_flip(Configure::read("Role")),
                             'class' => 'form-control',
                             'id' => 'inputRole'
                         ));

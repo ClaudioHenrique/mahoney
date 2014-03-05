@@ -33,7 +33,9 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
     public $uses = array();
+    
     public $components = array(
+        'System.Configurer',
         'System.Plugin',
         'Session',
         'Cookie',
@@ -85,17 +87,14 @@ class AppController extends Controller {
             $this->redirect('/install');
         endif;
         if (file_exists(APP . 'Config' . DS . 'installed')):
-            $siteOptions = array();
-            $this->uses = array("System.Config");
-            foreach ($this->Config->find('all') as $key => $value):
-                if($value["Config"]["section"] == "siteinfo")
-                $siteOptions[$value["Config"]["type"]] = $value["Config"]["value"];
-            endforeach;
-            $this->set('appOptions', $siteOptions);
+            // Load Plugins Informations
+            $this->Plugin->getPlugins();
+            $this->set('mahoneyPlugins', $this->Plugin->PLUGINS);
+            // Get the authUser
+            $this->set('authUser', $this->Auth->user());
+            // Load config data from database
+            $this->Configurer->loadMahoneyConf();
         endif;
-        $this->Plugin->getPlugins();
-        $this->set('mahoneyPlugins', $this->Plugin->PLUGINS);
-        $this->set('authUser', $this->Auth->user());
     }
 
     public function isAuthorized($user) {

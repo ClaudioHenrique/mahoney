@@ -1,7 +1,4 @@
 <?php
-
-$config['debug'] = 2;
-
 $config['App.database'] = array(
         'datasource' => 'Database/Mysql',
 	'host'       => '{host}',

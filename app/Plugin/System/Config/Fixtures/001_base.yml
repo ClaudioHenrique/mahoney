@@ -19,4 +19,13 @@ system_config:
     section: user
     type: initialStatus
     value: 1
-
+  6:
+    global: config
+    section: email
+    type: password
+    value: 
+  7:
+    global: config
+    section: email
+    type: transport
+    value: Smtp

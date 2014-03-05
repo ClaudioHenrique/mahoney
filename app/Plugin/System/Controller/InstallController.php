@@ -7,6 +7,13 @@ class InstallController extends SystemAppController {
 
     public $uses = array();
     public $components = array('System.Security', 'System.FileManager', 'System.Plugin');
+    public $EMAIL_PROVIDERS = array(
+        array(
+            "provider" => "gmail",
+            "host" => "ssl://smtp.gmail.com",
+            "port" => "465"
+        )
+    );
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -26,8 +33,8 @@ class InstallController extends SystemAppController {
                     $this->redirect('/install');
                 else:
                     $this->uses = array('System.Config', 'System.User');
-                
-                    if(!$this->Plugin->update("System")):
+
+                    if (!$this->Plugin->update("System")):
                         $this->Session->setFlash(__("Unable to install database. Try again."));
                         $this->redirect("/install");
                     endif;
@@ -36,15 +43,66 @@ class InstallController extends SystemAppController {
                     $this->Session->delete('installData');
 
                     $this->Config->create();
+
                     $putConfig = array(
-                        "Config" => array(
-                            "global" => "config",
-                            "section" => "siteinfo",
-                            "type" => "sitename",
-                            "value" => $requestData["Config"]["sitename"]
+                        array(
+                            "Config" => array(
+                                "global" => "config",
+                                "section" => "siteinfo",
+                                "type" => "sitename",
+                                "value" => $requestData["Config"]["sitename"]
+                            )
+                        ),
+                        array(
+                            "Config" => array(
+                                "global" => "config",
+                                "section" => "email",
+                                "type" => "from",
+                                "value" => $requestData["Config"]["email"]
+                            )
+                        ),
+                        array(
+                            "Config" => array(
+                                "global" => "config",
+                                "section" => "email",
+                                "type" => "username",
+                                "value" => $requestData["Config"]["email"]
+                            )
+                        ),
+                        array(
+                            "Config" => array(
+                                "global" => "config",
+                                "section" => "email",
+                                "type" => "fromName",
+                                "value" => $requestData["Config"]["sitename"]
+                            )
                         )
                     );
-                    if (!$this->Config->save($putConfig)):
+                    
+                    foreach($this->EMAIL_PROVIDERS as $key => $value):
+                        if (strpos($requestData["Config"]["email"], $value["provider"]) !== false):
+                            $emailMergeConfig = array(
+                                array(
+                                    "Config" => array(
+                                        "global" => "config",
+                                        "section" => "email",
+                                        "type" => "host",
+                                        "value" => $value["host"]
+                                    )
+                                ),
+                                array(
+                                    "Config" => array(
+                                        "global" => "config",
+                                        "section" => "email",
+                                        "type" => "port",
+                                        "value" => $value["port"]
+                                    )
+                                )
+                            );
+                            $putConfig = array_merge($putConfig, $emailMergeConfig);
+                        endif;
+                    endforeach;
+                    if (!$this->Config->saveMany($putConfig)):
                         $this->Session->setFlash(__("Unable to set config properties to database. Try again."));
                         $this->redirect("/install");
                     endif;
@@ -77,9 +135,9 @@ class InstallController extends SystemAppController {
                 $this->Session->write('seed', $this->Security->genrandom(29, "0123456789"));
 
                 $siteName = "Mahoney";
-                
+
                 $pageTitle = __('Installation');
-                
+
                 $salt = $this->Session->read('salt');
                 $seed = $this->Session->read('seed');
                 $this->set(compact('siteName', 'pageTitle', 'salt', 'seed'));
@@ -92,10 +150,10 @@ class InstallController extends SystemAppController {
                             if ($value == ""):
                                 $inputErrors[$key] = __("This field must not be empty.");
                             endif;
-                            if(strlen($value) > 25 || strlen($value) < 4):
+                            if (strlen($value) > 25 || strlen($value) < 4):
                                 $inputErrors[$key] = __("The characters length for this field must be between 4 and 25.");
                             endif;
-                            if($key == "email"):
+                            if ($key == "email"):
                                 if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                                     $inputErrors[$key] = __("Put a valid email address.");
                                 }
@@ -152,4 +210,5 @@ class InstallController extends SystemAppController {
             endif;
         endif;
     }
+
 }

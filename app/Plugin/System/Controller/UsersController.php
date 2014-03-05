@@ -1,27 +1,19 @@
 <?php
 
 App::uses('System.SystemAppController', 'Controller');
-App::uses('CakeEmail', 'Network/Email');
 
 class UsersController extends SystemAppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('login', 'recover');
-        if ($this->Auth->user()):
-            $this->set('userRoles', $this->Config->find('list', array('fields' => array('value', 'type'), 'conditions' => array('section' => 'role'))));
-        endif;
     }
 
-    public $uses = array('System.User');
-    public $components = array('System.Security');
+    public $uses = array('System.User', 'System.Token');
+    public $components = array('System.Security', 'System.Configurer', 'System.Mailer');
 
     public function recover() {
-        /**
-         * TODO: NEED TO UNDERSTAND WHY CAN'T ADD MULTIPLE MODELS IN ONE CONTROLLER
-         */
-        $this->Token = ClassRegistry::init('System.Token');
-
+        $this->set('pageTitle', __("Password recovery"));
         if (!AuthComponent::user()):
             if (!isset($this->request->query['get'])):
                 if ($this->request->is("post")):
@@ -36,24 +28,30 @@ class UsersController extends SystemAppController {
                             )
                         );
 
-                        if ($this->Token->save($tokenToSave)):
-                            $Email = new CakeEmail();
-                            $Email->template("System.recover","System.recover");
-                            $Email->emailFormat('html');
-                            $Email->viewVars(array(
-                                'username' => $userToRecovery["User"]["username"],
-                                'recoverLink' => "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",
-                                'token' => $tokenToSave["Token"]["token"]
-                                ));
-                            $Email->config('gmail');
-                            $Email->from(array('kalvinmoraes@gmail.com' => 'App'));
-                            $Email->to('kalvinmoraes@gmail.com');
-                            $Email->subject('About your password change');
-                            $Email->send();
-                            $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
+                        $vVars = array(
+                            'username' => $userToRecovery["User"]["username"],
+                            'recoverLink' => "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",
+                            'token' => $tokenToSave["Token"]["token"]
+                        );
+                        if($this->Token->save($tokenToSave)):
+                            try {
+                                // Sends the Email
+                                $this->Mailer->send($this->request->data["Recover"]["email"], __("About password change"), "System.recover", "System.recover", $vVars);
+                                CakeLog::write('activity', 'Info: New token generated to "' . $userToRecovery["User"]["username"].'"');
+                                $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
+                            } catch (Exception $ex) {
+                                // Delete last token from database:
+                                $this->Token->delete($this->Token->getInsertID()); 
+                                
+                                CakeLog::write('activity', 'Error: Error trying to send an email to "' . $this->request->data["Recover"]["email"].'": ' . $ex->getMessage());
+                                
+                                $this->Session->setFlash(__("The email with your token data cannot be sent. Please try again."));
+                            }
                         else:
-                            $this->Session->setFlash(__("Sorry, for some reason we cannot create a token for you. Can you try again?"));
+                            CakeLog::write('activity', 'Error: Error trying to store token data for "' . $vVars["username"].'"');
+                            $this->Session->setFlash(__("Your token cannot be generated right now. Please try again."));
                         endif;
+                        
                     else:
                         CakeLog::write('activity', 'Warning: ' . $_SERVER['REMOTE_ADDR'] . ' has requested email recovery for a unknow address: ' . $this->request->data["Recover"]["email"]);
                         $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
@@ -98,7 +96,6 @@ class UsersController extends SystemAppController {
         $usersInfo = array(
             'totalUsers' => $this->User->find('count'),
             'lastUser' => $this->User->find('first', array('order' => array('id' => 'DESC'))),
-            'userRoles' => $this->Config->find('list', array('fields' => array('value', 'type'), 'conditions' => array('section' => 'role')))
         );
         return $usersInfo;
     }
