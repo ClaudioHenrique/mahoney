@@ -1,5 +1,6 @@
 # User specific & automatically generated files #
 #################################################
+/app/Plugin/DebugKit
 /app/Config/installed
 /app/tmp
 /app/Config/Environment/default.php
