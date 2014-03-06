@@ -3,7 +3,8 @@
         <div class="bs-example widget">
             <div class="hightlight">
                 <h2><?php echo __('About'); ?></h2>
-                <p>Version: <strong>1.0 NewGroove</strong></p>
+                <p>Version: <strong><?= $mahoneyPlugins[0]["data"]["version"] ?></strong></p>
+                <p><a href="<?= $mahoneyPlugins[0]["data"]["homepage"] ?>" target="_blank"><?= __("Repository"); ?></a> | <a href="/system/docs" target="_blank"><?= __("Docs"); ?></a></p>
             </div>
         </div>
         <div class="highlight">

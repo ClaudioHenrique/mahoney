@@ -15,6 +15,7 @@ $this->Html->addCrumb(__('Plugins'), '/system/plugins');
             <div class="col-md-12">
                 <div class="bs-example widget">
                     <h2><?php echo $plugin['name']; ?></h2>
+                    <img style="float:right;"src="<?= $plugin['icon'] ?>"/>
                     <h6>Type: <strong><?php echo $plugin['data']['type']; ?></strong></h6>
                     <h6>Version: <strong><?php echo $plugin['data']['version']; ?></strong></h6>
                     <h6>Author: <strong><?php echo $plugin['data']['author']; ?></strong></h6>

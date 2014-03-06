@@ -12,10 +12,12 @@
         <?php
         echo $this->Html->meta('icon');
 
-        echo $this->Html->css('bootstrap.min');
-        echo $this->Html->css('mahoney-base');
+        echo $this->Html->css('../com/css/bootstrap/bootstrap.min');
+        echo $this->Html->css('../com/css/font-awesome/font-awesome.min');
+        echo $this->Html->css('mahoneyBase');
+        
         if(AuthComponent::user()):
-            echo $this->Html->css('System.systemBase');
+            echo $this->Html->css('System.mahoneySystem');
         endif;
 
         echo $this->fetch('meta');
@@ -71,9 +73,16 @@
             </div>
         </div>
         <?php
-        echo $this->Html->script('com/jquery/jquery-1.11.0.min');
-        echo $this->Html->script('com/bootstrap/bootstrap.min');
-        echo $this->Html->script('mahoney-base');
+        echo $this->Html->script('../com/js/jquery/jquery-1.11.0.min');
+        echo $this->Html->script('../com/js/bootstrap/bootstrap.min');
+        echo $this->Html->script('mahoneyBase');
+        if(AuthComponent::user()):
+            echo $this->Html->script('System.mahoneySystem');
+        endif;
+        
+        if(is_file($jsController)):
+            echo $this->Html->script($jsController);
+        endif;
         ?>
     </body>
 </html>

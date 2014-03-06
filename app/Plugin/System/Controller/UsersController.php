@@ -172,7 +172,7 @@ class UsersController extends SystemAppController {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The user has been saved'));
-                CakeLog::write('activity', $this->Auth->user()['username'] . ' added a new user: ' . $this->request->data['User']['username'] . ' (#' . $this->User->getLastInsertId() . ')');
+                CakeLog::write('activity', AuthComponent::user()['username'] . ' added a new user: ' . $this->request->data['User']['username'] . ' (#' . $this->User->getLastInsertId() . ')');
             } else {
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
             }
@@ -201,7 +201,7 @@ class UsersController extends SystemAppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
-                CakeLog::write('activity', $this->Auth->user()['username'] . ' edited the user ' . $this->request->data['User']['username'] . ' (#' . $this->request->data['User']['id'] . ')');
+                CakeLog::write('activity', AuthComponent::user()['username'] . ' edited the user ' . $this->request->data['User']['username'] . ' (#' . $this->request->data['User']['id'] . ')');
                 $this->Session->setFlash(__('The user has been saved'));
             } else {
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
@@ -218,7 +218,7 @@ class UsersController extends SystemAppController {
             throw new MethodNotAllowedException();
         endif;
         $this->User->id = $id;
-        $userId = $this->Auth->user();
+        $userId = AuthComponent::user();
         if ($id == 1):
             $this->Session->setFlash(__('Are you freaking insane? You cannot delete god.'));
         else:
@@ -226,7 +226,7 @@ class UsersController extends SystemAppController {
                 throw new NotFoundException(__('Invalid user'));
             endif;
             if ($this->User->delete()):
-                CakeLog::write('activity', $this->Auth->user()['username'] . ' deleted an existing user #' . $id . "");
+                CakeLog::write('activity', AuthComponent::user()['username'] . ' deleted an existing user #' . $id . "");
                 $this->Session->setFlash(__('User deleted'));
             else:
                 $this->Session->setFlash(__('User was not deleted'));
@@ -247,7 +247,7 @@ class UsersController extends SystemAppController {
 
         if ($this->request->is('POST')):
             if ($this->Auth->login()):
-                CakeLog::write('activity', $this->Auth->user()['username'] . ' has logged in under IP ' . $_SERVER["REMOTE_ADDR"]);
+                CakeLog::write('activity', AuthComponent::user()['username'] . ' has logged in under IP ' . $_SERVER["REMOTE_ADDR"]);
                 $this->redirect($this->referer());
             else:
                 CakeLog::write('activity', $_SERVER["REMOTE_ADDR"] . ' failed attempting to login (Username used: ' . $this->request->data['User']['username'] . ')');

@@ -15,13 +15,18 @@ class PluginComponent extends Component {
     public $FIXTURE_FOLDER;
     public $ACTIVE_PLUGIN_FILE;
     public $PACKAGE_FILE;
+    public $ICON;
+    public $ACTIVATED_PLUGINS;
+    
     public $Migrations;
     public $Fixtures;
     public $Schema;
 
     function __construct() {
+        $this->ACTIVATED_PLUGINS = 0;
         $this->DENY_LIST = array('.', '..', 'System', 'DebugKit');
         $this->PLUGIN_FOLDER = APP . 'plugin' . DS;
+        $this->ICON = $this->PLUGIN_FOLDER . "{plugin}" . DS . "webroot/img/pluginIco.png";
         $this->PACKAGE_FILE = $this->PLUGIN_FOLDER . "{plugin}" . DS . "package.json";
         $this->ACTIVE_PLUGIN_FILE = $this->PLUGIN_FOLDER . "{plugin}" . DS . "active";
         $this->MIGRATION_FOLDER = $this->PLUGIN_FOLDER . "{plugin}" . DS . 'Config' . DS . 'Migrations' . DS;
@@ -32,7 +37,8 @@ class PluginComponent extends Component {
             'data' => $this->generatePluginInfo('System'),
             'path' => $this->PLUGIN_FOLDER . 'System',
             'active' => (is_file($this->PLUGIN_FOLDER . 'System' . DS . 'active')) ? true : false,
-            'menu' => $this->generatePluginMenu('System')
+            'menu' => $this->generatePluginMenu('System'),
+            'icon' => $this->getPluginIconAsBase64('System')
         );
 
         $this->PLUGINS = array($actualPlugin);
@@ -42,6 +48,20 @@ class PluginComponent extends Component {
         $this->Fixtures = new Fixtures();
     }
 
+    /**
+     * Return the plugin icon as Base64
+     * 
+     * @param String The plugin to return the icon in b64
+     */
+    public function getPluginIconAsBase64($plugin) {
+        if(file_exists(str_replace("{plugin}", $plugin, $this->ICON))):
+            $imgBinary = file_get_contents(str_replace("{plugin}", $plugin, $this->ICON));
+            return "data:image/png;base64," . base64_encode($imgBinary);
+        else:
+            return null;
+        endif;
+    }
+    
     /**
      * Return an array with informations about the plugin schema in database.
      * 
@@ -185,6 +205,9 @@ class PluginComponent extends Component {
         if(file_exists(APP . 'Config' . DS . 'installed')):
             $pluginFolder = scandir($this->PLUGIN_FOLDER);
             foreach ($pluginFolder as $plugin):
+                if(is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE)) && $plugin != 'System'):
+                    $this->ACTIVATED_PLUGINS++;
+                endif;
                 if (is_dir($this->PLUGIN_FOLDER . $plugin) && !in_array($plugin, $this->DENY_LIST)):
                     $actualPlugin = array(
                         'name' => $plugin,
@@ -192,12 +215,14 @@ class PluginComponent extends Component {
                         'path' => $this->PLUGIN_FOLDER . $plugin,
                         'outdated' => $this->isOutdated($plugin),
                         'active' => (is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE))) ? true : false,
-                        'menu' => $this->generatePluginMenu($plugin)
+                        'menu' => $this->generatePluginMenu($plugin),
+                        'icon' => $this->getPluginIconAsBase64($plugin)
                     );
                     array_push($this->PLUGINS, $actualPlugin);
                 endif;
             endforeach;
         endif;
+        Configure::write("Plugin.count", $this->ACTIVATED_PLUGINS);
         return $this->PLUGINS;
     }
 

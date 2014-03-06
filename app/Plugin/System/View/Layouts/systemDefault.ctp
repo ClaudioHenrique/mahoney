@@ -30,9 +30,10 @@
         <?php
         echo $this->Html->meta('icon');
 
-        echo $this->Html->css('bootstrap.min');
+        echo $this->Html->css('../com/css/bootstrap/bootstrap.min');
+        echo $this->Html->css('../com/css/font-awesome/font-awesome.min');
         echo $this->Html->css('System.docs.min');
-        echo $this->Html->css('System.systemBase');
+        echo $this->Html->css('System.mahoneySystem');
 
         echo $this->fetch('meta');
         echo $this->fetch('css');
@@ -108,11 +109,15 @@
         </footer>
         <?php endif; ?>
         <?php
-        echo $this->Html->script('com/jquery/jquery-1.11.0.min');
-        echo $this->Html->script('com/bootstrap/bootstrap.min');
+        echo $this->Html->script('../com/js/jquery/jquery-1.11.0.min');
+        echo $this->Html->script('../com/js/bootstrap/bootstrap.min');
         echo $this->Html->script('System.com/tablesorter/jquery.tablesorter.min');
-        echo $this->Html->script('mahoneyBase');
-        echo $this->Html->script('System.systemBase');
+        echo $this->Html->script('System.mahoneySystem');
+        
+        if(is_file($jsController)):
+            echo $this->Html->script($jsController);
+        endif;
+        
         ?>
     </body>
 </html>

@@ -85,6 +85,7 @@ class AppController extends Controller {
     function beforeFilter() {
         // Load Plugins Informations
         $this->set('mahoneyPlugins', $this->Plugin->getPlugins());
+        $this->set('jsController', $this->Configurer->getJsController());
         // If user have not installed Mahoney
         if (!file_exists(APP . 'Config' . DS . 'installed') && $this->params['controller'] != 'install' && $this->params['action'] != 'db'):
             $this->redirect('/install');

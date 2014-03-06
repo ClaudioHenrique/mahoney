@@ -13,7 +13,7 @@
         "menu": {
             "Dashboard": "/system",
             "Options": {
-                "General": "/system/config",
+                "Config": "/system/config",
                 "Plugins": "/system/plugins"
             },
             "Users": {

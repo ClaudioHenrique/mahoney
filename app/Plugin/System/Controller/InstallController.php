@@ -29,7 +29,7 @@ class InstallController extends SystemAppController {
         if (file_exists(APP . 'Config' . DS . 'installed')):
             $this->redirect($this->Auth->logoutRedirect);
         else:
-            if ($this->Auth->user()):
+            if (AuthComponent::user()):
                 $this->Auth->logout();
                 $this->redirect("/install");
             endif;
