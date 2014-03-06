@@ -1,8 +1,8 @@
 <?php
 $config['App.database'] = array(
         'datasource' => 'Database/Mysql',
-	'host'       => '',
-	'login'      => '',
+	'host'       => 'localhost',
+	'login'      => 'root',
 	'password'   => '',
-	'database'   => ''
+	'database'   => 'mahoney'
 );
