@@ -4,7 +4,7 @@
             <div class="hightlight">
                 <h2><?php echo __('About'); ?></h2>
                 <p>Version: <strong><?= $mahoneyPlugins[0]["data"]["version"] ?></strong></p>
-                <p><a href="<?= $mahoneyPlugins[0]["data"]["homepage"] ?>" target="_blank"><?= __("Repository"); ?></a> | <a href="/system/docs" target="_blank"><?= __("Docs"); ?></a></p>
+                <p><?= $this->Html->link(__("Repository"), $mahoneyPlugins[0]["data"]["homepage"]); ?> | <?= $this->Html->link(__("Docs"), array("plugin" => "system", "controller" => "docs")); ?></p>
             </div>
         </div>
         <div class="highlight">

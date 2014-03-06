@@ -1,6 +1,6 @@
 <?php
-$this->Html->addCrumb(__('Users'), '/system/users');
-$this->Html->addCrumb(__('Manage roles'), '/system/users/roles');
+$this->Html->addCrumb(__('Users'), array("plugin" => "system", "controller" => "users"));
+$this->Html->addCrumb(__('Manage roles'), array("plugin" => "system", "controller" => "users", "action" => "roles"));
 ?>
 <div class="container">
     <h1><?php echo __('Manage roles'); ?></h1>

@@ -98,7 +98,7 @@ class AppController extends Controller {
     }
 
     public function isAuthorized($user) {
-        if (isset($user['role']) && $user['role'] >= '4') {
+        if (isset($user['role']) && intval($user['role']) >= 4) {
             return true;
         }
         return false;

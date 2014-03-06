@@ -1,5 +1,5 @@
 <?php
-$this->Html->addCrumb(__('Documentation'), '/system/docs');
+$this->Html->addCrumb(__('Documentation'), array("plugin" => "system", "controller" => "docs"));
 ?>
 <div class="container">
     <div class="page-header">

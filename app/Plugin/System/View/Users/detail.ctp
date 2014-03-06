@@ -1,6 +1,6 @@
 <?php
-$this->Html->addCrumb(__('Users'), '/system/users');
-$this->Html->addCrumb(__('User detail'), '/system/users/detail');
+$this->Html->addCrumb(__('Users'), array("plugin" => "system", "controller" => "users"));
+$this->Html->addCrumb($user['User']['name'], array("plugin" => "system", "controller" => "users", "action" => "detail", $user['User']['id']));
 ?>
 <div class="container">
     <div class="page-header">

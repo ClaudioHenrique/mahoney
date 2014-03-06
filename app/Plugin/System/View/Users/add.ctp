@@ -1,6 +1,6 @@
 <?php
-$this->Html->addCrumb(__('Users'), '/system/users');
-$this->Html->addCrumb(__('Add user'), '/system/users/add');
+$this->Html->addCrumb(__('Users'), array("plugin" => "system", "controller" => "users"));
+$this->Html->addCrumb(__('Add user'), array("plugin" => "system", "controller" => "users", "action" => "add"));
 ?>
 <div class="globalTop">
     <div class="container">

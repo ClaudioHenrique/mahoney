@@ -1,7 +1,6 @@
 <?php
-
-$this->Html->addCrumb(__('Config'), '/system/config');
-$this->Html->addCrumb(__('Install'), '/system/config/install');
+$this->Html->addCrumb(__('Config'), array("plugin" => "system", "controller" => "config"));
+$this->Html->addCrumb(__('Install'), array("plugin" => "system", "controller" => "config", "action" => "install"));
 ?>
 <div class="container">
     <div class="page-header text-center">
