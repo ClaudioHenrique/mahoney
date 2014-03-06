@@ -102,7 +102,7 @@
                         <p class="text-muted"><?php echo "<a href=\"".$mahoneyPlugins[0]["data"]["homepage"]."\" target=\"_blank\">Mahoney</a> " . $mahoneyPlugins[0]["data"]["version"] . " - " . date("Y"); ?></p>
                     </div>
                     <div class="col-xs-6">
-                       <p class="text-muted text-right"><?= $this->Html->image('cake.power.gif') ?> | <a href="/system/docs"><?php echo __("help"); ?></a> | <a href="/system/docs#privacy"><?php echo __("privacy"); ?></a> | <a href="/system/docs#about"><?php echo __("about"); ?></a></p>
+                       <p class="text-muted text-right"><?= $this->Html->image('System.cake.power.gif') ?> | <?= $this->Html->link(__("help"), array("plugin" => "system", "controller" => "docs")); ?> | <?= $this->Html->link(__("privacy"), array("plugin" => "system", "controller" => "docs", "action" => "#privacy")); ?> | <?= $this->Html->link(__("about"), array("plugin" => "system", "controller" => "docs", "action" => "#about")); ?></p>
                     </div>
                 </div>
             </div>

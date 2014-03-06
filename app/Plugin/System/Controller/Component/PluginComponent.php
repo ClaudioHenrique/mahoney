@@ -223,6 +223,7 @@ class PluginComponent extends Component {
             endforeach;
         endif;
         Configure::write("Plugin.count", $this->ACTIVATED_PLUGINS);
+        
         return $this->PLUGINS;
     }
 
