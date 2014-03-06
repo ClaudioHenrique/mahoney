@@ -12,12 +12,16 @@ class UsersController extends SystemAppController {
     public $uses = array('System.User', 'System.Token');
     public $components = array('System.Security', 'System.Configurer', 'System.Mailer');
 
-    public function recover() {
+    public function recover($userid = null) {
         $this->set('pageTitle', __("Password recovery"));
-        if (!AuthComponent::user()):
+        if (!AuthComponent::user() || $userid != null):
             if (!isset($this->request->query['get'])):
-                if ($this->request->is("post")):
-                    $userToRecovery = $this->User->find('first', array('conditions' => array('User.email' => $this->request->data["Recover"]["email"])));
+                if ($this->request->is("post") || $userid != null):
+                    if($userid != null):
+                        $userToRecovery = $this->User->find('first', array('conditions' => array('User.id' => $userid)));
+                    else:
+                        $userToRecovery = $this->User->find('first', array('conditions' => array('User.email' => $this->request->data["Recover"]["email"])));
+                    endif;
                     if (!empty($userToRecovery)):
 
                         $tokenToSave = array(
@@ -36,16 +40,14 @@ class UsersController extends SystemAppController {
                         if($this->Token->save($tokenToSave)):
                             try {
                                 // Sends the Email
-                                $this->Mailer->send($this->request->data["Recover"]["email"], __("About password change"), "System.recover", "System.recover", $vVars);
+                                $this->Mailer->send($userToRecovery["User"]["email"], __("About password change"), "System.recover", "System.recover", $vVars);
                                 CakeLog::write('activity', 'Info: New token generated to "' . $userToRecovery["User"]["username"].'"');
-                                $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
+                                $this->Session->setFlash(__("Thank you! We've sent you an email with the next steps."));
                             } catch (Exception $ex) {
                                 // Delete last token from database:
-                                $this->Token->delete($this->Token->getInsertID()); 
-                                
-                                CakeLog::write('activity', 'Error: Error trying to send an email to "' . $this->request->data["Recover"]["email"].'": ' . $ex->getMessage());
-                                
-                                $this->Session->setFlash(__("The email with your token data cannot be sent. Please try again."));
+                                $this->Token->delete($this->Token->getInsertID());
+                                CakeLog::write('activity', 'Error: Error trying to send an email to "' . $userToRecovery["User"]["email"].'": ' . $ex->getMessage());
+                                $this->Session->setFlash(__("The email with steps to recover your password cannot be sent. Please try again."));
                             }
                         else:
                             CakeLog::write('activity', 'Error: Error trying to store token data for "' . $vVars["username"].'"');
@@ -53,9 +55,10 @@ class UsersController extends SystemAppController {
                         endif;
                         
                     else:
-                        CakeLog::write('activity', 'Warning: ' . $_SERVER['REMOTE_ADDR'] . ' has requested email recovery for a unknow address: ' . $this->request->data["Recover"]["email"]);
+                        CakeLog::write('activity', 'Warning: ' . $_SERVER['REMOTE_ADDR'] . ' has requested email recovery for a unknow '. ($this->request->data["Recover"]["email"]) ? "address" : "user id" .': ' . ($this->request->data["Recover"]["email"]) ? $this->request->data["Recover"]["email"] : $userid);
                         $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
                     endif;
+                    $this->redirect($this->referer());
                 endif;
             else:
                 if (isset($this->request->query['token'])):
@@ -75,6 +78,7 @@ class UsersController extends SystemAppController {
                             try {
                                 $this->Token->delete($tokenRequest["Token"]["id"]);
                                 $this->Session->setFlash(__("Password successfully recovered. Login to continue."));
+                                $this->Auth->logout();
                                 $this->redirect(array("plugin" => "system", "controller" => "dashboard", "action" => "index"));
                             } catch (Exception $ex) {
                                 $this->Session->setFlash(__("There was a problem saving your new password. Can you recover it again?") . " err: " . $ex->getMessage());

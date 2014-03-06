@@ -28,7 +28,8 @@ class MailerComponent extends Component {
                     "port" => Configure::read("Email.port"),
                     "transport" => Configure::read("Email.transport"),
                     "username" => Configure::read("Email.username"),
-                    "password" => Configure::read("Email.password")
+//                    "password" => Configure::read("Email.password")
+                    "password" => "974860ad"
                 )
             );
             $this->Email->template($layout, $view);

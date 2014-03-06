@@ -49,9 +49,9 @@
                     <label for="inputRole" class="col-sm-3 control-label"><small><?php echo __('Role'); ?></small></label>
                     <div class="col-sm-9">
                         <?php
-                        foreach (Configure::read("Role") as $key => $value):
-                            if (AuthComponent::user()['role'] < $value):
-                                Configure::delete("Role.".$key);
+                        foreach (array_flip(Configure::read("Role")) as $key => $value):
+                            if (AuthComponent::user()['role'] < $key):
+                                Configure::delete("Role.".$value);
                             endif;
                         endforeach;
                         echo $this->Form->input('role', array(

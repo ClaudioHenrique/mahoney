@@ -68,7 +68,8 @@ class AppController extends Controller {
                 )
             ),
             'authorize' => array('Controller')
-        )
+        ),
+        'DebugKit.Toolbar'
     );
 
     function beforeRender() {
