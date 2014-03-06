@@ -45,7 +45,7 @@ $this->Html->addCrumb(__('Users'), '/system/users');
                     <?php echo $user['User']['id']; ?>
                 </td>
                 <td>
-                    <?php echo $userRoles[$user['User']['role']]; ?>
+                    <?php echo array_flip(Configure::read("Role"))[$user['User']['role']]; ?>
                 </td>
                 <td>
                     <?php echo $user['User']['name']; ?>
@@ -71,7 +71,7 @@ $this->Html->addCrumb(__('Users'), '/system/users');
                             <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?php echo __('This user requires an email to reset his password'); ?>"><?php echo __('Reset password'); ?></span>
                             <?php
                         else:
-                            echo $this->HTML->link(__('Reset password'), array('plugin' => 'system','controller' => 'users', 'action' => 'reset', $user['User']['id']));
+                            echo $this->HTML->link(__('Reset password'), array('plugin' => 'system','controller' => 'users', 'action' => 'recover', $user['User']['id']));
                         endif;
                     endif;
                     ?>
