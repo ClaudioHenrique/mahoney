@@ -45,7 +45,7 @@ $this->Html->addCrumb(__('Users'), '/system/users');
                     <?php echo $user['User']['id']; ?>
                 </td>
                 <td>
-                    <?php echo $userRoles[$user['User']['role']]; ?>
+                    <?php echo array_flip(Configure::read("Role"))[$user['User']['role']]; ?>
                 </td>
                 <td>
                     <?php echo $user['User']['name']; ?>
