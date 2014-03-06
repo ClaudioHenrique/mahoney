@@ -26,9 +26,9 @@ $this->Html->addCrumb(__('Add user'), '/system/users/add');
         <label for="inputRole" class="col-sm-2 control-label"><?php echo __('Role'); ?></label>
         <div class="col-sm-3">
             <?php
-            foreach (array_flip(Configure::read("Role")) as $key => $value):
-                if (AuthComponent::user()['role'] < $key):
-                    Configure::delete("Role.".$value);
+            foreach (Configure::read("Role") as $key => $value):
+                if (AuthComponent::user()['role'] < $value):
+                    Configure::delete("Role.".$key);
                 endif;
             endforeach;
             echo $this->Form->input('role', array(
