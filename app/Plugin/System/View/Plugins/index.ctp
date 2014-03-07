@@ -27,12 +27,12 @@ $this->Html->addCrumb(__('Plugins'), array("plugin" => "system", "controller" =>
                         if($plugin['name'] != "System"):
                         ?>
                             <div class="col-md-6">
-                                <?php echo ($plugin['active'] == 1) ? 
-                                $this->HTML->link(__('Disable'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'disable', $plugin['name']), array('class' => 'btn btn-default'))
-                                . " " .
-                                (($plugin['outdated'] == true) ? $this->HTML->link(__('Update'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'update', $plugin['name']), array('class' => 'btn btn-info', 'confirm' => __('Are you sure you want to update this plugin? All data from that same can be lost.'))) : "")
-                                :
-                                $this->HTML->link(__('Enable'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'enable', $plugin['name']), array('class' => 'btn btn-success')); ?>
+                                <?php
+                                echo $this->Form->input(__('Disable'), array('label' => false,'div' => false, 'data-loading-text' => __('Loading...'), 'data-controller' => 'remove', 'data-target' => $plugin['name'], 'class' => 'btn btn-default ' . (($plugin['active'] != true) ? 'hidden' : ''), 'type' => 'button'));
+                                echo $this->Form->input(__('Enable'), array('label' => false,'div' => false, 'data-loading-text' => __('Loading...'), 'data-controller' => 'migrate', 'data-target' => $plugin['name'], 'class' => 'btn btn-success ' . (($plugin['active'] == true) ? 'hidden' : ''), 'type' => 'button'));
+                                echo " ";
+                                echo $this->Form->input(__('Update'), array('label' => false,'div' => false, 'data-loading-text' => __('Loading...'), 'data-controller' => 'update', 'data-target' => $plugin['name'], 'class' => 'btn btn-info ' . (($plugin['outdated'] != true || $plugin['active'] != true) ? 'hidden' : ''), 'type' => 'button'));
+                                ?>
                             </div>
                             <div class="col-md-6 text-right">
                                 <?php echo $this->HTML->link(__('Reset'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'reset', $plugin['name']), array('class' => 'btn btn-default', 'confirm' => __('Are you sure you want to reset all data from this plugin? All your saved data from this plugin will be lost.'))); ?> <?php echo $this->HTML->link(__('Uninstall'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'uninstall', $plugin['name']), array('class' => 'btn btn-warning', 'confirm' => __('Are you sure you want to uninstall this plugin? All your saved data from this plugin will be lost.'))); ?> <?php echo $this->HTML->link(__('Delete'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'delete', $plugin['name']), array('class' => 'btn btn-danger', 'confirm' => __('Are you sure you want to delete this plugin?'))); ?>
