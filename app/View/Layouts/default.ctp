@@ -47,13 +47,7 @@
             echo $this->Html->script('System.mahoneySystem');
         endif;
         
-        if(strpos($jsController, ".") !== true):
-            $file = APP . "plugin\\" . explode(".", $jsController)[0] . "\\webroot\\js\\" . explode(".", $jsController)[1] . ".js";
-        else:
-            $file = APP . "webroot\\js\\" . explode(".", $jsController)[0] . ".js";
-        endif;
-        
-        if(file_exists($file)):
+        if(is_file($jsController)):
             echo $this->Html->script($jsController);
         endif;
         ?>

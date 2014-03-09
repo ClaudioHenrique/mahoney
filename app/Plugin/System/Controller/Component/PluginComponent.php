@@ -17,6 +17,7 @@ class PluginComponent extends Component {
     public $PACKAGE_FILE;
     public $ICON;
     public $ACTIVATED_PLUGINS;
+    
     public $Migrations;
     public $Fixtures;
     public $Schema;
@@ -53,14 +54,14 @@ class PluginComponent extends Component {
      * @param String The plugin to return the icon in b64
      */
     public function getPluginIconAsBase64($plugin) {
-        if (file_exists(str_replace("{plugin}", $plugin, $this->ICON))):
+        if(file_exists(str_replace("{plugin}", $plugin, $this->ICON))):
             $imgBinary = file_get_contents(str_replace("{plugin}", $plugin, $this->ICON));
             return "data:image/png;base64," . base64_encode($imgBinary);
         else:
             return null;
         endif;
     }
-
+    
     /**
      * Return an array with informations about the plugin schema in database.
      * 
@@ -70,26 +71,22 @@ class PluginComponent extends Component {
      */
     public function schema($plugin) {
         try {
-            $schemaRequest = $this->Schema->find("first", array(
+            $schemaRequest = $this->Schema->find("all", array(
                 "conditions" => array(
                     "Schema.plugin" => $plugin
                 )
                     )
             );
-            if (empty($schemaRequest["Schema"]["version"]) || !isset($schemaRequest["Schema"]["version"])):
-                $schemaRequest["Schema"]["version"] = 0;
-            endif;
             return $schemaRequest;
         } catch (Exception $ex) {
             CakeLog::write('activity', "Warning, trying to retrieve '" . $plugin . "' schema from database.");
 
-            $schemaRequest = array(
+            $schemaRequest = [
                 "Schema" => array(
-                    "id" => "",
                     "plugin" => $plugin,
                     "version" => "000"
                 )
-            );
+            ];
             return $schemaRequest;
         }
     }
@@ -102,124 +99,113 @@ class PluginComponent extends Component {
      * @return Boolean TRUE if plugin is outdated. FALSE if not.
      */
     public function isOutdated($plugin = null) {
-        $pluginSchema = $this->schema($plugin);
+        $schemaV = $this->schema($plugin);
         $a = str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER);
         if (is_dir($a)):
             $b = scandir($a);
             $c = array_diff($b, array('.', '..'));
             $lastV = substr(end($c), 0, 3);
-            return intval($pluginSchema["Schema"]["version"]) < intval($lastV);
+            return intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) < intval($lastV);
         else:
             throw new Exception("Error");
         endif;
     }
 
     /**
-     * Removes the plugin schema tables based in Migrations YML files.
+     * Updates an plugin based on Migration files.
      * 
-     * @param String The plugin to verify
+     * @param String The plugin to update
+     * @return boolean The operation result
+     * @throws Exception If operation fails
      */
-    public function remove($plugin = null) {
-        
-    }
-
-    /**
-     * Update/Create the plugin schema tables based in Migration YML files.
-     * 
-     * @param String The plugin to migrate
-     */
-    public function migrate($plugin = 'System', $reverse = false) {
-
-        $lastMigrated = 0;
-        $migrationList = array_diff(scandir(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER)), array('.', '..'));
-
-        if ($reverse):
-            $migrationList = array_reverse($migrationList);
-        endif;
-
-        $lastMigration = substr(end($migrationList), 0, 3);
-        $pluginSchema = $this->schema($plugin);
-        
-        if (!$reverse):
-            if($this->isOutdated($plugin)):
-                try {
-                    if (intval($pluginSchema["Schema"]["version"]) <= intval($lastMigration)):
-                        foreach ($migrationList as $mgrOrder => $mgrValue):
-                            if (intval($pluginSchema["Schema"]["version"]) <= intval(substr($mgrValue, 0, 3))):
-
-                                $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $mgrValue);
-                                $this->Migrations->down();
-                                $this->Migrations->up();
-
-                                $lastMigrated = substr($mgrValue, 0, 3);
-                            endif;
-                        endforeach;
-                    endif;
-                    $this->activate($plugin);
-                } catch (Exception $ex) {
-                    return $ex->getMessage();
-                }
-            else:
-                return __("The plugin is already up to date.");
-            endif;
-        else:
-            try {
-                foreach ($migrationList as $mgrOrder => $mgrValue):
-                    if (intval($pluginSchema["Schema"]["version"]) >= intval(substr($mgrValue, 0, 3))):
-
-                        $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $mgrValue);
+    public function update($plugin) {
+        $vList = array_diff(scandir(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER)), array('.', '..'));
+        $lastV = substr(end($vList), 0, 3);
+        $schemaV = $this->schema($plugin);
+        if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) <= intval($lastV)):
+            foreach ($vList as $key => $value):
+                if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) <= intval(substr($value, 0, 3))):
+                    try {
+                        $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $value);
                         $this->Migrations->down();
+                        $this->Migrations->up();
+                        $this->Fixtures->import(str_replace("{plugin}", $plugin, $this->FIXTURE_FOLDER) . $value);
+                    } catch(Exception $ex) {
+                        return false;
+                    }
+                    $lastV = substr($value, 0, 3);
+                endif;
+            endforeach;
+            
+            try {
+                $updateSchema = array(
+                    "Schema" => array(
+                        "id" => (isset($schemaV[0]["Schema"]["id"]) && !empty($schemaV[0]["Schema"]["id"])) ? $schemaV[0]["Schema"]["id"] : "",
+                        "plugin" => $plugin,
+                        "version" => $lastV
+                    )
+                );
+                $this->Schema->save($updateSchema);
 
-                        $lastMigrated = intval(substr($mgrValue, 0, 3)) - 1;
-                    endif;
-                endforeach;
-                $this->deactivate($plugin);
+                return true;
             } catch (Exception $ex) {
-                return $ex->getMessage();
+                throw new Exception(__("There is an error trying to save schema for") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
             }
         endif;
-        if ($this->Schema->save(
-                array(
-                    "id" => $pluginSchema["Schema"]["id"],
-                    "plugin" => $plugin,
-                    "version" => $lastMigrated
-                )
-            )
-        ):
-            return true;
-        else:
-            return __("There is an error saving the plugin schema.");
-        endif;
-    }
-    
-    public function activate($plugin){
-        $fp = fopen(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE), "wb");
-        fclose($fp);
-    }
-    
-    public function deactivate($plugin){
-        unlink(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE));
+        return false;
     }
 
     /**
-     * Update/Create the plugin schema tables based in Fixture YML files.
+     * Uninstall a plugin from database.
      * 
-     * @param String The plugin to fixture
+     * @param String The plugin to uninstall from database
+     * @return boolean The operation result
+     * @throws Exception If operation fails
      */
-    public function fixture($plugin = 'System') {
-        
+    public function uninstall($plugin) {
+
+        $vList = array_reverse(array_diff(scandir(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER)), array('.', '..')));
+        $lastV = substr(end($vList), 0, 3);
+        $schemaV = $this->schema($plugin);
+
+        if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) >= intval($lastV)):
+            foreach ($vList as $key => $value):
+                try {
+                    if (intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) >= intval(substr($value, 0, 3))):
+                        $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $value);
+                        $this->Migrations->down();
+                        $lastV = substr($value, 0, 3);
+                    endif;
+                } catch (Exception $ex) {
+                    throw new Exception(__("There is an error trying to uninstall") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+                }
+            endforeach;
+
+            try {
+
+                if (isset($schemaV[0]["Schema"]["id"]) && !empty($schemaV[0]["Schema"]["id"])):
+                    $this->Schema->delete($schemaV[0]["Schema"]["id"]);
+                endif;
+
+                return true;
+            } catch (Exception $ex) {
+                throw new Exception(__("There is an error trying to save schema for") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+            }
+        endif;
+
+        return false;
     }
 
     /**
      * Return an array with informations about all App plugins.
      * 
-     * This array can be accessed anywhere by `$mahoneyPlugins`
+     * This array can be accessed anywhere by `$mahoneyPlugin`
      */
     public function getPlugins() {
-        if (file_exists(APP . 'Config' . DS . 'installed')):
+        if(file_exists(APP . 'Config' . DS . 'installed')):
             $pluginFolder = scandir($this->PLUGIN_FOLDER);
             foreach ($pluginFolder as $plugin):
-                if (is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE)) && $plugin != 'System'):
+                if(is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE)) && $plugin != 'System'):
                     $this->ACTIVATED_PLUGINS++;
                 endif;
                 if (is_dir($this->PLUGIN_FOLDER . $plugin) && !in_array($plugin, $this->DENY_LIST)):
@@ -236,10 +222,8 @@ class PluginComponent extends Component {
                 endif;
             endforeach;
         endif;
-
-        // Set the number of activated plugins
         Configure::write("Plugin.count", $this->ACTIVATED_PLUGINS);
-
+        
         return $this->PLUGINS;
     }
 
