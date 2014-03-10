@@ -44,7 +44,6 @@ class PluginComponent extends Component {
 
         $this->Schema = ClassRegistry::init('System.Schema');
         $this->Migrations = new Migrations();
-        $this->Fixtures = new Fixtures();
     }
 
     /**
