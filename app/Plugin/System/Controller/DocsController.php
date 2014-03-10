@@ -12,11 +12,9 @@ class DocsController extends SystemAppController {
 
     public function index() {
 
-        $siteName = "Mahoney";
-
         $pageTitle = __("Documentation");
 
-        $this->set(compact('siteName', 'pageTitle'));
+        $this->set(compact('pageTitle'));
 
     }
 

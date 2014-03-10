@@ -33,7 +33,7 @@
         Router::connect('/contact', array('plugin' => 'system', 'controller' => 'contact', 'action' => "index"));
         
         // Plugin relatives
-//        Router::connect('/blog', array('plugin' => 'blog', 'controller' => 'posts', 'action' => 'index'));
+        Router::connect('/blog/*', array('plugin' => 'blog', 'controller' => 'posts', 'action' => 'index'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

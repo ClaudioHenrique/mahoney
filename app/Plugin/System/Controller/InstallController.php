@@ -22,9 +22,8 @@ class InstallController extends SystemAppController {
 
     public function index($type = null) {
         
-        $siteName = "Mahoney";
         $pageTitle = __('Installation');
-        $this->set(compact('siteName', 'pageTitle'));
+        $this->set('pageTitle', $pageTitle);
         
         if (file_exists(APP . 'Config' . DS . 'installed')):
             $this->redirect($this->Auth->logoutRedirect);

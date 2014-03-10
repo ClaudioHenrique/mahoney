@@ -20,7 +20,7 @@ class DashboardController extends SystemAppController {
             $pageTitle = __('Login');
         endif;
         
-        $this->set(compact('siteName', 'pageTitle'));
+        $this->set(compact('pageTitle'));
         
         $this->render($render);
     }    

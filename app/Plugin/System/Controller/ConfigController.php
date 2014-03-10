@@ -4,12 +4,10 @@ App::uses('System.SystemAppController', 'Controller');
 
 class ConfigController extends SystemAppController {
 
-    public $uses = array('System.Config', 'System.User');
-    public $components = array('System.Plugin', 'System.FileManager');
+    public $uses = array('System.Config');
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('setupdb');
     }
 
     /**
@@ -25,23 +23,5 @@ class ConfigController extends SystemAppController {
             throw new NotFoundException(__('The activity log does not exist!'));
         endif;
         $this->redirect($this->referer());
-    }
-
-    public function index() {
-
-        $siteName = "Mahoney";
-        $render = "index";
-        $pageTitle = __('Plugins');
-
-        $this->set(compact('siteName', 'pageTitle'));
-
-        try {
-            $this->render($render);
-        } catch (MissingViewException $e) {
-            if (Configure::read('debug')) {
-                throw $e;
-            }
-            throw new NotFoundException();
-        }
     }
 }

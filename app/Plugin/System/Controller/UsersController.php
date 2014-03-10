@@ -13,7 +13,11 @@ class UsersController extends SystemAppController {
     public $components = array('System.Security', 'System.Configurer', 'System.Mailer');
 
     public function recover($userid = null) {
-        $this->set('pageTitle', __("Password recovery"));
+        
+        $pageTitle = __("Password recovery");
+        
+        $this->set('pageTitle', $pageTitle);
+        
         if (!AuthComponent::user() || $userid != null):
             if (!isset($this->request->query['get'])):
                 if ($this->request->is("post") || $userid != null):

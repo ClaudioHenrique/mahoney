@@ -22,7 +22,7 @@
         <?php echo $this->Html->charset(); ?>
         <title>
             <?php
-                echo (Configure::read("Siteinfo.sitename")) ? Configure::read("Siteinfo.sitename") : $siteName;
+                echo (Configure::read("Siteinfo.sitename")) ? Configure::read("Siteinfo.sitename") : "Mahoney";
                 echo " | ";
                 echo $pageTitle;
             ?>
@@ -37,7 +37,6 @@
 
         echo $this->fetch('meta');
         echo $this->fetch('css');
-        echo $this->fetch('script');
         ?>
     </head>
     <body>
@@ -82,7 +81,15 @@
         echo $this->Html->script('System.com/tablesorter/jquery.tablesorter.min');
         echo $this->Html->script('System.mahoneySystem');
         
-        if(is_file($jsController)):
+        echo $this->fetch('script');
+        
+        if(strpos($jsController, ".") !== false):
+            $file = APP . "plugin\\" . explode(".", $jsController)[0] . "\\webroot\\js\\" . explode(".", $jsController)[1] . ".js";
+        else:
+            $file = APP . "webroot\\js\\" . explode(".", $jsController)[0] . ".js";
+        endif;
+        
+        if(file_exists($file)):
             echo $this->Html->script($jsController);
         endif;
         

@@ -13,13 +13,15 @@
         "menu": {
             "Dashboard": "/system",
             "Options": {
-                "Config": "/system/config",
-                "Plugins": "/system/plugins"
+                "Config": "/system/config"
             },
             "Users": {
                 "List_Users": "/system/users",
                 "Add_Users": "/system/users/add",
                 "Manage_Roles": "/system/users/roles"
+            },
+            "Plugins": {
+                "Manage": "/system/plugins/index"
             }
         }
     }
