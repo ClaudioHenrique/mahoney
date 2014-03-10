@@ -1,13 +1,16 @@
 <?php
 /**
-* Migrations -- A Simple PHP Class to convert YAML into SQL queries
-* @version 0.2 -- 2008-04-08
-* @author Georgi Momchilov <gmomchilov@gmail.com>
-* @copyright Copyright 2008 Georgi Momchilov
-* @license http://www.opensource.org/licenses/mit-license.php MIT License
-* @package Migrations
-*/
-
+ * Migrations - PHP Class to upload YML schemas as SQL Queries and execute
+ * into your database.
+ * 
+ * This class is based in Georgi Momchilov Migrations and Fixtures for CakePHP
+ * https://github.com/georgious/cakephp-yaml-migrations-and-fixtures
+ * 
+ * @version 0.3 -- 2014-03-10
+ * @author Alexandre C. Moraes <kalvinmoraes@gmail.com>
+ * @copyright Copyright 2014 Alexandre Moraes
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 App::uses('ConnectionManager', 'Model');
 App::uses('Spyc', 'Vendor');
 
@@ -109,6 +112,9 @@ class Migrations{
     * @return mixed True on success and an Error code ( see class constants ) on failure
     */
     function load($sFile){
+        
+        $fixtureFile = str_replace("Migrations","Fixtures",$sFile);
+        
         if( !$this->bSpycReady )
             return self::SPYC_CLASS_NOT_FOUND;
         
@@ -117,7 +123,12 @@ class Migrations{
 
         
         $spycElement = new Spyc();
+        
+        // Load Migration File
         $this->aSchema = $spycElement->YAMLload( file_get_contents( $sFile ) );
+        
+        // Load Fixture File
+        $this->aTables = file_exists($fixtureFile) ? $spycElement->YAMLload(file_get_contents($fixtureFile )) : null;
 
         $this->aTasks = array();
         $this->aTasks['UP'] = $this->aTasks['DOWN'] = array();
@@ -161,6 +172,14 @@ class Migrations{
                 }
             }
         }
+        
+        if(is_array($this->aTables)):
+            // Fixture the Table
+            foreach( $this->aTables as $table => $records ):
+                $this->aTasks["UP"][] = $this->save($table, $records);
+            endforeach;
+        endif;
+        
         $this->bLoaded = true;
         return true;
     }
@@ -353,6 +372,36 @@ class Migrations{
     */
     function drop_table($sTable){
         $sSql = 'DROP TABLE IF EXISTS '.$this->getPrefix().$sTable.';';
+        return $sSql;
+    }
+    
+    function save($table, $records){
+        $sSql = "";
+        $columns = "";
+        $values = "";
+        $sSql .= "INSERT INTO " . $table . " ";
+        $sSql .= "(" . implode(", ", array_keys($records[1])) . ") VALUES";
+        foreach( $records as $record_num => $record_value ):
+
+            foreach($record_value as $insertKey => $insertValue):
+                $columns[] = $insertKey;
+                $values[] = $insertValue;
+            endforeach;
+
+            $list = '';
+            $prefix = '';
+
+            foreach ($values as $val):
+                $list .= $prefix . '\'' . $val . '\'';
+                $prefix = ', ';
+            endforeach;
+
+            $sSql .= " (" . $list . "), ";
+            $columns = "";
+            $values = "";
+        endforeach;
+        $sSql = substr($sSql, 0, -2);
+        $sSql .= "; ";
         return $sSql;
     }
     

@@ -4,8 +4,8 @@ $this->Html->addCrumb(__('Plugins'), array("plugin" => "system", "controller" =>
 <div class="container">
     <div class="page-header">
         <h1><?php echo __('Plugins'); ?></h1>
-        <p><?php echo __('Create a unique CMS with thousands of plugins'); ?></p>
-        <?php echo $this->HTML->link(__('Search'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'search'), array('class' => 'btn btn-default')); ?> <?php echo $this->HTML->link(__('Upload plugin'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'upload'), array('class' => 'btn btn-default')); ?>
+        <p><?php echo __('Create a unique CMS with plugins for your app.'); ?></p>
+        <!--?php echo $this->HTML->link(__('Search'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'search'), array('class' => 'btn btn-default')); ?--> <!--?php echo $this->HTML->link(__('Upload plugin'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'upload'), array('class' => 'btn btn-default')); ?-->
     </div>
 
     <?php

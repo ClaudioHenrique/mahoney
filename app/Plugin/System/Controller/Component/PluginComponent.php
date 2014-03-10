@@ -1,7 +1,6 @@
 <?php
 
 App::uses('Migrations', 'Vendor');
-App::uses('Fixtures', 'Vendor');
 
 /**
  * The Plugin component has common tasks for plugin management
@@ -129,9 +128,8 @@ class PluginComponent extends Component {
                         $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $value);
                         $this->Migrations->down();
                         $this->Migrations->up();
-                        $this->Fixtures->import(str_replace("{plugin}", $plugin, $this->FIXTURE_FOLDER) . $value);
                     } catch(Exception $ex) {
-                        return false;
+                        throw new Exception($ex->getMessage());
                     }
                     $lastV = substr($value, 0, 3);
                 endif;

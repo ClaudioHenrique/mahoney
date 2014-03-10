@@ -86,7 +86,11 @@ class PluginsController extends SystemAppController {
             try {
 
                 if ($this->Plugin->isOutdated($plugin)):
-                    $this->Plugin->update($plugin);
+                    try {
+                        $this->Plugin->update($plugin);
+                    } catch(Exception $ex) {
+                        $this->Session->setFlash($ex->getMessage());
+                    }
                 endif;
 
                 $fp = fopen(str_replace("{plugin}", $plugin, $this->Plugin->ACTIVE_PLUGIN_FILE), "wb");
@@ -114,21 +118,11 @@ class PluginsController extends SystemAppController {
     }
 
     public function index() {
-
-        $siteName = "Mahoney";
-        $render = "index";
+        
         $pageTitle = __('Plugins');
 
-        $this->set(compact('siteName', 'pageTitle'));
-
-        try {
-            $this->render($render);
-        } catch (MissingViewException $e) {
-            if (Configure::read('debug')) {
-                throw $e;
-            }
-            throw new NotFoundException();
-        }
+        $this->set(compact('pageTitle'));
+        
     }
 
 }
