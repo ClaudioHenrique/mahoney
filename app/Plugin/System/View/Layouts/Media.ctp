@@ -1,7 +1,3 @@
-<?php
-
-
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -76,7 +72,7 @@
 		    dictResponseError: "SERVER ERROR",
 		    paramName: "file", // The name that will be used to transfer the file
 		    maxFilesize: <?php echo $MaxSizeUpload; ?>, // MB
-		    url: "/system/filemanager/upload",
+		    url: "upload",
 		    accept: function(file, done) {
 		    var extension=file.name.split('.').pop();
 		    extension=extension.toLowerCase();
@@ -99,7 +95,7 @@
 		    img.src = newURL;
 		    $.ajax({
 			type: "POST",
-			url: "ajax_calls.php?action=save_img",
+			url: "ajaxcalls?action=save_img",
 			data: { url: newURL, path:$('#sub_folder').val()+$('#fldr_value').val(), name:$('#aviary_img').data('name') }
 		    }).done(function( msg ) {			
 			featherEditor.close();
@@ -122,7 +118,7 @@
 	    }
 	</script>
         <?php
-	echo $this->Html->script("System.../com/js/filemanager/include.min.js");
+	echo $this->Html->script("System.../com/js/filemanager/include.js");
         ?>
     </head>
     <body>

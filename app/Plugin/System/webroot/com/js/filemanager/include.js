@@ -38,7 +38,7 @@ $(document).ready(function(){
 			    var m=$('#sub_folder').val()+$('#fldr_value').val()+$trigger.find('a.link').attr('data-file');
 			    $.ajax({
 				type: "POST",
-				url: "ajax_calls.php?action=extract",
+				url: "media/ajax?action=extract",
 				data: { path: m }
 			    }).done(function( msg ) {
 				if (msg!="")
@@ -197,7 +197,7 @@ $(document).ready(function(){
     });
     
     $('#info').on('click',function(){
-	bootbox.alert('<center><img src="img/logo.png" alt="responsive filemanager"/><br/><br/><p><strong>RESPONSIVE filemanager v.'+version+'</strong><br/><a href="http://www.responsivefilemanager.com">responsivefilemanager.com</a></p><br/><p>Copyright © <a href="http://www.tecrail.com" alt="tecrail">Tecrail</a> - Alberto Peripolli. All rights reserved.</p><br/><p>License<br/><small><img alt="Creative Commons License" style="border-width:0" src="http://responsivefilemanager.com/license.php" /><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution-NonCommercial 3.0 Unported License</a>.</small></p></center>');
+	bootbox.alert('<center><img src="com/img/filemanager/logo.png" alt="responsive filemanager"/><br/><br/><p><strong>RESPONSIVE filemanager v.'+version+'</strong><br/><a href="http://www.responsivefilemanager.com">responsivefilemanager.com</a></p><br/><p>Copyright © <a href="http://www.tecrail.com" alt="tecrail">Tecrail</a> - Alberto Peripolli. All rights reserved.</p><br/><p>License<br/><small><img alt="Creative Commons License" style="border-width:0" src="http://responsivefilemanager.com/license.php" /><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution-NonCommercial 3.0 Unported License</a>.</small></p></center>');
 	});
     
     $('#uploader-btn').on('click',function(){
@@ -224,7 +224,7 @@ $(document).ready(function(){
 	sortDescending=!sortDescending;
 	if (js_script) {
 	    $.ajax({
-		url: "ajax_calls.php?action=sort&sort_by="+_this.attr('data-sort')+"&descending="+sortDescending
+		url: "media/ajax?action=sort&sort_by="+_this.attr('data-sort')+"&descending="+sortDescending
 	    }).done(function( msg ) {
 		    
 	    });
@@ -321,7 +321,7 @@ $(document).ready(function(){
 		var folder_path_thumb=$('#cur_dir_thumb').val()+ name;
 		$.ajax({
 			  type: "POST",
-			  url: "execute.php?action=create_folder",
+			  url: "media/execute?action=create_folder",
 			  data: {path: folder_path, path_thumb: folder_path_thumb}
 			}).done(function( msg ) {
 			setTimeout(function(){window.location.href = $('#refresh').attr('href') + '&' + new Date().getTime();},300);
@@ -340,7 +340,7 @@ $(document).ready(function(){
 	    _this.find('i').addClass('icon-white');
 	    
 	     $.ajax({
-		url: "ajax_calls.php?action=view&type="+_this.attr('data-value')
+		url: "media/ajax?action=view&type="+_this.attr('data-value')
 	    }).done(function( msg ) {
 		if (msg!="") {
 		    bootbox.alert(msg);
@@ -722,7 +722,7 @@ function execute_action(action,file1,file2,name,container,function_name){
 	name=fix_filename(name);
 	$.ajax({
 	    type: "POST",
-	    url: "execute.php?action="+action,
+	    url: "media/execute?action="+action,
 	    data: {path: file1, path_thumb: file2, name: name.replace('/','')}
 	}).done(function( msg ) {
 	    if (msg!="") {

@@ -83,6 +83,7 @@ class AppController extends Controller {
     }
 
     function beforeFilter() {
+        $this->Session->write("user", $this->Auth->user());
         // Load Plugins Informations
         $this->set('mahoneyPlugins', $this->Plugin->getPlugins());
         $this->set('jsController', $this->Configurer->getJsController());
@@ -98,9 +99,9 @@ class AppController extends Controller {
     }
 
     public function isAuthorized($user) {
-        if (isset($user['role']) && intval($user['role']) >= 4) {
+        if (isset($user['role']) && intval($user['role']) >= 4):
             return true;
-        }
+        endif;
         return false;
     }
 

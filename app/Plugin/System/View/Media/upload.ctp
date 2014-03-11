@@ -1,7 +1,4 @@
 <?php
-include('config/config.php');
-include('include/utils.php');
-
 if (!empty($_FILES)) {
     $info=pathinfo($_FILES['file']['name']);
     if(in_array(fix_strtolower($info['extension']), $ext)){

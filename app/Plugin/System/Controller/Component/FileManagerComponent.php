@@ -4,12 +4,14 @@
  */
 class FileManagerComponent extends Component {
     
+    var $components = array("System.ImageMagician");
+    
     public function deleteDir($dir) {
         if (!file_exists($dir)) return true;
         if (!is_dir($dir)) return unlink($dir);
         foreach (scandir($dir) as $item) {
             if ($item == '.' || $item == '..') continue;
-            if (!deleteDir($dir.DIRECTORY_SEPARATOR.$item)) return false;
+            if (!$this->deleteDir($dir.DIRECTORY_SEPARATOR.$item)) return false;
         }
         return rmdir($dir);
     }
@@ -24,7 +26,7 @@ class FileManagerComponent extends Component {
     }
 
     public function rename_file($old_path,$name,$transliteration){
-        $name=fix_filename($name,$transliteration);
+        $name=$this->fix_filename($name,$transliteration);
         if(file_exists($old_path)){
             $info=pathinfo($old_path);
             $new_path=$info['dirname']."/".$name.".".$info['extension'];
@@ -34,20 +36,19 @@ class FileManagerComponent extends Component {
     }
 
     public function rename_folder($old_path,$name,$transliteration){
-        $name=fix_filename($name,$transliteration);
+        $name=$this->fix_filename($name,$transliteration);
         if(file_exists($old_path)){
-            $new_path=fix_dirname($old_path)."/".$name;
+            $new_path=$this->fix_dirname($old_path)."/".$name;
             if(file_exists($new_path)) return false;
             return rename($old_path,$new_path);
         }
     }
 
     public function create_img_gd($imgfile, $imgthumb, $newwidth, $newheight="") {
-        if(image_check_memory_usage($imgfile,$newwidth,$newheight)){
-            require_once('php_image_magician.php');
-            $magicianObj = new imageLib($imgfile);
-            $magicianObj -> resizeImage($newwidth, $newheight, 'crop');
-            $magicianObj -> saveImage($imgthumb,80);
+        if($this->image_check_memory_usage($imgfile,$newwidth,$newheight)){
+            $this->ImageMagician->load($imgfile);
+            $this->ImageMagician->resizeImage($newwidth, $newheight, 'crop');
+            $this->ImageMagician->saveImage($imgthumb,80);
             return true;
         }
         return false;
@@ -84,7 +85,7 @@ class FileManagerComponent extends Component {
             if ($t<>"." && $t<>"..") {
                 $currentFile = $cleanPath . $t;
                 if (is_dir($currentFile)) {
-                    $size = foldersize($currentFile);
+                    $size = $this->foldersize($currentFile);
                     $total_size += $size;
                 }
                 else {
@@ -149,6 +150,7 @@ class FileManagerComponent extends Component {
             }
 
             $str = preg_replace( "/[^a-zA-Z0-9\.\[\]_| -]/", '', $str );
+            $str = preg_replace('/[[:space:]]+/', '-', $str);
         }
 
         $str=str_replace(array('"',"'","/","\\"),"",$str);
@@ -187,7 +189,7 @@ class FileManagerComponent extends Component {
     public function fix_path($path,$transliteration){
         $info=pathinfo($path);
         $tmp_path = $info['dirname'];
-            $str=fix_filename($info['filename'],$transliteration);
+            $str=$this->fix_filename($info['filename'],$transliteration);
         if($tmp_path!="")
                     return $tmp_path.DIRECTORY_SEPARATOR.$str;
         else
@@ -255,10 +257,10 @@ class FileManagerComponent extends Component {
         if($relative_image_creation){
             foreach($relative_path_from_current_pos as $k=>$path){
                 if($path!="" && $path[strlen($path)-1]!="/") $path.="/";
-                if (!file_exists($targetPath.$path)) create_folder($targetPath.$path,false);
+                if (!file_exists($targetPath.$path)) $this->create_folder($targetPath.$path,false);
                 $info=pathinfo($name);
                 if(!endsWith($targetPath,$path))
-                    if(!create_img($targetFile, $targetPath.$path.$relative_image_creation_name_to_prepend[$k].$info['filename'].$relative_image_creation_name_to_append[$k].".".$info['extension'], $relative_image_creation_width[$k], $relative_image_creation_height[$k]))
+                    if(!$this->create_img($targetFile, $targetPath.$path.$relative_image_creation_name_to_prepend[$k].$info['filename'].$relative_image_creation_name_to_append[$k].".".$info['extension'], $relative_image_creation_width[$k], $relative_image_creation_height[$k]))
                         $all_ok=false;
             }
         }

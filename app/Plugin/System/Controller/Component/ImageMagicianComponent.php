@@ -160,9 +160,11 @@
    # ========================================================================#
 
 
-class imageLib
+class ImageMagicianComponent extends Component
 {
 
+    var $components = array("System.FileManager");
+    
     private $fileName;
     private $image;
     protected $imageResized;
@@ -199,7 +201,7 @@ class imageLib
 
 ## --------------------------------------------------------
 
-    function __construct($fileName)
+    function load($fileName)
     # Author:     Jarrod Oberto
   # Date:     27-02-08
     # Purpose:    Constructor
@@ -215,7 +217,7 @@ class imageLib
 
         // *** Save the image file name. Only store this incase you want to display it
         $this->fileName = $fileName;
-    $this->fileExtension = fix_strtolower(strrchr($fileName, '.'));
+    $this->fileExtension = $this->FileManager->fix_strtolower(strrchr($fileName, '.'));
 
         // *** Open up the file
         $this->image = $this->openImage($fileName);
@@ -468,7 +470,7 @@ class imageLib
   #       black borders.
   #
   {
-    $pos = fix_strtolower($pos);
+    $pos = $this->FileManager->fix_strtolower($pos);
 
     // *** If co-ords have been entered
     if (strstr($pos, 'x')) {
@@ -2396,7 +2398,7 @@ class imageLib
 
         // *** Get extension
         $extension = strrchr($file, '.');
-        $extension = fix_strtolower($extension);
+        $extension = $this->FileManager->fix_strtolower($extension);
         switch($extension)
         {
             case '.jpg':
@@ -2468,7 +2470,7 @@ class imageLib
 
     // *** Get extension
         $extension = strrchr($savePath, '.');
-        $extension = fix_strtolower($extension);
+        $extension = $this->FileManager->fix_strtolower($extension);
 
     $error = '';
 
