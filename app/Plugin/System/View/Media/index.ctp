@@ -148,9 +148,15 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
                 <div class="nav-collapse collapse">
                     <div class="filters">
                         <div class="row-fluid">
-                            <div class="span2 half">
+                            <div class="span3 half">
                                 <span><?php echo lang_Actions; ?>:</span>
+                                <?php
+                                if(!isset($_GET["popup"])):
+                                ?>
                                 <?= $this->Html->link("<i class=\"fa fa-angle-left\"></i> <i class=\"fa fa-dashboard\"></i> ", array("plugin"=>"system","controller"=>"dashboard"), array("title"=>"Back to Dashboard", "class" => "tip btn", "escape" => false)); ?>
+                                <?php
+                                endif;
+                                ?>
 			    <?php if($upload_files){ ?>
                                 <button class="tip btn upload-btn" title="<?php echo  lang_Upload_file; ?>"><i class="icon-plus"></i><i class="icon-file"></i></button> 
 			    <?php } ?>

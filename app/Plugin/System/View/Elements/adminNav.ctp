@@ -30,10 +30,10 @@
                                     ?>
                                     <li class="divider"></li>
                                 <?php
-                                elseif($key2 != "icon"):
-                                ?>
-                                <li><?php echo $this->Html->link(__(Inflector::humanize($key2)), $value2); ?></li>
-                                <?php
+                                elseif($value2 != "icon"):
+                                    ?>
+                                    <li><?php echo $this->Html->link(__(Inflector::humanize($key2)), $value2["link"]); ?></li>
+                                    <?php
                                 endif;
                                 ?>
                             <?php
@@ -48,13 +48,13 @@
                                 if($plugin['name'] != 'System'):
                                     if ($plugin['active'] && $plugin['menu']):
                                         foreach ($plugin['menu'] as $key => $value):
-                                            if (is_array($plugin['menu'][$key])):
+                                            if (isset($plugin['menu'][$key]["child"])):
                                             ?>
                                             <li>
                                                 <a class="trigger right-caret"><?= $key ?></a>
                                                 <ul class="dropdown-menu sub-menu">
                                                     <?php
-                                                    foreach ($plugin['menu'][$key] as $key2 => $value2):
+                                                    foreach ($plugin['menu'][$key]["child"] as $key2 => $value2):
                                                         if ($key2 == "config"):
                                                             ?>
                                                     <li class="divider"></li>
