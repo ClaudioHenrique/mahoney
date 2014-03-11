@@ -11,17 +11,48 @@
     "homepage": "http://github.com/kalvinmoraes/mahoney",
     "config": {
         "menu": {
-            "Dashboard": "/system",
+            "Dashboard": {
+                "icon": "fa-dashboard",
+                "link": "/system"
+            },
             "Options": {
-                "Config": "/system/config"
+                "icon": "fa fa-cog",
+                "child": {
+                    "Config": {
+                        "icon": "",
+                        "link": "/system/config"
+                    }
+                }
             },
             "Users": {
-                "List_Users": "/system/users",
-                "Add_Users": "/system/users/add",
-                "Manage_Roles": "/system/users/roles"
+                "icon" : "fa fa-users",
+                "child": {
+                    "List_Users": {
+                        "icon": "",
+                        "link": "/system/users"
+                    },
+                    "Add_Users": {
+                        "icon": "",
+                        "link": "/system/users/add"
+                    },
+                    "Manage_Roles": {
+                        "icon": "",
+                        "link": "/system/users/roles"
+                    }
+                }
+            },
+            "Media": {
+                "icon": "fa-cloud",
+                "link": "/system/media"
             },
             "Plugins": {
-                "Manage": "/system/plugins/index"
+                "icon": "fa-bolt",
+                "child": {
+                    "Manage": {
+                        "icon": "",
+                        "link": "/system/plugins/index"
+                    }
+                }
             }
         }
     }

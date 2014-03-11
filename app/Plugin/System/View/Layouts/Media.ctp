@@ -18,6 +18,7 @@
         echo $this->Html->css("System.../com/css/filemanager/bootstrap.min.css");
         echo $this->Html->css("System.../com/css/filemanager/bootstrap-responsive.min.css");
         echo $this->Html->css("System.../com/css/filemanager/bootstrap-lightbox.min.css");
+        echo $this->Html->css('../com/css/font-awesome/font-awesome.min');
         echo $this->Html->css("System.../com/css/filemanager/style.css");
 	echo $this->Html->css("System.../com/css/filemanager/dropzone.min.css");
 	echo $this->Html->css("System.../com/css/filemanager/jquery.contextMenu.min.css");

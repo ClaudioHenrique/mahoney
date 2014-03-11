@@ -19,20 +19,23 @@
     foreach ($mahoneyPlugins as $plugin):
         if($plugin['name'] == 'System'):
             foreach ($plugin['menu'] as $key => $value):
-                if (is_array($plugin['menu'][$key])):
+                if (isset($plugin['menu'][$key]["child"])):
                 ?>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo __(Inflector::humanize($key)); ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa <?= (isset($plugin['menu'][$key]["icon"]) ? $plugin['menu'][$key]["icon"] : ""); ?>"></i> <?php echo __(Inflector::humanize($key)); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                             <?php
-                            foreach ($plugin['menu'][$key] as $key2 => $value2):
+                            foreach ($plugin['menu'][$key]["child"] as $key2 => $value2):
                                 if ($key2 == "config" || $key == "manage"):
                                     ?>
                                     <li class="divider"></li>
                                 <?php
-                                endif;
+                                elseif($key2 != "icon"):
                                 ?>
                                 <li><?php echo $this->Html->link(__(Inflector::humanize($key2)), $value2); ?></li>
+                                <?php
+                                endif;
+                                ?>
                             <?php
                             endforeach;
                             if($key == "Plugins"):
@@ -81,7 +84,7 @@
                 <?php
                 else:
                     ?>
-                <li><?php echo $this->Html->link(__(Inflector::humanize($key)), $value); ?></li>
+                <li><?php echo $this->Html->link("<i class=\"fa ".(isset($plugin["menu"][$key]["icon"]) ? $plugin["menu"][$key]["icon"] : "")."\"></i> " . __(Inflector::humanize($key)), $plugin['menu'][$key]["link"], array("escape" => false)); ?></li>
                     <?php
                 endif;
             endforeach;

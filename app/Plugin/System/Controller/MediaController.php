@@ -35,7 +35,9 @@ class MediaController extends SystemAppController {
                 "upload_files" => false,
                 "rename_files" => false,
                 "rename_folders" => false,
-                "duplicate_files" => false
+                "duplicate_files" => false,
+                "image_resizing_width" => 800,
+                "image_resize" => true
             );
             // TODO -> User has CHROOT?
             if(true):
@@ -133,11 +135,11 @@ class MediaController extends SystemAppController {
             // just simply add a value in the array
             // The image creation path is always relative so if i'm inside source/test/test1 and I upload an image, the path start from here
             "relative_image_creation" => false, //activate or not the creation of one or more image resized with relative path from upload folder
-            "relative_path_from_current_pos" => array('thumb/', 'thumb/'), //relative path of the image folder from the current position on upload folder
-            "relative_image_creation_name_to_prepend" => array('', 'test_'), //name to prepend on filename
-            "relative_image_creation_name_to_append" => array('_test', ''), //name to append on filename
-            "relative_image_creation_width" => array(300, 400), //width of image (you can leave empty if you set height)
-            "relative_image_creation_height" => array(200, '') //height of image (you can leave empty if you set width)
+            "relative_path_from_current_pos" => array('small/'), //relative path of the image folder from the current position on upload folder
+            "relative_image_creation_name_to_prepend" => array(''), //name to prepend on filename
+            "relative_image_creation_name_to_append" => array('-small'), //name to append on filename
+            "relative_image_creation_width" => array(550), //width of image (you can leave empty if you set height)
+            "relative_image_creation_height" => array() //height of image (you can leave empty if you set width)
         );
         
         // If userConfig exists, merge with this->config

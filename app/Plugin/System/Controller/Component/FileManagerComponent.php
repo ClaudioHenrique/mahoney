@@ -55,11 +55,10 @@ class FileManagerComponent extends Component {
     }
 
     public function create_img($imgfile, $imgthumb, $newwidth, $newheight="") {
-        if(image_check_memory_usage($imgfile,$newwidth,$newheight)){
-            require_once('php_image_magician.php');  
-            $magicianObj = new imageLib($imgfile);
-            $magicianObj -> resizeImage($newwidth, $newheight, 'auto');  
-            $magicianObj -> saveImage($imgthumb,80);
+        if($this->image_check_memory_usage($imgfile,$newwidth,$newheight)){
+            $this->ImageMagician->load($imgfile);
+            $this->ImageMagician->resizeImage($newwidth, $newheight, 'auto');  
+            $this->ImageMagician->saveImage($imgthumb,80);
             return true;
         }else{
             return false;
@@ -259,7 +258,7 @@ class FileManagerComponent extends Component {
                 if($path!="" && $path[strlen($path)-1]!="/") $path.="/";
                 if (!file_exists($targetPath.$path)) $this->create_folder($targetPath.$path,false);
                 $info=pathinfo($name);
-                if(!endsWith($targetPath,$path))
+                if(!$this->endsWith($targetPath,$path))
                     if(!$this->create_img($targetFile, $targetPath.$path.$relative_image_creation_name_to_prepend[$k].$info['filename'].$relative_image_creation_name_to_append[$k].".".$info['extension'], $relative_image_creation_width[$k], $relative_image_creation_height[$k]))
                         $all_ok=false;
             }

@@ -868,7 +868,7 @@ class ImageMagicianComponent extends Component
     #
   {
     if (is_array($option)) {
-      if (fix_strtolower($option[0]) == 'crop' && count($option) == 2) {
+      if ($this->FileManager->fix_strtolower($option[0]) == 'crop' && count($option) == 2) {
         return 'crop';
       } else {
         throw new Exception('Crop resize option array is badly formatted.');
@@ -878,7 +878,7 @@ class ImageMagicianComponent extends Component
     }
 
     if (is_string($option)) {
-      return fix_strtolower($option);
+      return $this->FileManager->fix_strtolower($option);
     }
 
     return $option;
