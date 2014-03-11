@@ -1,6 +1,7 @@
 # User specific & automatically generated files #
 #################################################
 /app/webroot/files/*
+!/app/webroot/files/empty
 /app/webroot/thumbs/*
 /app/Plugin/*
 !/app/Plugin/System
