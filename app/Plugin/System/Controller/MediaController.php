@@ -4,6 +4,7 @@ App::uses('System.SystemAppController', 'Controller');
 class MediaController extends SystemAppController {
 
     public $uses = array('System.Config');
+    
     public $components = array(
         'System.FileManager'
     );
@@ -317,14 +318,8 @@ class MediaController extends SystemAppController {
         define('lang_File_info', __('file info'));
         define('lang_Edit_image', __('edit image'));
         define('lang_Duplicate', __('Duplicate'));
-        
-//        $this->Auth->allow(array('index', 'execute', 'ajax', 'upload', 'download'));
-
-        $pageTitle = __('Media');
 
         $this->layout = "System.Media";
-
-        $this->set('pageTitle', $pageTitle);
         
         $this->set('FileManager', $this->FileManager);
 
@@ -532,6 +527,8 @@ class MediaController extends SystemAppController {
     }
 
     public function index() {
+        
+        $this->set('pageTitle', __('Media'));
 
         $this->Session->write("verify", "RESPONSIVEfilemanager");
         
@@ -539,6 +536,8 @@ class MediaController extends SystemAppController {
 
     public function execute() {
 
+        $this->set('pageTitle', __('Media'));
+        
         $this->autoRender = false;
 
         if ($this->Session->read("verify") != "RESPONSIVEfilemanager"):
@@ -696,6 +695,8 @@ class MediaController extends SystemAppController {
 
     public function download() {
         
+        $this->set('pageTitle', __('Media'));
+        
         $this->autoRender = false;
         
         if($this->request->is('post')):
@@ -727,6 +728,8 @@ class MediaController extends SystemAppController {
     }
     
     public function upload() {
+        
+        $this->set('pageTitle', __('Media'));
 
         $this->autoRender = false;
         if($this->request->is('post')):

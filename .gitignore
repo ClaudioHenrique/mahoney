@@ -1,5 +1,7 @@
 # User specific & automatically generated files #
 #################################################
+/app/webroot/thumbs/*
+!/app/webroot/thumbs/empty
 /app/webroot/files/*
 !/app/webroot/files/empty
 /app/webroot/thumbs/*
