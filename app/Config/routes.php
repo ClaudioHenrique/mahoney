@@ -29,6 +29,8 @@
         Router::connect('/install', array('plugin' => 'system', 'controller' => 'install'));
         Router::connect('/install/db', array('plugin' => 'system', 'controller' => 'install', 'db'));
         
+        Router::connect('/logout', array('plugin' => 'system', 'controller' => 'users', 'action' => 'logout'));
+        
         Router::connect('/system', array('plugin' => 'system', 'controller' => 'dashboard', 'action' => 'index'));
         Router::connect('/contact', array('plugin' => 'system', 'controller' => 'contact', 'action' => "index"));
         

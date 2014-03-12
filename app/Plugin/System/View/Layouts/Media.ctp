@@ -8,8 +8,7 @@
         <title>
             <?php
                 echo (Configure::read("Siteinfo.sitename")) ? Configure::read("Siteinfo.sitename") : "Mahoney";
-                echo " | ";
-                echo $pageTitle;
+                echo (isset($pageTitle)) ? " | " . $pageTitle : "";
             ?>
         </title>
         <?php

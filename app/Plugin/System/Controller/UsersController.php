@@ -248,9 +248,10 @@ class UsersController extends SystemAppController {
     }
 
     public function login() {
-        $siteName = "Mahoney";
+
         $pageTitle = __("Login");
-        $this->set(compact('siteName', 'pageTitle'));
+        
+        $this->set(compact('pageTitle'));
 
         if ($this->request->is('POST')):
             if ($this->Auth->login()):

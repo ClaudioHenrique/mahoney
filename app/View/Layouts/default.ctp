@@ -5,8 +5,7 @@
         <title>
             <?php
                 echo (Configure::read("Siteinfo.sitename")) ? Configure::read("Siteinfo.sitename") : $siteName;
-                echo " | ";
-                echo $pageTitle;
+                echo (isset($pageTitle)) ? " | " . $pageTitle : "";
             ?>
         </title>
         <?php
@@ -29,7 +28,7 @@
         <!-- Wrap all page content here -->
         <div class="wrap">
             <?php
-            if (AuthComponent::user()):
+            if (AuthComponent::user() && AuthComponent::user()['role'] >= 4):
                 echo $this->element('System.adminNav');
             endif;
             ?>
@@ -43,7 +42,7 @@
         echo $this->Html->script('../com/js/bootstrap/bootstrap.min');
         echo $this->Html->script('mahoneyBase');
         
-        if(AuthComponent::user()):
+        if(AuthComponent::user() && AuthComponent::user()['role'] >= 4):
             echo $this->Html->script('System.mahoneySystem');
         endif;
         
