@@ -1,6 +1,24 @@
 <?php
 /**
  * Common tasks to manage static files from Mahoney.
+ * 
+ * This class have been adapted from Responsive FileManager 9
+ * "utils" file and has been transformed to CakePHP component schema.
+ * 
+ * Some methods has also been implemented to keep forward the Mahoney
+ * application development
+ * 
+ * Responsive FileManager 9 website:
+ * http://www.responsivefilemanager.com/
+ * 
+ * Responsive FileManager on github:
+ * https://github.com/trippo/ResponsiveFilemanager
+ * 
+ * @author Alberto Peripolli <info[at]albertoperipolli.com>
+ * @author Alexandre Moraes <kalvinmoraes@gmail.com>
+ * @license http://creativecommons.org/licenses/by-nc/3.0/
+ * Creative Commons Attribution-NonCommercial 3.0 Unported
+ * 
  */
 class FileManagerComponent extends Component {
     

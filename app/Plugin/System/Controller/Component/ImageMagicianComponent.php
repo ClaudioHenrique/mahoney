@@ -82,6 +82,7 @@
    #                background color to use instead of transparency.
    #  05-11-11  J.C.O   0.1.5.1 * Fixed interlacing option
    #  0-07-12  J.C.O   1.0
+   #  12-03-14 A.C.M 1.0.1 * Class transformed to CakePHP Component
    #
    #  Known issues & Limitations:
    # -------------------------------
