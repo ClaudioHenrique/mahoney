@@ -20,7 +20,7 @@
         echo $this->Html->css("System.../com/css/filemanager/bootstrap-lightbox.min.css");
         echo $this->Html->css('../com/css/font-awesome/font-awesome.min');
         echo $this->Html->css("System.../com/css/filemanager/style.css");
-	echo $this->Html->css("System.../com/css/filemanager/dropzone.min.css");
+	echo $this->Html->css("System.../com/css/filemanager/dropzone.css");
 	echo $this->Html->css("System.../com/css/filemanager/jquery.contextMenu.min.css");
 	echo $this->Html->css("System.../com/css/filemanager/bootstrap-modal.min.css");
 	echo $this->Html->css("System.../com/css/filemanager/jPlayer/skin/blue.monday/jplayer.blue.monday.css");

@@ -214,7 +214,7 @@ $(document).ready(function(){
 	    }));
 	});
     $('.upload-btn').on('click',function(){
-	    $('.uploader').show(500);
+	    $('.uploader').fadeIn();
     });
     
     var sortDescending=$('#descending').val()=== 'true';
@@ -240,7 +240,7 @@ $(document).ready(function(){
     });
     
     $('.close-uploader').on('click',function(){
-	    $('.uploader').hide(500);
+	    $('.uploader').fadeOut();
 	    window.location.href = $('#refresh').attr('href') + '&' + new Date().getTime();
     });
     

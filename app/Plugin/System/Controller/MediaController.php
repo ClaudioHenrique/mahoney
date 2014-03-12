@@ -532,12 +532,8 @@ class MediaController extends SystemAppController {
     }
 
     public function index() {
-        
-        $pageTitle = "File Manager";
 
         $this->Session->write("verify", "RESPONSIVEfilemanager");
-
-        $this->set('pageTitle', $pageTitle);
         
     }
 
@@ -725,7 +721,6 @@ class MediaController extends SystemAppController {
             header("Content-Length: " .(string)(filesize($path.$name)) );
             header('Content-Disposition: attachment; filename="'.($name).'"');
             readfile($path.$name);
-            
         else:
             $this->redirect($this->referer());
         endif;
@@ -735,8 +730,6 @@ class MediaController extends SystemAppController {
 
         $this->autoRender = false;
         if($this->request->is('post')):
-            $pageTitle = "File Manager";
-            $this->set('pageTitle', $pageTitle);
 
             if ($this->Session->read("verify") != "RESPONSIVEfilemanager"):
                 throw new Exception(__("Forbidden"));
@@ -841,18 +834,9 @@ class MediaController extends SystemAppController {
             }
             
             $this->set(compact($varSend));
-            
-            if(isset($_POST['submit'])){
-                $query = http_build_query(array(
-                    'type'      => $_POST['type'],
-                    'lang'      => $_POST['lang'],
-                    'popup'     => $_POST['popup'],
-                    'field_id'  => $_POST['field_id'],
-                    'fldr'      => $_POST['fldr'],
-                ));
-                header("location: ?" . $query);
-            }
         endif;
+        
+        $this->redirect($this->referer());
     }
 
 }

@@ -151,7 +151,7 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
                             <div class="span3 half">
                                 <span><?php echo lang_Actions; ?>:</span>
                                 <?php
-                                if(!isset($_GET["popup"])):
+                                if(!isset($_GET["popup"]) || $_GET["popup"] != "true"):
                                 ?>
                                 <?= $this->Html->link("<i class=\"fa fa-angle-left\"></i> <i class=\"fa fa-dashboard\"></i> ", array("plugin"=>"system","controller"=>"dashboard"), array("title"=>"Back to Dashboard", "class" => "tip btn", "escape" => false)); ?>
                                 <?php
