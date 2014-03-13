@@ -116,11 +116,41 @@ class PluginsController extends SystemAppController {
         endif;
         $this->redirect($this->referer());
     }
+    
+    public function install($plugin = null) {
+        
+        $officialRepos = json_decode($this->Plugin->getOfficialPlugins(), true);
+        foreach($officialRepos as $key => $value):
+            if($value["name"] == $plugin):
+                $x = $this->FileManager->installZipFromWeb(Inflector::humanize(substr($value["name"], strpos($value["name"], "-")+1)), "https://github.com/kalvinmoraes/".$value["name"]."/archive/master.zip", APP . "Plugin/");
+                if($x == true):
+                    $this->Session->setFlash(Inflector::humanize(substr($value["name"], strpos($value["name"], "-")+1)) . __(" installed with success"));
+                else:
+                    $this->Session->setFlash(__("Cannot install ") . Inflector::humanize(substr($value["name"], strpos($value["name"], "-")+1)) . " > " . $x);
+                endif;
+                $this->redirect(array("plugin"=>"system","controller"=>"plugins","action"=>"index"));
+            endif;
+        endforeach;
+        
+    }
+    
+    public function search() {
+        $officialPlugins = array();
+        
+        $officialRepos = json_decode($this->Plugin->getOfficialPlugins(), true);
+        foreach($officialRepos as $key => $value):
+            if(strpos($value["name"], "mahoney-") !== false):
+                $officialPlugins[] = $value;
+            endif;
+        endforeach;
+        
+        $this->set('officialPlugins', $officialPlugins);
+    }
 
     public function index() {
         
         $pageTitle = __('Plugins');
-
+//
         $this->set(compact('pageTitle'));
         
     }

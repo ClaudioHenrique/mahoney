@@ -14,6 +14,34 @@ class FileManagerComponent extends Component {
         unlink($file);
     }
     
+    public function installZipFromWeb($fileName, $zipUrl, $path) {
+        try {
+            $fh = fopen($path . $fileName . '.zip', 'w');
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_URL, $zipUrl); 
+            curl_setopt($ch, CURLOPT_FILE, $fh); 
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // this will follow redirects
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fh);
+            
+            $zip = new ZipArchive;
+            if ($zip->open($path . $fileName . '.zip') === TRUE) {
+                $zip->extractTo($path);
+                $zip->close();
+                rename($path . "mahoney-".strtolower($fileName)."-master", $path . $fileName);
+                return true;
+            } else {
+                return __("Cannot extract the zip.");
+            }
+            
+            return true;
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+    
     public function templateFile($file, $template, $filename = null) {
         if(is_file($file . ".template")):
             $fileContent = file_get_contents($file . ".template");

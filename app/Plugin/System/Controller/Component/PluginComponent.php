@@ -16,7 +16,6 @@ class PluginComponent extends Component {
     public $PACKAGE_FILE;
     public $ICON;
     public $ACTIVATED_PLUGINS;
-    
     public $Migrations;
     public $Fixtures;
     public $Schema;
@@ -52,14 +51,14 @@ class PluginComponent extends Component {
      * @param String The plugin to return the icon in b64
      */
     public function getPluginIconAsBase64($plugin) {
-        if(file_exists(str_replace("{plugin}", $plugin, $this->ICON))):
+        if (file_exists(str_replace("{plugin}", $plugin, $this->ICON))):
             $imgBinary = file_get_contents(str_replace("{plugin}", $plugin, $this->ICON));
             return "data:image/png;base64," . base64_encode($imgBinary);
         else:
             return null;
         endif;
     }
-    
+
     /**
      * Return an array with informations about the plugin schema in database.
      * 
@@ -127,13 +126,13 @@ class PluginComponent extends Component {
                         $this->Migrations->load(str_replace("{plugin}", $plugin, $this->MIGRATION_FOLDER) . $value);
                         $this->Migrations->down();
                         $this->Migrations->up();
-                    } catch(Exception $ex) {
+                    } catch (Exception $ex) {
                         throw new Exception($ex->getMessage());
                     }
                     $lastV = substr($value, 0, 3);
                 endif;
             endforeach;
-            
+
             try {
                 $updateSchema = array(
                     "Schema" => array(
@@ -150,6 +149,28 @@ class PluginComponent extends Component {
             }
         endif;
         return false;
+    }
+
+    /* gets url */
+
+    public function getOfficialPlugins($url = 'https://api.github.com/users/kalvinmoraes/repos') {
+        // create a new cURL resource
+        $ch = curl_init();
+
+        // set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+
+        // grab URL and pass it to the browser
+        $x = curl_exec($ch);
+
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+        
+        return $x;
     }
 
     /**
@@ -199,10 +220,10 @@ class PluginComponent extends Component {
      * This array can be accessed anywhere by `$mahoneyPlugin`
      */
     public function getPlugins() {
-        if(file_exists(APP . 'Config' . DS . 'installed')):
+        if (file_exists(APP . 'Config' . DS . 'installed')):
             $pluginFolder = scandir($this->PLUGIN_FOLDER);
             foreach ($pluginFolder as $plugin):
-                if(is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE)) && $plugin != 'System'):
+                if (is_file(str_replace("{plugin}", $plugin, $this->ACTIVE_PLUGIN_FILE)) && $plugin != 'System'):
                     $this->ACTIVATED_PLUGINS++;
                 endif;
                 if (is_dir($this->PLUGIN_FOLDER . $plugin) && !in_array($plugin, $this->DENY_LIST)):
@@ -220,7 +241,7 @@ class PluginComponent extends Component {
             endforeach;
         endif;
         Configure::write("Plugin.count", $this->ACTIVATED_PLUGINS);
-        
+
         return $this->PLUGINS;
     }
 
