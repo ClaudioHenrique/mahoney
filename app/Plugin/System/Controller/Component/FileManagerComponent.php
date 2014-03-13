@@ -1,6 +1,7 @@
 <?php
 /**
  * Common tasks to manage static files from Mahoney.
+ * 
  */
 class FileManagerComponent extends Component {
     

@@ -55,11 +55,7 @@ class AppController extends Controller {
                 'action' => 'index',
                 'plugin' => 'system'
             ),
-            'unauthorizedRedirect' => array(
-                'plugin' => false,
-                'controller' => 'site',
-                'action' => 'index'
-            ),
+            'unauthorizedRedirect' => "/",
             'loginError' => 'Oops. Wrong credentials',
             'authError' => 'Did you really think you are allowed to see that?',
             'authenticate' => array(
@@ -83,6 +79,7 @@ class AppController extends Controller {
     }
 
     function beforeFilter() {
+        $this->Session->write("user", $this->Auth->user());
         // Load Plugins Informations
         $this->set('mahoneyPlugins', $this->Plugin->getPlugins());
         $this->set('jsController', $this->Configurer->getJsController());
@@ -98,10 +95,7 @@ class AppController extends Controller {
     }
 
     public function isAuthorized($user) {
-        if (isset($user['role']) && intval($user['role']) >= 4) {
-            return true;
-        }
-        return false;
+        
     }
 
 }

@@ -6,11 +6,11 @@ class UsersController extends SystemAppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login', 'recover');
+        $this->Auth->allow('login', 'recover', 'logout');
     }
 
     public $uses = array('System.User', 'System.Token');
-    public $components = array('System.Security', 'System.Configurer', 'System.Mailer');
+    public $components = array('System.Security', 'System.Configurer', 'System.Mailer', 'System.FileManager');
 
     public function recover($userid = null) {
         
@@ -175,6 +175,9 @@ class UsersController extends SystemAppController {
         if ($this->request->is('POST')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
+                
+                $this->FileManager->create_folder(WWW_ROOT . "files" . DS . $this->request->data["User"]["username"]);
+                
                 $this->Session->setFlash(__('The user has been saved'));
                 CakeLog::write('activity', AuthComponent::user()['username'] . ' added a new user: ' . $this->request->data['User']['username'] . ' (#' . $this->User->getLastInsertId() . ')');
             } else {
@@ -245,9 +248,10 @@ class UsersController extends SystemAppController {
     }
 
     public function login() {
-        $siteName = "Mahoney";
+
         $pageTitle = __("Login");
-        $this->set(compact('siteName', 'pageTitle'));
+        
+        $this->set(compact('pageTitle'));
 
         if ($this->request->is('POST')):
             if ($this->Auth->login()):

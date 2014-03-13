@@ -380,7 +380,7 @@ class Migrations{
         $columns = "";
         $values = "";
         $sSql .= "INSERT INTO " . $table . " ";
-        $sSql .= "(" . implode(", ", array_keys($records[1])) . ") VALUES";
+        $sSql .= "(" . implode(", ", array_keys($records[1])) . ", created, modified) VALUES";
         foreach( $records as $record_num => $record_value ):
 
             foreach($record_value as $insertKey => $insertValue):
@@ -396,7 +396,7 @@ class Migrations{
                 $prefix = ', ';
             endforeach;
 
-            $sSql .= " (" . $list . "), ";
+            $sSql .= " (" . $list . ", '".date("Y-m-d H:i:s")."', '".date("Y-m-d H:i:s")."'), ";
             $columns = "";
             $values = "";
         endforeach;

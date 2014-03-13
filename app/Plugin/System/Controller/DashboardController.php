@@ -7,12 +7,11 @@ class DashboardController extends SystemAppController {
     
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('index');
     }
     
     public function index() {
         
-        if (AuthComponent::user('id')):
+        if (AuthComponent::user()):
             $render = "index";
             $pageTitle = __('Dashboard');
         else:

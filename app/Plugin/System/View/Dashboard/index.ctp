@@ -12,7 +12,9 @@
         <?php
         foreach ($mahoneyPlugins as $plugin):
             if ($plugin['active'] && $plugin['name'] != 'System'):
-                echo $this->element($plugin['name'] . '.dashWidget');
+                if($this->_getElementFilename($plugin['name'] . '.dashWidget')):
+                    echo $this->element($plugin['name'] . '.dashWidget');
+                endif;
             endif;
         endforeach;
         ?>
