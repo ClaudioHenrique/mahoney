@@ -4,7 +4,6 @@
 !/app/webroot/thumbs/empty
 /app/webroot/files/*
 !/app/webroot/files/empty
-/app/webroot/thumbs/*
 /app/Plugin/*
 !/app/Plugin/System
 /app/Config/installed
