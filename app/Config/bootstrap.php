@@ -71,7 +71,7 @@ $pluginFolder = scandir(APP . 'plugin' . DS);
 foreach ($pluginFolder as $plugin):
     if (is_dir(APP . 'plugin' . DS . $plugin) && ($plugin != '..' && $plugin != '.')):
         if (is_file(APP . 'plugin' . DS . $plugin . DS . 'active')):
-            CakePlugin::load($plugin);
+            CakePlugin::load(array($plugin => array('routes' => true)));
         endif;
     endif;
 endforeach;

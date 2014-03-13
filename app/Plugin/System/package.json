@@ -18,8 +18,12 @@
             "Options": {
                 "icon": "fa fa-cog",
                 "child": {
+                    "Plugins": {
+                        "icon": "fa-bolt",
+                        "link": "/system/plugins"
+                    },
                     "Config": {
-                        "icon": "",
+                        "icon": "fa-star",
                         "link": "/system/config"
                     }
                 }
@@ -28,29 +32,16 @@
                 "icon" : "fa fa-users",
                 "child": {
                     "List_Users": {
-                        "icon": "",
+                        "icon": "fa-bars",
                         "link": "/system/users"
                     },
                     "Add_Users": {
-                        "icon": "",
+                        "icon": "fa-plus",
                         "link": "/system/users/add"
                     },
                     "Manage_Roles": {
-                        "icon": "",
+                        "icon": "fa-unlock-alt",
                         "link": "/system/users/roles"
-                    }
-                }
-            },
-            "Media": {
-                "icon": "fa-cloud",
-                "link": "/system/media"
-            },
-            "Plugins": {
-                "icon": "fa-bolt",
-                "child": {
-                    "Manage": {
-                        "icon": "",
-                        "link": "/system/plugins/index"
                     }
                 }
             }

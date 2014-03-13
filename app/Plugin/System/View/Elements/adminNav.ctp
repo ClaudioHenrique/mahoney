@@ -17,74 +17,38 @@
             <ul class="nav navbar-nav">
 <?php
     foreach ($mahoneyPlugins as $plugin):
-        if($plugin['name'] == 'System'):
+        if($plugin["active"]):
             foreach ($plugin['menu'] as $key => $value):
                 if (isset($plugin['menu'][$key]["child"])):
                 ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa <?= (isset($plugin['menu'][$key]["icon"]) ? $plugin['menu'][$key]["icon"] : ""); ?>"></i> <?php echo __(Inflector::humanize($key)); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                            <?php
-                            foreach ($plugin['menu'][$key]["child"] as $key2 => $value2):
-                                if ($key2 == "config" || $key == "manage"):
-                                    ?>
-                                    <li class="divider"></li>
-                                <?php
-                                elseif($value2 != "icon"):
-                                    ?>
-                                    <li><?php echo $this->Html->link(__(Inflector::humanize($key2)), $value2["link"]); ?></li>
-                                    <?php
-                                endif;
-                                ?>
-                            <?php
-                            endforeach;
-                            if($key == "Plugins"):
+                        <?php
+                        foreach ($plugin['menu'][$key]["child"] as $key2 => $value2):
+                            if ($key2 == "Config" || $key == "Manage"):
                             ?>
-                            <?php if(Configure::read("Plugin.count") > 0): ?>
                             <li class="divider"></li>
-                            <?php endif; ?>
                             <?php
-                            foreach ($mahoneyPlugins as $plugin):
-                                if($plugin['name'] != 'System'):
-                                    if ($plugin['active'] && $plugin['menu']):
-                                        foreach ($plugin['menu'] as $key => $value):
-                                            if (isset($plugin['menu'][$key]["child"])):
-                                            ?>
-                                            <li>
-                                                <a class="trigger right-caret"><?= $key ?></a>
-                                                <ul class="dropdown-menu sub-menu">
-                                                    <?php
-                                                    foreach ($plugin['menu'][$key]["child"] as $key2 => $value2):
-                                                        if ($key2 == "config"):
-                                                            ?>
-                                                    <li class="divider"></li>
-                                                            <?php
-                                                            endif;
-                                                            ?>
-                                                    <li><?php echo $this->Html->link(__(Inflector::humanize($key2)), $value2); ?></li>
-                                                        <?php
-                                                    endforeach;
-                                                    ?>
-                                                </ul>
-                                            </li>
-                                            <?php
-                                            else:
-                                                ?>
-                                            <li><?php echo $this->Html->link(__(Inflector::humanize($key)), $value); ?></li>
-                                            <?php
-                                            endif;
-                                        endforeach;
-                                    endif;
-                                endif;
-                            endforeach;
-                        endif;
+                            endif;
+                            if($value2 != "icon"):
+                                ?>
+                                <li><?php echo $this->Html->link("<i class=\"fa ".(isset($value2["icon"]) ? $value2["icon"] : "")."\"></i> " . __(Inflector::humanize($key2)), (isset($value2["link"]) ? $value2["link"] : ""), array("escape" => false)); ?></li>
+                                <?php
+                            endif;
+                        endforeach;
                         ?>
                     </ul>
                 </li>
                 <?php
                 else:
+                    if ($key == "Config" || $key == "Manage"):
                     ?>
-                <li><?php echo $this->Html->link("<i class=\"fa ".(isset($plugin["menu"][$key]["icon"]) ? $plugin["menu"][$key]["icon"] : "")."\"></i> " . __(Inflector::humanize($key)), $plugin['menu'][$key]["link"], array("escape" => false)); ?></li>
+                    <li class="divider"></li>
+                    <?php
+                    endif;
+                    ?>
+                <li><?php echo $this->Html->link("<i class=\"fa ".(isset($plugin["menu"][$key]["icon"]) ? $plugin["menu"][$key]["icon"] : "")."\"></i> " . __(Inflector::humanize($key)), (isset($plugin['menu'][$key]["link"]) ? $plugin['menu'][$key]["link"] : ""), array("escape" => false)); ?></li>
                     <?php
                 endif;
             endforeach;
@@ -95,11 +59,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo AuthComponent::user()['username']; ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo AuthComponent::user()['username']; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><?php echo $this->Html->link('My profile',array('plugin'=>'system','controller'=>'users','action'=>'detail', AuthComponent::user()['id'])); ?></li>
+                        <li><?php echo $this->Html->link("<i class=\"fa fa-asterisk\"></i> " . __('My profile'),array('plugin'=>'system','controller'=>'users','action'=>'detail', AuthComponent::user()['id']), array("escape" => false)); ?></li>
                         <li class="divider"></li>
-                        <li><?php echo $this->Html->link('Logout',array('plugin'=>'system','controller'=>'users','action'=>'logout')); ?></li>
+                        <li><?php echo $this->Html->link("<i class=\"fa fa-power-off\"></i> " . __('Logout'),array('plugin'=>'system','controller'=>'users','action'=>'logout'), array("escape" => false)); ?></li>
                     </ul>
                 </li>
             </ul>
