@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php echo $this->Html->charset(); ?>
+        <?= $this->Html->charset(); ?>
         <title>
         </title>
     </head>
@@ -10,7 +10,7 @@
         <div class="wrap">
             <div id="container">
                 <h1>About your password change</h1>
-                <?php echo $this->fetch('content'); ?>
+                <?= $this->fetch('content'); ?>
             </div>
         </div>
     </body>

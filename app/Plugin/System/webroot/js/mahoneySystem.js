@@ -6,6 +6,37 @@ $(document).ready(function() {
     if ($(".table").length > 0) {
         $(".table").tablesorter();
     }
+    
+    if($("[data-action=\"batch-toggle\"]").length > 0) {
+        $("[data-action=\"batch-toggle\"]").click(function(){
+            var parentElement = $(this);
+            $("[data-target=\"batch\"]").each(function(){
+                $(this).prop("checked", parentElement.prop("checked"));
+            });
+        });
+    }
+    
+    if($("#BatchAction").length > 0) {
+        $("#BatchAction").change(function(){
+            if($(this).val() != "") {
+                $(".batch-objects").html("");
+                $("[data-target=\"batch\"]").each(function(){
+                    if($(this).is(":checked")){
+                        var howMany = $('.batch-element').length;
+                        $(".batch-objects").append(''+
+                            '<input class="batch-element" name="data[Batch]['+howMany+'][id]" value="'+$(this).data("post")+'">'+
+                        '');
+                    }
+                });
+                if($('.batch-element').length > 0) {
+                    var q = confirm("Are you really sure about that?");
+                    if(q) {
+                        $('#BatchAction').parent("form").submit();
+                    }
+                }
+            }
+        });
+    }
 
     if ($('.tooltipElement').length > 0) {
         $('.tooltipElement').tooltip();

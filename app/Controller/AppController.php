@@ -55,7 +55,7 @@ class AppController extends Controller {
                 'action' => 'index',
                 'plugin' => 'system'
             ),
-            'unauthorizedRedirect' => "/",
+            'authError' => 'You are not authorized to view this page.',
             'loginError' => 'Oops. Wrong credentials',
             'authError' => 'Did you really think you are allowed to see that?',
             'authenticate' => array(
@@ -99,7 +99,7 @@ class AppController extends Controller {
     }
 
     public function isAuthorized($user) {
-        
+        return true;
     }
 
 }

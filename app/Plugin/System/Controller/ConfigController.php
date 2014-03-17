@@ -9,6 +9,10 @@ class ConfigController extends SystemAppController {
     public function beforeFilter() {
         parent::beforeFilter();
     }
+    
+    public function isAuthorized($user) {
+        return parent::isAuthorized($user);
+    }
 
     /**
      * Cleans the activity log

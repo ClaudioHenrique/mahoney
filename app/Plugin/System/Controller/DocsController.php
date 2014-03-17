@@ -7,6 +7,10 @@ class DocsController extends SystemAppController {
     public function beforeFilter() {
         parent::beforeFilter();
     }
+    
+    public function isAuthorized($user) {
+        return parent::isAuthorized($user);
+    }
 
     public $uses = array();
 

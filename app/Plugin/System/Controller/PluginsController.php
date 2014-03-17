@@ -10,6 +10,10 @@ class PluginsController extends SystemAppController {
     public function beforeFilter() {
         parent::beforeFilter();
     }
+    
+    public function isAuthorized($user) {
+        return parent::isAuthorized($user);
+    }
 
     public function uninstall($plugin = null) {
         if (!in_array($plugin, $this->Plugin->DENY_LIST) && is_dir($this->Plugin->PLUGIN_FOLDER . $plugin)):

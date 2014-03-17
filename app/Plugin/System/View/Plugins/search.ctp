@@ -4,8 +4,8 @@ $this->Html->addCrumb(__('Search'), array("plugin" => "system", "controller" => 
 ?>
 <div class="container">
     <div class="page-header">
-        <h1><?php echo __('Search Plugins'); ?></h1>
-        <p><?php echo __('Search for the official plugins'); ?></p>
+        <h1><?= __('Search Plugins'); ?></h1>
+        <p><?= __('Search for the official plugins'); ?></p>
     </div>
 <div class="row">
     <?php
@@ -13,8 +13,8 @@ $this->Html->addCrumb(__('Search'), array("plugin" => "system", "controller" => 
         ?>
             <div class="col-md-3">
                 <div class="bs-example widget">
-                    <h2><?php echo Inflector::humanize(substr($plugin['name'], strpos($plugin['name'], "-")+1)); ?></h2>
-                    <h6><?php echo $plugin['description']; ?></h6>
+                    <h2><?= Inflector::humanize(substr($plugin['name'], strpos($plugin['name'], "-")+1)); ?></h2>
+                    <h6><?= $plugin['description']; ?></h6>
                 </div>
                 <div class="highlight">
                     <div class="row">

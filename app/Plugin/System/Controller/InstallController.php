@@ -16,8 +16,12 @@ class InstallController extends SystemAppController {
     );
 
     public function beforeFilter() {
-        parent::beforeFilter();
         $this->Auth->allow('index');
+        parent::beforeFilter();
+    }
+    
+    public function isAuthorized($user) {
+        return parent::isAuthorized($user);
     }
 
     public function index($type = null) {

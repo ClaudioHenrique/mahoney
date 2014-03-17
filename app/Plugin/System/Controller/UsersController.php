@@ -8,10 +8,55 @@ class UsersController extends SystemAppController {
         parent::beforeFilter();
         $this->Auth->allow('login', 'recover', 'logout');
     }
+    
+    public function isAuthorized($user) {
+        
+        if (in_array($this->action, array('edit', 'delete'))) {
+            $id = $this->request->params['pass'][0];
+            if($this->User->read(null, $id)):
+                $userToModify = $this->User->read(null, $id);
+                if($user["role"] < $userToModify["User"]["role"]):
+                    $this->Session->setFlash(__("You cannot modify users with higher role than you"));
+                    return false;
+                endif;
+            endif;
+        }
+        
+        return parent::isAuthorized($user);
+    }
 
     public $uses = array('System.User', 'System.Token');
-    public $components = array('System.Security', 'System.Configurer', 'System.Mailer', 'System.FileManager');
+    public $components = array('System.Security', 'System.Configurer', 'System.Mailer', 'Paginator');
+    
+    public $paginate = array(
+        'limit' => 25,
+        'order' => array(
+            'User.id' => 'desc'
+        )
+    );
 
+    public function batch() {
+        $action = $this->request->data["Batch"]["action"];
+        unset($this->request->data["Batch"]["action"]);
+        $count = count($this->request->data["Batch"]);
+        if($count > 0):
+            try {
+                foreach($this->request->data["Batch"] as $key => $value):
+                    $this->User->delete($value['id']);
+                endforeach;
+                CakeLog::write('activity', '[USER] ' . AuthComponent::user()['username'] . ' batched multiple users');
+                $this->Session->setFlash(__("Successfully batch") . " '" . $action . "' " . $count . " " . __("users"));
+                $this->redirect($this->referer());
+            } catch(Exception $ex) {           
+                $this->Session->setFlash(__('Cannot batch') . " " . $action . ". " . __("Try again"));
+                $this->redirect($this->referer());
+            }
+        else:
+            $this->Session->setFlash(__("You must select at least 1 user to batch."));
+            $this->redirect($this->referer());
+        endif;
+    }
+    
     public function recover($userid = null) {
         
         $pageTitle = __("Password recovery");
@@ -109,22 +154,25 @@ class UsersController extends SystemAppController {
     }
 
     public function index() {
-        $siteName = "Mahoney";
-
-        $render = "index";
+        
         $pageTitle = __("Users");
         $this->User->recursive = 0;
-        $users = $this->paginate();
-        $this->set(compact('siteName', 'pageTitle', 'users'));
+        
+        $this->Paginator->settings = $this->paginate;
+        $conditions = array();
+        foreach($this->params['url'] as $key => $value):
+            if(!is_int($key)):
+                $conditions[$key . " LIKE"] = "%".$value."%";
+            endif;
+        endforeach;
+        if(count($conditions) > 0):
+            $users = $this->Paginator->paginate($conditions);
+        else:
+            $users = $this->Paginator->paginate();
+        endif;
+        
+        $this->set(compact('pageTitle', 'users'));
 
-        try {
-            $this->render($render);
-        } catch (MissingViewException $e) {
-            if (Configure::read('debug')) {
-                throw $e;
-            }
-            throw new NotFoundException();
-        }
     }
 
     public function detail($id = null) {
@@ -169,35 +217,24 @@ class UsersController extends SystemAppController {
     public function add($type = null) {
 
         $siteName = "Mahoney";
-        $render = "add";
         $pageTitle = __("Add user");
+
+        $this->set(compact('pageTitle'));
 
         if ($this->request->is('POST')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                
-                $this->FileManager->create_folder(WWW_ROOT . "files" . DS . $this->request->data["User"]["username"]);
                 
                 $this->Session->setFlash(__('The user has been saved'));
                 CakeLog::write('activity', AuthComponent::user()['username'] . ' added a new user: ' . $this->request->data['User']['username'] . ' (#' . $this->User->getLastInsertId() . ')');
             } else {
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
             }
-        }
-
-        $this->set(compact('siteName', 'pageTitle'));
-
-        if ($type == "quick"):
-            $this->redirect($this->referer());
-        endif;
-
-        try {
-            $this->render($render);
-        } catch (MissingViewException $e) {
-            if (Configure::read('debug')) {
-                throw $e;
-            }
-            throw new NotFoundException();
+            if ($type == "quick"):
+                $this->redirect($this->referer());
+            else:
+                $this->redirect(array("plugin"=>"system","controller"=>"users","action"=>"index"));
+            endif;
         }
     }
 
@@ -207,16 +244,17 @@ class UsersController extends SystemAppController {
             throw new NotFoundException(__('Invalid user'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
+            $this->request->data["User"]["id"] = $id;
             if ($this->User->save($this->request->data)) {
                 CakeLog::write('activity', AuthComponent::user()['username'] . ' edited the user ' . $this->request->data['User']['username'] . ' (#' . $this->request->data['User']['id'] . ')');
-                $this->Session->setFlash(__('The user has been saved'));
+                $this->Session->setFlash(__('The user has been edited'));
+                $this->redirect(array("plugin"=>"system","controller"=>"users","action"=>"index"));
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('The user could not be edited. Please, try again.'));
             }
-            $this->redirect($this->referer());
         } else {
             $this->request->data = $this->User->read(null, $id);
-            unset($this->request->data['User']['password']);
+//            unset($this->request->data['User']['password']);
         }
     }
 

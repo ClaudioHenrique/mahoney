@@ -1,4 +1,5 @@
 <?php
+
 App::uses('System.SystemAppController', 'Controller');
 
 class DashboardController extends SystemAppController {
@@ -7,6 +8,10 @@ class DashboardController extends SystemAppController {
     
     public function beforeFilter() {
         parent::beforeFilter();
+    }
+    
+    public function isAuthorized($user) {
+        return parent::isAuthorized($user);
     }
     
     public function index() {

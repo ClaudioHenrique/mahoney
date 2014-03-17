@@ -22,7 +22,7 @@
                 if (isset($plugin['menu'][$key]["child"])):
                 ?>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa <?= (isset($plugin['menu'][$key]["icon"]) ? $plugin['menu'][$key]["icon"] : ""); ?>"></i> <?php echo __(Inflector::humanize($key)); ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa <?= (isset($plugin['menu'][$key]["icon"]) ? $plugin['menu'][$key]["icon"] : ""); ?>"></i> <?= __(Inflector::humanize($key)); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <?php
                         foreach ($plugin['menu'][$key]["child"] as $key2 => $value2):
@@ -33,7 +33,7 @@
                             endif;
                             if($value2 != "icon"):
                                 ?>
-                                <li><?php echo $this->Html->link("<i class=\"fa ".(isset($value2["icon"]) ? $value2["icon"] : "")."\"></i> " . __(Inflector::humanize($key2)), (isset($value2["link"]) ? $value2["link"] : ""), array("escape" => false)); ?></li>
+                                <li><?= $this->Html->link("<i class=\"fa ".(isset($value2["icon"]) ? $value2["icon"] : "")."\"></i> " . __(Inflector::humanize($key2)), (isset($value2["link"]) ? $value2["link"] : ""), array("escape" => false)); ?></li>
                                 <?php
                             endif;
                         endforeach;
@@ -48,7 +48,7 @@
                     <?php
                     endif;
                     ?>
-                <li><?php echo $this->Html->link("<i class=\"fa ".(isset($plugin["menu"][$key]["icon"]) ? $plugin["menu"][$key]["icon"] : "")."\"></i> " . __(Inflector::humanize($key)), (isset($plugin['menu'][$key]["link"]) ? $plugin['menu'][$key]["link"] : ""), array("escape" => false)); ?></li>
+                <li><?= $this->Html->link("<i class=\"fa ".(isset($plugin["menu"][$key]["icon"]) ? $plugin["menu"][$key]["icon"] : "")."\"></i> " . __(Inflector::humanize($key)), (isset($plugin['menu'][$key]["link"]) ? $plugin['menu'][$key]["link"] : ""), array("escape" => false)); ?></li>
                     <?php
                 endif;
             endforeach;
@@ -59,11 +59,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo AuthComponent::user()['username']; ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?= AuthComponent::user()['username']; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><?php echo $this->Html->link("<i class=\"fa fa-asterisk\"></i> " . __('My profile'),array('plugin'=>'system','controller'=>'users','action'=>'detail', AuthComponent::user()['id']), array("escape" => false)); ?></li>
+                        <li><?= $this->Html->link("<i class=\"fa fa-asterisk\"></i> " . __('My profile'),"/system/users/detail/" . AuthComponent::user()['id'], array("escape" => false)); ?></li>
                         <li class="divider"></li>
-                        <li><?php echo $this->Html->link("<i class=\"fa fa-power-off\"></i> " . __('Logout'),array('plugin'=>'system','controller'=>'users','action'=>'logout'), array("escape" => false)); ?></li>
+                        <li><?= $this->Html->link("<i class=\"fa fa-power-off\"></i> " . __('Logout'),"/system/users/logout", array("escape" => false)); ?></li>
                     </ul>
                 </li>
             </ul>
