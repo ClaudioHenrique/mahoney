@@ -31,7 +31,8 @@
 
         echo $this->Html->css('../com/css/bootstrap/bootstrap.min');
         echo $this->Html->css('../com/css/font-awesome/font-awesome.min');
-        echo $this->Html->css('System.docs.min');
+        echo $this->Html->css('../com/css/bootstrap/docs.min');
+        
         echo $this->Html->css('System.mahoneySystem');
 
         echo $this->fetch('meta');
@@ -77,7 +78,7 @@
         <?php
         echo $this->Html->script('../com/js/jquery/jquery-1.11.0.min');
         echo $this->Html->script('../com/js/bootstrap/bootstrap.min');
-        echo $this->Html->script('System.com/tablesorter/jquery.tablesorter.min');
+        echo $this->Html->script('System.../com/js/tablesorter/jquery.tablesorter.min');
         echo $this->Html->script('System.mahoneySystem');
         
         echo $this->fetch('script');

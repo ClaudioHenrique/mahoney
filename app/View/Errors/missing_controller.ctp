@@ -103,8 +103,8 @@
     }
 </style>
 <div class="block">
-    <h1><?= $this->Html->image("error404.gif"); ?></h1>
-    <h2><?= $this->Html->image("oops!.gif"); ?></h2>
+    <h1><?= $this->Html->image("error/error404.gif"); ?></h1>
+    <h2><?= $this->Html->image("error/oops!.gif"); ?></h2>
     <div class="dontWorry"><?= __("It looks like you're lost"); ?><br><?= __("Don't worry, we've all passed through this sometime."); ?></div>
     <div class="row">
         <p class="text-muted"><?= $this->Html->link(__("Back to the Future"), array("plugin" => false, "controller" => "site")); ?> <?= (is_array(AuthComponent::user() && AuthComponent::user()['role'] >= 4) ? " | " . $this->Html->link(__("Dashboard"), array("plugin" => "system", "controller" => "dashboard", "action" => "index")) : ""); ?>

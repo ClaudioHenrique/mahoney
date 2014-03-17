@@ -68,6 +68,10 @@ class AppController extends Controller {
     );
 
     function beforeRender() {
+        
+        // Set theme
+        $this->theme = "MahoneyXperience";
+        
         if ($this->Session->check('Message.flash')) {
             $flash = $this->Session->read('Message.flash');
 
