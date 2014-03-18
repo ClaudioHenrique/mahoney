@@ -33,7 +33,7 @@ class FileManagerComponent extends Component {
                 rename($path . "mahoney-".strtolower($fileName)."-master", $path . $fileName);
                 return true;
             } else {
-                return __("Cannot extract the zip.");
+                return __d("system","Cannot extract the zip.");
             }
             
             return true;

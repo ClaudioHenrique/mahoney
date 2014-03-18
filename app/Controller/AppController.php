@@ -71,6 +71,8 @@ class AppController extends Controller {
         
         // Set theme
         $this->theme = "MahoneyXperience";
+        // Set language
+        Configure::write('Config.language', 'ptbr');
         
         if ($this->Session->check('Message.flash')) {
             $flash = $this->Session->read('Message.flash');

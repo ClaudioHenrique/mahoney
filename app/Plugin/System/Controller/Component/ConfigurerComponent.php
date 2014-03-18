@@ -30,8 +30,25 @@ class ConfigurerComponent extends Component {
                 endforeach;
             endif;
          } catch(Exception $ex) {
-             throw new Exception(__("Unable to set config data from database. Check your database connection."));
+             throw new Exception(__d("system","Unable to set config data from database. Check your database connection."));
          }
+    }
+    
+    public function getAvailableLanguages() {
+        $localeDir = array_diff(scandir(APP . "Locale"), array(".",".."));
+        $locales = array();
+        foreach($localeDir as $key => $value):
+            if(is_dir(APP . "Locale" . DS . $value)):
+                if(is_file(APP . "Locale" . DS . $value . DS . "lang.json")):
+                    $lang = json_decode(file_get_contents(APP . "Locale" . DS . $value . DS . "lang.json"));
+                    $locales[] = array(
+                        "Language" => $lang["language"],
+                        "Abbreviation" => $lang["abbreviation"]
+                    );
+                endif;
+            endif;
+        endforeach;
+        return $locales;
     }
     
     /**

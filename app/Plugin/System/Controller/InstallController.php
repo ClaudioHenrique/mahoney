@@ -26,7 +26,7 @@ class InstallController extends SystemAppController {
 
     public function index($type = null) {
         
-        $pageTitle = __('Installation');
+        $pageTitle = __d('system','Installation');
         $this->set('pageTitle', $pageTitle);
         
         if (file_exists(APP . 'Config' . DS . 'installed')):
@@ -43,7 +43,7 @@ class InstallController extends SystemAppController {
                     $this->uses = array('System.Config', 'System.User');
 
                     if (!$this->Plugin->update("System")):
-                        $this->Session->setFlash(__("Unable to install database. Try again."));
+                        $this->Session->setFlash(__d("system","Unable to install database. Try again."));
                         $this->redirect("/install");
                     endif;
 
@@ -111,7 +111,7 @@ class InstallController extends SystemAppController {
                         endif;
                     endforeach;
                     if (!$this->Config->saveMany($putConfig)):
-                        $this->Session->setFlash(__("Unable to set config properties to database. Try again."));
+                        $this->Session->setFlash(__d("system","Unable to set config properties to database. Try again."));
                         $this->redirect("/install");
                     endif;
 
@@ -127,11 +127,11 @@ class InstallController extends SystemAppController {
                         )
                     );
                     if (!$this->User->save($putUser)):
-                        $this->Session->setFlash(__("Unable to create admin user. Try again."));
+                        $this->Session->setFlash(__d("system","Unable to create admin user. Try again."));
                         $this->redirect("/install");
                     endif;
 
-                    $this->Session->setFlash(__("Mahoney successfully installed. Login to continue."));
+                    $this->Session->setFlash(__d("system","Mahoney successfully installed. Login to continue."));
 
                     $fp = fopen(APP . 'Config' . DS . 'installed', "wb");
                     fclose($fp);
@@ -152,14 +152,14 @@ class InstallController extends SystemAppController {
                     foreach ($this->request->data["Config"] as $key => $value):
                         if ($key != "name" && $key != "databasepassword"):
                             if ($value == ""):
-                                $inputErrors[$key] = __("This field must not be empty.");
+                                $inputErrors[$key] = __d("system","This field must not be empty.");
                             endif;
                             if (strlen($value) > 25 || strlen($value) < 4):
-                                $inputErrors[$key] = __("The characters length for this field must be between 4 and 25.");
+                                $inputErrors[$key] = __d("system","The characters length for this field must be between 4 and 25.");
                             endif;
                             if ($key == "email"):
                                 if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                                    $inputErrors[$key] = __("Put a valid email address.");
+                                    $inputErrors[$key] = __d("system","Put a valid email address.");
                                 }
                             endif;
                         endif;
@@ -172,7 +172,7 @@ class InstallController extends SystemAppController {
                         try {
                             $dbh = new PDO('mysql:host=' . $this->request->data["Config"]["databasehost"] . ';dbname=' . $this->request->data["Config"]["databasename"], $this->request->data["Config"]["databaseuser"], $this->request->data["Config"]["databasepassword"]);
                         } catch (PDOException $ex) {
-                            array_push($formErrors, __("Unable to connect to database."));
+                            array_push($formErrors, __d("system","Unable to connect to database."));
                         }
 
                         try {
@@ -185,7 +185,7 @@ class InstallController extends SystemAppController {
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . 'default.php');
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . $this->request->data["Config"]["hostname"] . '.php');
                         } catch (Exception $ex) {
-                            array_push($formErrors, __("Unable to create database config files."));
+                            array_push($formErrors, __d("system","Unable to create database config files."));
                         }
 
                         try {
@@ -195,7 +195,7 @@ class InstallController extends SystemAppController {
                             );
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'core.php', $coreTemplate);
                         } catch (Exception $ex) {
-                            array_push($formErrors, __("Unable to create security tokens in core file."));
+                            array_push($formErrors, __d("system","Unable to create security tokens in core file."));
                         }
 
                         if (empty($formErrors)):

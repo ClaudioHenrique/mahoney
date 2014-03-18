@@ -16,7 +16,7 @@ class DocsController extends SystemAppController {
 
     public function index() {
 
-        $pageTitle = __("Documentation");
+        $pageTitle = __d("system","Documentation");
 
         $this->set(compact('pageTitle'));
 

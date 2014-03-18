@@ -16,7 +16,7 @@ class UsersController extends SystemAppController {
             if($this->User->read(null, $id)):
                 $userToModify = $this->User->read(null, $id);
                 if($user["role"] < $userToModify["User"]["role"]):
-                    $this->Session->setFlash(__("You cannot modify users with higher role than you"));
+                    $this->Session->setFlash(__d("system","You cannot modify users with higher role than you"));
                     return false;
                 endif;
             endif;
@@ -45,21 +45,21 @@ class UsersController extends SystemAppController {
                     $this->User->delete($value['id']);
                 endforeach;
                 CakeLog::write('activity', '[USER] ' . AuthComponent::user()['username'] . ' batched multiple users');
-                $this->Session->setFlash(__("Successfully batch") . " '" . $action . "' " . $count . " " . __("users"));
+                $this->Session->setFlash(__d("system","Successfully batch") . " '" . $action . "' " . $count . " " . __d("system","users"));
                 $this->redirect($this->referer());
             } catch(Exception $ex) {           
-                $this->Session->setFlash(__('Cannot batch') . " " . $action . ". " . __("Try again"));
+                $this->Session->setFlash(__d('system','Cannot batch') . " " . $action . ". " . __d("system","Try again"));
                 $this->redirect($this->referer());
             }
         else:
-            $this->Session->setFlash(__("You must select at least 1 user to batch."));
+            $this->Session->setFlash(__d("system","You must select at least 1 user to batch."));
             $this->redirect($this->referer());
         endif;
     }
     
     public function recover($userid = null) {
         
-        $pageTitle = __("Password recovery");
+        $pageTitle = __d("system","Password recovery");
         
         $this->set('pageTitle', $pageTitle);
         
@@ -89,23 +89,23 @@ class UsersController extends SystemAppController {
                         if($this->Token->save($tokenToSave)):
                             try {
                                 // Sends the Email
-                                $this->Mailer->send($userToRecovery["User"]["email"], __("About password change"), "System.recover", "System.recover", $vVars);
+                                $this->Mailer->send($userToRecovery["User"]["email"], __d("system","About password change"), "System.recover", "System.recover", $vVars);
                                 CakeLog::write('activity', 'Info: New token generated to "' . $userToRecovery["User"]["username"].'"');
-                                $this->Session->setFlash(__("Thank you! We've sent you an email with the next steps."));
+                                $this->Session->setFlash(__d("system","Thank you! We've sent you an email with the next steps."));
                             } catch (Exception $ex) {
                                 // Delete last token from database:
                                 $this->Token->delete($this->Token->getInsertID());
                                 CakeLog::write('activity', 'Error: Error trying to send an email to "' . $userToRecovery["User"]["email"].'": ' . $ex->getMessage());
-                                $this->Session->setFlash(__("The email with steps to recover your password cannot be sent. Please try again."));
+                                $this->Session->setFlash(__d("system","The email with steps to recover your password cannot be sent. Please try again."));
                             }
                         else:
                             CakeLog::write('activity', 'Error: Error trying to store token data for "' . $vVars["username"].'"');
-                            $this->Session->setFlash(__("Your token cannot be generated right now. Please try again."));
+                            $this->Session->setFlash(__d("system","Your token cannot be generated right now. Please try again."));
                         endif;
                         
                     else:
                         CakeLog::write('activity', 'Warning: ' . $_SERVER['REMOTE_ADDR'] . ' has requested email recovery for a unknow '. ($this->request->data["Recover"]["email"]) ? "address" : "user id" .': ' . ($this->request->data["Recover"]["email"]) ? $this->request->data["Recover"]["email"] : $userid);
-                        $this->Session->setFlash(__("Thank you for your request. Check your email to know how to proceed."));
+                        $this->Session->setFlash(__d("system","Thank you for your request. Check your email to know how to proceed."));
                     endif;
                     $this->redirect($this->referer());
                 endif;
@@ -126,17 +126,17 @@ class UsersController extends SystemAppController {
                         if ($this->User->save($updateUserPw)):
                             try {
                                 $this->Token->delete($tokenRequest["Token"]["id"]);
-                                $this->Session->setFlash(__("Password successfully recovered. Login to continue."));
+                                $this->Session->setFlash(__d("system","Password successfully recovered. Login to continue."));
                                 $this->Auth->logout();
                                 $this->redirect(array("plugin" => "system", "controller" => "dashboard", "action" => "index"));
                             } catch (Exception $ex) {
-                                $this->Session->setFlash(__("There was a problem saving your new password. Can you recover it again?") . " err: " . $ex->getMessage());
+                                $this->Session->setFlash(__d("system","There was a problem saving your new password. Can you recover it again?") . " err: " . $ex->getMessage());
                             }
                         else:
-                            $this->Session->setFlash(__("There was a problem saving your new password. Can you recover it again?"));
+                            $this->Session->setFlash(__d("system","There was a problem saving your new password. Can you recover it again?"));
                         endif;
                     else:
-                        $this->Session->setFlash(__("Sorry, we can't find any request with that token code."));
+                        $this->Session->setFlash(__d("system","Sorry, we can't find any request with that token code."));
                     endif;
                 endif;
             endif;
@@ -155,7 +155,7 @@ class UsersController extends SystemAppController {
 
     public function index() {
         
-        $pageTitle = __("Users");
+        $pageTitle = __d("system","Users");
         $this->User->recursive = 0;
         
         $this->Paginator->settings = $this->paginate;
@@ -181,10 +181,10 @@ class UsersController extends SystemAppController {
 
         $this->User->id = $id;
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
+            throw new NotFoundException(__d('system','Invalid user'));
         }
         $user = $this->User->read(null, $id);
-        $pageTitle = $user['User']['username'] . "'s     " . __("profile");
+        $pageTitle = $user['User']['username'] . "'s     " . __d("system","profile");
         $this->set(compact('siteName', 'pageTitle', 'user'));
 
         try {
@@ -200,7 +200,7 @@ class UsersController extends SystemAppController {
     public function roles() {
         $siteName = "Mahoney";
         $render = "roles";
-        $pageTitle = __("Manage roles");
+        $pageTitle = __d("system","Manage roles");
 
         $this->set(compact('siteName', 'pageTitle'));
 
@@ -217,7 +217,7 @@ class UsersController extends SystemAppController {
     public function add($type = null) {
 
         $siteName = "Mahoney";
-        $pageTitle = __("Add user");
+        $pageTitle = __d("system","Add user");
 
         $this->set(compact('pageTitle'));
 
@@ -225,10 +225,10 @@ class UsersController extends SystemAppController {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
                 
-                $this->Session->setFlash(__('The user has been saved'));
+                $this->Session->setFlash(__d('system','The user has been saved'));
                 CakeLog::write('activity', AuthComponent::user()['username'] . ' added a new user: ' . $this->request->data['User']['username'] . ' (#' . $this->User->getLastInsertId() . ')');
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+                $this->Session->setFlash(__d('system','The user could not be saved. Please, try again.'));
             }
             if ($type == "quick"):
                 $this->redirect($this->referer());
@@ -241,16 +241,16 @@ class UsersController extends SystemAppController {
     public function edit($id = null) {
         $this->User->id = $id;
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
+            throw new NotFoundException(__d('system','Invalid user'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data["User"]["id"] = $id;
             if ($this->User->save($this->request->data)) {
                 CakeLog::write('activity', AuthComponent::user()['username'] . ' edited the user ' . $this->request->data['User']['username'] . ' (#' . $this->request->data['User']['id'] . ')');
-                $this->Session->setFlash(__('The user has been edited'));
+                $this->Session->setFlash(__d('system','The user has been edited'));
                 $this->redirect(array("plugin"=>"system","controller"=>"users","action"=>"index"));
             } else {
-                $this->Session->setFlash(__('The user could not be edited. Please, try again.'));
+                $this->Session->setFlash(__d('system','The user could not be edited. Please, try again.'));
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
@@ -265,19 +265,19 @@ class UsersController extends SystemAppController {
         $this->User->id = $id;
         $userId = AuthComponent::user();
         if ($id == 1):
-            $this->Session->setFlash(__('Are you freaking insane? You cannot delete god.'));
+            $this->Session->setFlash(__d('system','Are you freaking insane? You cannot delete god.'));
         else:
             if (!$this->User->exists()):
-                throw new NotFoundException(__('Invalid user'));
+                throw new NotFoundException(__d('system','Invalid user'));
             endif;
             if ($this->User->delete()):
                 CakeLog::write('activity', AuthComponent::user()['username'] . ' deleted an existing user #' . $id . "");
-                $this->Session->setFlash(__('User deleted'));
+                $this->Session->setFlash(__d('system','User deleted'));
             else:
-                $this->Session->setFlash(__('User was not deleted'));
+                $this->Session->setFlash(__d('system','User was not deleted'));
             endif;
             if ($userId["id"] == $id):
-                $this->Session->setFlash(__('It was good fight by your side young padawan.'));
+                $this->Session->setFlash(__d('system','It was good fight by your side young padawan.'));
                 $this->Auth->logout();
                 $this->redirect($this->Auth->loginAction);
             endif;
@@ -287,7 +287,7 @@ class UsersController extends SystemAppController {
 
     public function login() {
 
-        $pageTitle = __("Login");
+        $pageTitle = __d("system","Login");
         
         $this->set(compact('pageTitle'));
 
@@ -297,7 +297,7 @@ class UsersController extends SystemAppController {
                 $this->redirect($this->referer());
             else:
                 CakeLog::write('activity', $_SERVER["REMOTE_ADDR"] . ' failed attempting to login (Username used: ' . $this->request->data['User']['username'] . ')');
-                $this->Session->setFlash(__('Invalid username or password, try again'));
+                $this->Session->setFlash(__d('system','Invalid username or password, try again'));
                 $this->redirect($this->Auth->redirect());
             endif;
         else:

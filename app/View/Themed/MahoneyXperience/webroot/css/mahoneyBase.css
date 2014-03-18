@@ -2,3 +2,41 @@
 /**
  * Generic CSS for Mahoney
  */
+.post-container {
+    padding: 5px;
+    background: #F7F7F7;
+    border: solid 1px #eee;
+}
+.post-container .user-controls {
+    margin: 5px 0px 0px 0px;
+}
+.post-comment .baloon-tip {
+    position: absolute;
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: #FFFFFF;
+    tranform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    top: -8px;
+    left: 20px;
+    border-left: solid 1px #E2E2E2;
+    border-top: solid 1px #E2E2E2;
+}
+.post-container .user-avatar {
+    margin: 10px;
+}
+.post-container .post-comment {
+    position: relative;
+    border: solid 1px #E2E2E2;
+    padding: 15px;
+    color: #888;
+    border-radius: 0px 0px 5px 5px;
+    background: #fff;
+}
+.post-container .post-date {
+    color: #999;
+    font-size: 11px;
+    border-bottom: dashed 1px #ccc;
+}

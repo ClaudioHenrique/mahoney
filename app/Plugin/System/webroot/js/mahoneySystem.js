@@ -29,7 +29,7 @@ $(document).ready(function() {
                     }
                 });
                 if($('.batch-element').length > 0) {
-                    var q = confirm("Are you really sure about that?");
+                    var q = confirm($("#BatchAction").data("confirm"));
                     if(q) {
                         $('#BatchAction').parent("form").submit();
                     }

@@ -1,3 +1,3 @@
 <?php
-$this->Html->addCrumb(__('Config'), array("plugin" => "system", "controller" => "config"));
+$this->Html->addCrumb(__d('system','Config'), array("plugin" => "system", "controller" => "config"));
 ?>

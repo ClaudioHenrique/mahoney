@@ -11,8 +11,8 @@ $options = array(
 echo $this->Form->create('User', $options);
 ?>
 <?= $this->Session->flash('auth'); ?>
-<h2 class="form-signin-heading"><?= __('Please sign in'); ?></h2>
-<?= $this->Form->input('username', array('class' => 'form-control', 'placeholder' => __('Username'), 'autofocus' => 'autofocus', 'required' => 'required')); ?>
-<?= $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __('Password'), 'required' => 'required')); ?>
-<p class="text-muted text-center"><?= $this->Html->link(__("Lost your password?"), array("plugin" => "system", "controller" => "users", "action" => "recover")); ?> | <?= $this->Html->link(__("Need help?"), "/".__("contact")); ?></p>
-<?= $this->Form->end(array('label' => __('Sign in'), 'class' => 'btn btn-lg btn-success btn-block')); ?>
+<h2 class="form-signin-heading"><?= __d('system','Please sign in'); ?></h2>
+<?= $this->Form->input('username', array('class' => 'form-control', 'placeholder' => __d('system','Username'), 'autofocus' => 'autofocus', 'required' => 'required')); ?>
+<?= $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __d('system','Password'), 'required' => 'required')); ?>
+<p class="text-muted text-center"><?= $this->Html->link(__d("system","Lost your password?"), array("plugin" => "system", "controller" => "users", "action" => "recover")); ?> | <?= $this->Html->link(__d("system","Need help?"), "/".__d("system","contact")); ?></p>
+<?= $this->Form->end(array('label' => __d('system','Sign in'), 'class' => 'btn btn-lg btn-success btn-block')); ?>

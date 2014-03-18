@@ -1,14 +1,14 @@
 <div class="col-md-4">
     <div class="bs-example widget">
-        <h2><?= __('Users'); ?></h2>
+        <h2><?= __d('system','Users'); ?></h2>
         <p>
             <?php
             $userWidgetData = $this->requestAction('/system/users/widgetdata');
-            echo __('Total users') . ': <strong>' . $userWidgetData['totalUsers'] . '</strong><br/>';
-            echo __('Last user') . ': <strong>' . $this->Html->link(($userWidgetData['lastUser']['User']['name'] != null) ? $userWidgetData['lastUser']['User']['name'] . " | " . $userWidgetData['lastUser']['User']['username'] : $userWidgetData['lastUser']['User']['username'], '/system/users/detail/' . $userWidgetData['lastUser']['User']['id']) . '</strong><br/>';
+            echo __d('system','Total users') . ': <strong>' . $userWidgetData['totalUsers'] . '</strong><br/>';
+            echo __d('system','Last user') . ': <strong>' . $this->Html->link(($userWidgetData['lastUser']['User']['name'] != null) ? $userWidgetData['lastUser']['User']['name'] . " | " . $userWidgetData['lastUser']['User']['username'] : $userWidgetData['lastUser']['User']['username'], '/system/users/detail/' . $userWidgetData['lastUser']['User']['id']) . '</strong><br/>';
             ?>
         </p>
-        <p><a href="#" onclick="return false;" data-toggle="collapse" data-target="#quickAddContent"><?= __('Quick add user'); ?></a></p>
+        <p><a href="#" onclick="return false;" data-toggle="collapse" data-target="#quickAddContent"><?= __d('system','Quick add user'); ?></a></p>
         <div id="quickAddContent" class="highlight collapse">
             <?php
             $options = array(
@@ -23,19 +23,19 @@
             echo $this->Form->create('User', $options);
             ?>
             <div class="form-group <?= $this->Form->isFieldError('User.username') ? 'has-error has-feedback' : ''; ?>">
-                <label for="inputUser" class="col-sm-3 control-label"><small><?= __('Username'); ?></small></label>
+                <label for="inputUser" class="col-sm-3 control-label"><small><?= __d('system','Username'); ?></small></label>
                 <div class="col-sm-9">
-                    <?= $this->Form->input('username', array('class' => 'form-control', 'placeholder' => __('Username'), 'id' => 'inputUser')); ?>
+                    <?= $this->Form->input('username', array('class' => 'form-control', 'placeholder' => __d('system','Username'), 'id' => 'inputUser')); ?>
                 </div>
             </div>
             <div class="form-group <?= $this->Form->isFieldError('User.password') ? 'has-error has-feedback' : ''; ?>">
-                <label for="inputPassword" class="col-sm-3 control-label"><small><?= __('Password'); ?></small></label>
+                <label for="inputPassword" class="col-sm-3 control-label"><small><?= __d('system','Password'); ?></small></label>
                 <div class="col-sm-9">
-                    <?= $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __('Password'), 'id' => 'inputPassword')); ?>
+                    <?= $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __d('system','Password'), 'id' => 'inputPassword')); ?>
                 </div>
             </div>
             <div class="form-group <?= $this->Form->isFieldError('User.role') ? 'has-error has-feedback' : ''; ?>">
-                <label for="inputRole" class="col-sm-3 control-label"><small><?= __('Role'); ?></small></label>
+                <label for="inputRole" class="col-sm-3 control-label"><small><?= __d('system','Role'); ?></small></label>
                 <div class="col-sm-9">
                     <?php
                     foreach (array_flip(Configure::read("Role")) as $key => $value):
@@ -60,30 +60,30 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    <?= $this->Form->end(array('label' => __('Add'), 'class' => 'btn btn-success')); ?>
+                    <?= $this->Form->end(array('label' => __d('system','Add'), 'class' => 'btn btn-success')); ?>
                 </div>
             </div>
         </div>
     </div>
     <div class="highlight">
-        <?= $this->HTML->link(__('List users'), array('plugin' => 'system', 'controller' => 'users', 'action' => 'index'), array('class' => 'btn btn-default')); ?> <?= $this->HTML->link(__('Manage roles'), array('plugin' => 'system', 'controller' => 'users', 'action' => 'roles'), array('class' => 'btn btn-default')); ?> <?= $this->HTML->link(__('Add user'), array('plugin' => 'system', 'controller' => 'users', 'action' => 'add'), array('class' => 'btn btn-default')); ?>
+        <?= $this->HTML->link(__d('system','List users'), array('plugin' => 'system', 'controller' => 'users', 'action' => 'index'), array('class' => 'btn btn-default')); ?> <?= $this->HTML->link(__d('system','Manage roles'), array('plugin' => 'system', 'controller' => 'users', 'action' => 'roles'), array('class' => 'btn btn-default')); ?> <?= $this->HTML->link(__d('system','Add user'), array('plugin' => 'system', 'controller' => 'users', 'action' => 'add'), array('class' => 'btn btn-default')); ?>
     </div>
 </div>
 <div class="col-md-12">
     <div class="bs-example widget">
         <div class="row">
             <div class="col-md-6">
-                <h2><?= __('Activity Log'); ?></h2>
+                <h2><?= __d('system','Activity Log'); ?></h2>
             </div>
             <div class="col-md-6">
-                <h2 class="text-right"><input type="text" id="liveSearchActivityLog" class="form-control" placeholder="<?= __('Search'); ?>"></h2>
+                <h2 class="text-right"><input type="text" id="liveSearchActivityLog" class="form-control" placeholder="<?= __d('system','Search'); ?>"></h2>
             </div>
         </div>
-        <h6><?= __('Showing the last 100 activities'); ?></h6>
+        <h6><?= __d('system','Showing the last 100 activities'); ?></h6>
         <?php
         if (!file_exists(LOGS . 'activity.log')):
             ?>
-            <p class="text-muted text-center"><?= __('There is no activity yet.'); ?></p>
+            <p class="text-muted text-center"><?= __d('system','There is no activity yet.'); ?></p>
             <?php
         else:
             ?>
@@ -91,10 +91,10 @@
                 <thead>
                     <tr>
                         <th>
-                            Date
+                            <?= __d("system","Date") ?>
                         </th>
                         <th>
-                            Activity
+                            <?= __d("system","Activity") ?>
                         </th>
                     </tr>
                 </thead>
@@ -142,6 +142,6 @@
         ?>
     </div>
     <div class="highlight">
-        <?= $this->HTML->link(__('Clean Activity Log'), array('plugin' => 'system', 'controller' => 'config', 'action' => 'cleanlog'), array('class' => 'btn btn-default')); ?>
+        <?= $this->HTML->link(__d('system','Clean Activity Log'), array('plugin' => 'system', 'controller' => 'config', 'action' => 'cleanlog'), array('class' => 'btn btn-default')); ?>
     </div>
 </div>

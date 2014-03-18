@@ -1,0 +1,740 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2014-03-18 21:32+0100\n"
+"PO-Revision-Date: 2014-03-18 17:52-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: Controller/ConfigController.php:27
+msgid "The activity log does not exist!"
+msgstr "O log de atividades não existe"
+
+#: Controller/ContactController.php:25
+msgid "Contact"
+msgstr "Contato"
+
+#: Controller/DashboardController.php:21
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: Controller/DashboardController.php:24 Controller/UsersController.php:290
+#: View/Users/login.ctp:2
+msgid "Login"
+msgstr "Login"
+
+#: Controller/DocsController.php:19 View/Docs/index.ctp:2;6
+#: View/Install/index.ctp:173
+msgid "Documentation"
+msgstr "Documentação"
+
+#: Controller/InstallController.php:29
+msgid "Installation"
+msgstr "Instalação"
+
+#: Controller/InstallController.php:46
+msgid "Unable to install database. Try again."
+msgstr "Impossível instalar o banco de dados. Tente novamente"
+
+#: Controller/InstallController.php:114
+msgid "Unable to set config properties to database. Try again."
+msgstr "Impossível setar as configurações do banco de dados. Tente novamente"
+
+#: Controller/InstallController.php:130
+msgid "Unable to create admin user. Try again."
+msgstr "Impossível criar o usuário admin. Tente novamente"
+
+#: Controller/InstallController.php:134
+msgid "Mahoney successfully installed. Login to continue."
+msgstr "Mahoney instalado com sucesso. Faça login para continuar"
+
+#: Controller/InstallController.php:155
+msgid "This field must not be empty."
+msgstr "Este campo não pode ficar vazio"
+
+#: Controller/InstallController.php:158
+msgid "The characters length for this field must be between 4 and 25."
+msgstr "A sequencia de caracteres deve conter entre 4 e 25 caracteres"
+
+#: Controller/InstallController.php:162
+msgid "Put a valid email address."
+msgstr "Coloque um endereço de email válido"
+
+#: Controller/InstallController.php:175
+msgid "Unable to connect to database."
+msgstr "Impossível conectar ao banco de dados"
+
+#: Controller/InstallController.php:188
+msgid "Unable to create database config files."
+msgstr "Impossível criar o arquivo de configuração de banco de dados"
+
+#: Controller/InstallController.php:198
+msgid "Unable to create security tokens in core file."
+msgstr "Impossível criar os tokens de segurança no arquivo de core"
+
+#: Controller/PluginsController.php:24
+msgid "was uninstalled successfully"
+msgstr "foi desinstalado com sucesso"
+
+#: Controller/PluginsController.php:26;75
+msgid "Error at disable plugin"
+msgstr "Erro ao desativar o plugin"
+
+#: Controller/PluginsController.php:26;75;103
+msgid "the error was the following"
+msgstr "o erro foi seguinte"
+
+#: Controller/PluginsController.php:30;49;60;78
+msgid "You cannot disable"
+msgstr "Você não pode desativar"
+
+#: Controller/PluginsController.php:46
+msgid "Error trying to reset the plugin named"
+msgstr "Erro tentando resetar o plugin"
+
+#: Controller/PluginsController.php:103
+msgid "Error at enable plugin"
+msgstr "Erro ao ativar o plugin"
+
+#: Controller/PluginsController.php:106
+msgid "You cannot enable"
+msgstr "Você não pode ativar"
+
+#: Controller/PluginsController.php:116
+msgid "deleted the plugin"
+msgstr "deletou o plugin"
+
+#: Controller/PluginsController.php:117
+msgid "Plugin named"
+msgstr "Plugin"
+
+#: Controller/PluginsController.php:117
+msgid "deleted successfully."
+msgstr "deletado com sucesso"
+
+#: Controller/PluginsController.php:119
+msgid "You cannot delete"
+msgstr "Você não pode deletar"
+
+#: Controller/PluginsController.php:131
+msgid " installed with success"
+msgstr "instalado com sucesso"
+
+#: Controller/PluginsController.php:133
+msgid "Cannot install "
+msgstr "Impossível instalar"
+
+#: Controller/PluginsController.php:156 View/Plugins/index.ctp:2;6
+#: View/Plugins/search.ctp:2
+msgid "Plugins"
+msgstr "Plugins"
+
+#: Controller/UsersController.php:19
+msgid "You cannot modify users with higher role than you"
+msgstr "Você não pode modificar usuários com maior hierarquia que você"
+
+#: Controller/UsersController.php:48
+msgid "Successfully batch"
+msgstr "Ação em lotes concluída"
+
+#: Controller/UsersController.php:48
+msgid "users"
+msgstr "usuários"
+
+#: Controller/UsersController.php:51
+msgid "Cannot batch"
+msgstr "Não foi possível executar a ação em lotes"
+
+#: Controller/UsersController.php:51
+msgid "Try again"
+msgstr "Tente novamente"
+
+#: Controller/UsersController.php:55
+msgid "You must select at least 1 user to batch."
+msgstr "Você precisa selecionar ao menos 1 usuário para ações em lote"
+
+#: Controller/UsersController.php:62 View/Users/recover.ctp:8
+msgid "Password recovery"
+msgstr "Recuperação de senha"
+
+#: Controller/UsersController.php:92
+msgid "About password change"
+msgstr "Sobre a mudança de senha"
+
+#: Controller/UsersController.php:94
+msgid "Thank you! We've sent you an email with the next steps."
+msgstr "Obrigado! Mandamos um email à você com os próximos passos à seguir"
+
+#: Controller/UsersController.php:99
+msgid ""
+"The email with steps to recover your password cannot be sent. Please try "
+"again."
+msgstr ""
+"O email com os dados de recuperação não puderam ser enviados. Tente novamente"
+
+#: Controller/UsersController.php:103
+msgid "Your token cannot be generated right now. Please try again."
+msgstr "Seu token não pode ser gerado agora. Tente novamente"
+
+#: Controller/UsersController.php:108
+msgid "Thank you for your request. Check your email to know how to proceed."
+msgstr ""
+"Obrigado por sua requisição. Cheque seu email para saber como prosseguir"
+
+#: Controller/UsersController.php:129
+msgid "Password successfully recovered. Login to continue."
+msgstr "Senha recuperada com sucesso. Logue-se para continuar"
+
+#: Controller/UsersController.php:133;136
+msgid "There was a problem saving your new password. Can you recover it again?"
+msgstr "Houve um problema salvando sua senha. Tente novamente"
+
+#: Controller/UsersController.php:139
+msgid "Sorry, we can't find any request with that token code."
+msgstr "Desculpe, não encontramos nenhuma requisição com esse token"
+
+#: Controller/UsersController.php:158 View/Elements/dashWidget.ctp:3
+#: View/Users/add.ctp:2 View/Users/detail.ctp:2 View/Users/edit.ctp:2
+#: View/Users/index.ctp:2;6 View/Users/recover.ctp:3 View/Users/roles.ctp:2
+msgid "Users"
+msgstr "Usuários"
+
+#: Controller/UsersController.php:184;244;271
+msgid "Invalid user"
+msgstr "Usuário inválido"
+
+#: Controller/UsersController.php:187
+msgid "profile"
+msgstr "perfil"
+
+#: Controller/UsersController.php:203 View/Elements/dashWidget.ctp:69
+#: View/Users/roles.ctp:3;6
+msgid "Manage roles"
+msgstr "Níveis"
+
+#: Controller/UsersController.php:220 View/Elements/dashWidget.ctp:69
+#: View/Users/add.ctp:3 View/Users/index.ctp:149
+msgid "Add user"
+msgstr "Adicionar usuário"
+
+#: Controller/UsersController.php:228
+msgid "The user has been saved"
+msgstr "O usuário foi salvo"
+
+#: Controller/UsersController.php:231
+msgid "The user could not be saved. Please, try again."
+msgstr "O usuário não pode ser salvo. Tente novamente"
+
+#: Controller/UsersController.php:250
+msgid "The user has been edited"
+msgstr "O usuário foi editado"
+
+#: Controller/UsersController.php:253
+msgid "The user could not be edited. Please, try again."
+msgstr "O usuário não pode ser editado. Tente novamente"
+
+#: Controller/UsersController.php:268
+msgid "Are you freaking insane? You cannot delete god."
+msgstr "Você está maluco? Você não pode deletar Deus"
+
+#: Controller/UsersController.php:275
+msgid "User deleted"
+msgstr "Usuário deletado"
+
+#: Controller/UsersController.php:277
+msgid "User was not deleted"
+msgstr "Usuário deletado"
+
+#: Controller/UsersController.php:280
+msgid "It was good fight by your side young padawan."
+msgstr "Foi bom lutar ao seu lado jovem padawan"
+
+#: Controller/UsersController.php:300
+msgid "Invalid username or password, try again"
+msgstr "Usuário ou senha inválidos. Tente novamente"
+
+#: Controller/Component/ConfigurerComponent.php:33
+msgid ""
+"Unable to set config data from database. Check your database connection."
+msgstr ""
+"Impossível setar configurações do banco de dados. Cheque sua conexão com o "
+"banco de dados"
+
+#: Controller/Component/FileManagerComponent.php:36
+msgid "Cannot extract the zip."
+msgstr "Impossível extrair o arquivo zip"
+
+#: Controller/Component/PluginComponent.php:148;210
+msgid "There is an error trying to save schema for"
+msgstr "Houve um erro ao salvar o esquema para"
+
+#: Controller/Component/PluginComponent.php:148;198;210
+msgid "The error message was"
+msgstr "O erro foi"
+
+#: Controller/Component/PluginComponent.php:198
+msgid "There is an error trying to uninstall"
+msgstr "Houve um erro ao tentar desinstalar"
+
+#: View/Config/index.ctp:2 View/Install/index.ctp:2
+msgid "Config"
+msgstr "Configurar"
+
+#: View/Dashboard/index.ctp:4
+msgid "Welcome to your dashboard!"
+msgstr "Bem vindo ao seu dashboard!"
+
+#: View/Dashboard/index.ctp:5
+msgid ""
+"Here you can check the common information about your website and get a good "
+"view of what's happening around here"
+msgstr ""
+"Aqui você pode verificar informações comuns sobre seu website e ter uma boa "
+"visão de tudo que está acontecendo"
+
+#: View/Docs/index.ctp:7
+msgid "Learn about Mahoney"
+msgstr "Aprenda mais sobre o Mahoney"
+
+#: View/Elements/adminNav.ctp:12
+msgid "Visit website"
+msgstr "Visite o website"
+
+#: View/Elements/adminNav.ctp:64
+msgid "My profile"
+msgstr "Meu perfil"
+
+#: View/Elements/adminNav.ctp:66
+msgid "Logout"
+msgstr "Sair"
+
+#: View/Elements/dashWidget.ctp:7
+msgid "Total users"
+msgstr "Total de usuários"
+
+#: View/Elements/dashWidget.ctp:8
+msgid "Last user"
+msgstr "Último usuário"
+
+#: View/Elements/dashWidget.ctp:11
+msgid "Quick add user"
+msgstr "Adicionar rápido"
+
+#: View/Elements/dashWidget.ctp:26;28 View/Elements/loginForm.ctp:15
+#: View/Elements/userForm.ctp:67;69 View/Install/index.ctp:24
+#: View/Users/index.ctp:80
+msgid "Username"
+msgstr "Usuário"
+
+#: View/Elements/dashWidget.ctp:32;34 View/Elements/loginForm.ctp:16
+#: View/Elements/userForm.ctp:81;83 View/Install/index.ctp:37;39
+msgid "Password"
+msgstr "Senha"
+
+#: View/Elements/dashWidget.ctp:38 View/Elements/userForm.ctp:14
+#: View/Users/index.ctp:71
+msgid "Role"
+msgstr "Nível"
+
+#: View/Elements/dashWidget.ctp:63
+msgid "Add"
+msgstr "Adicionar"
+
+#: View/Elements/dashWidget.ctp:69
+msgid "List users"
+msgstr "Listar"
+
+#: View/Elements/dashWidget.ctp:76
+msgid "Activity Log"
+msgstr "Log de atividade"
+
+#: View/Elements/dashWidget.ctp:79 View/Plugins/index.ctp:8
+#: View/Plugins/search.ctp:3
+msgid "Search"
+msgstr "Procura"
+
+#: View/Elements/dashWidget.ctp:82
+msgid "Showing the last 100 activities"
+msgstr "Mostrando últimas 100 atividades"
+
+#: View/Elements/dashWidget.ctp:86
+msgid "There is no activity yet."
+msgstr "Não há atividades no momento"
+
+#: View/Elements/dashWidget.ctp:94
+msgid "Date"
+msgstr "Data"
+
+#: View/Elements/dashWidget.ctp:97
+msgid "Activity"
+msgstr "Atividade"
+
+#: View/Elements/dashWidget.ctp:145
+msgid "Clean Activity Log"
+msgstr "Limpar log de atividade"
+
+#: View/Elements/loginForm.ctp:14
+msgid "Please sign in"
+msgstr "Porfavor entre"
+
+#: View/Elements/loginForm.ctp:17
+msgid "Lost your password?"
+msgstr "Perdeu sua senha?"
+
+#: View/Elements/loginForm.ctp:17 View/Users/recover.ctp:67
+msgid "Need help?"
+msgstr "Precisa de ajuda?"
+
+#: View/Elements/loginForm.ctp:17
+msgid "contact"
+msgstr "Contato"
+
+#: View/Elements/loginForm.ctp:18
+msgid "Sign in"
+msgstr "Entrar"
+
+#: View/Elements/userForm.ctp:39;41 View/Install/index.ctp:52
+#: View/Users/index.ctp:74
+msgid "Name"
+msgstr "Nome"
+
+#: View/Elements/userForm.ctp:53;55 View/Install/index.ctp:65;67
+msgid "Email"
+msgstr "Email"
+
+#: View/Elements/userForm.ctp:96
+msgid "Save"
+msgstr "Salvar"
+
+#: View/Install/index.ctp:3 View/Plugins/search.ctp:22
+msgid "Install"
+msgstr "Instalar"
+
+#: View/Install/index.ctp:7
+msgid "Welcome to Mahoney"
+msgstr "Bem vindo ao Mahoney"
+
+#: View/Install/index.ctp:21
+msgid "Admin Account"
+msgstr "Conta de Administração"
+
+#: View/Install/index.ctp:24
+msgid "The admin login"
+msgstr "Login de admin"
+
+#: View/Install/index.ctp:37
+msgid "The admin password"
+msgstr "Senha de admin"
+
+#: View/Install/index.ctp:52
+msgid "Your name"
+msgstr "Seu nome"
+
+#: View/Install/index.ctp:65
+msgid "Your email, for password recover and stuff"
+msgstr "Seu email, para recuperação de senha e etc"
+
+#: View/Install/index.ctp:78
+msgid "Core Configuration"
+msgstr "Configuração de Sistema"
+
+#: View/Install/index.ctp:80
+msgid "Your computer name. For environment based configuration."
+msgstr ""
+"O nome da máquina. Para configuração baseada em ambiente de desenvolvimento"
+
+#: View/Install/index.ctp:80;82
+msgid "Hostname"
+msgstr "Nome do host"
+
+#: View/Install/index.ctp:93
+msgid "Database host. Usually: localhost"
+msgstr "Host do banco de dados. Geralmente \"localhost\""
+
+#: View/Install/index.ctp:93
+msgid "DB Host"
+msgstr "Host do BD"
+
+#: View/Install/index.ctp:95
+msgid "localhost"
+msgstr "localhost"
+
+#: View/Install/index.ctp:106
+msgid "Database name. Usually: Mahoney"
+msgstr "Nome do BD. Geralmente \"Mahoney\""
+
+#: View/Install/index.ctp:106
+msgid "DB Name"
+msgstr "Nome do BD"
+
+#: View/Install/index.ctp:108
+msgid "mahoney"
+msgstr "mahoney"
+
+#: View/Install/index.ctp:120
+msgid "The username of database"
+msgstr "O nome de usuário para conexão ao banco de dados"
+
+#: View/Install/index.ctp:120
+msgid "DB Username"
+msgstr "Usuário do BD"
+
+#: View/Install/index.ctp:133
+msgid "The password of database"
+msgstr "A senha de conexão com o banco de dados"
+
+#: View/Install/index.ctp:133
+msgid "DB Password"
+msgstr "Senha do BD"
+
+#: View/Install/index.ctp:147
+msgid "Your application name"
+msgstr "O nome da sua aplicação"
+
+#: View/Install/index.ctp:147
+msgid "Application Name"
+msgstr "Nome da aplicação"
+
+#: View/Install/index.ctp:164
+msgid ""
+"These generated tokens will ensure the safety of your application. Save in a "
+"safe place."
+msgstr ""
+"Estes tokens gerados automaticamente ajudarão a proteger sua aplicação. "
+"Salve em um lugar seguro"
+
+#: View/Install/index.ctp:171
+msgid "Get Started"
+msgstr "Para iniciantes"
+
+#: View/Install/index.ctp:172
+msgid "This software is maintened under"
+msgstr "Este aplicativo é mantido através de"
+
+#: View/Install/index.ctp:172
+msgid "Mozilla Public License 2.0"
+msgstr "Mozilla Public License 2.0"
+
+#: View/Install/index.ctp:173
+msgid "Github"
+msgstr "Github"
+
+#: View/Layouts/systemDefault.ctp:72
+msgid "help"
+msgstr "ajuda"
+
+#: View/Layouts/systemDefault.ctp:72
+msgid "privacy"
+msgstr "privacidade"
+
+#: View/Layouts/systemDefault.ctp:72
+msgid "about"
+msgstr "sobre"
+
+#: View/Plugins/index.ctp:7
+msgid "Create a unique CMS with plugins for your app."
+msgstr "Crie um CMS único com plugins para sua aplicação"
+
+#: View/Plugins/index.ctp:19
+msgid "Type"
+msgstr "Tipo"
+
+#: View/Plugins/index.ctp:20
+msgid "Version"
+msgstr "Versão"
+
+#: View/Plugins/index.ctp:21
+msgid "Author"
+msgstr "Autor:"
+
+#: View/Plugins/index.ctp:22
+msgid "Description"
+msgstr "Descrição"
+
+#: View/Plugins/index.ctp:31
+msgid "Disable"
+msgstr "Desativar"
+
+#: View/Plugins/index.ctp:33
+msgid "Update"
+msgstr "Atualizar"
+
+#: View/Plugins/index.ctp:33
+msgid ""
+"Are you sure you want to update this plugin? All data from that same can be "
+"lost."
+msgstr ""
+"Você tem certeza que deseja atualizar este plugin? Todos os seus dados podem "
+"ser perdidos"
+
+#: View/Plugins/index.ctp:35
+msgid "Enable"
+msgstr "Ativar"
+
+#: View/Plugins/index.ctp:38 View/Users/index.ctp:56
+msgid "Reset"
+msgstr "Resetar"
+
+#: View/Plugins/index.ctp:38
+msgid ""
+"Are you sure you want to reset all data from this plugin? All your saved "
+"data from this plugin will be lost."
+msgstr ""
+"Você tem certeza que deseja resetar  este plugin? Todos os seus dados podem "
+"ser perdidos"
+
+#: View/Plugins/index.ctp:38
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: View/Plugins/index.ctp:38
+msgid ""
+"Are you sure you want to uninstall this plugin? All your saved data from "
+"this plugin will be lost."
+msgstr ""
+"Você tem certeza que deseja desinstalar este plugin? Todos os seus dados "
+"podem ser perdidos"
+
+#: View/Plugins/index.ctp:38 View/Users/index.ctp:27;134
+msgid "Delete"
+msgstr "Deletar"
+
+#: View/Plugins/index.ctp:38
+msgid "Are you sure you want to delete this plugin?"
+msgstr "Você tem certeza que deseja deletar este plugin?"
+
+#: View/Plugins/search.ctp:7
+msgid "Search Plugins"
+msgstr "Procurar plugins"
+
+#: View/Plugins/search.ctp:8
+msgid "Search for the official plugins"
+msgstr "Procurar por plugins oficiais"
+
+#: View/Users/add.ctp:8
+msgid "Add a new user"
+msgstr "Adicionar um novo usuário"
+
+#: View/Users/add.ctp:9
+msgid ""
+"Add a new user and set their information here. Need more fields? What about "
+"the"
+msgstr ""
+"Adicione um usuário e grave suas informações aqui. Precisa de mais campos? "
+"Que tal utilizar"
+
+#: View/Users/add.ctp:9
+msgid "Profile Extension"
+msgstr "Profile Extension"
+
+#: View/Users/detail.ctp:7
+msgid "User detail"
+msgstr "Detalhe de usuário"
+
+#: View/Users/edit.ctp:3 View/Users/index.ctp:83;114
+msgid "Edit"
+msgstr "Editar"
+
+#: View/Users/edit.ctp:9
+msgid "Edit user"
+msgstr "Editar usuário"
+
+#: View/Users/index.ctp:7
+msgid "Edit, Reset, Delete and check out the users registered in your app."
+msgstr ""
+"Edite, resete, delete e cheque os usuários registrados em sua aplicação"
+
+#: View/Users/index.ctp:9;155
+msgid "Add new user"
+msgstr "Adicionar um novo usuário"
+
+#: View/Users/index.ctp:30
+msgid "Are you really sure about that?"
+msgstr "Você tem certeza disso?"
+
+#: View/Users/index.ctp:30
+msgid "With selected:"
+msgstr "Com selecionados:"
+
+#: View/Users/index.ctp:30
+msgid "Select"
+msgstr "Selecione"
+
+#: View/Users/index.ctp:47
+msgid "Email:"
+msgstr "Email"
+
+#: View/Users/index.ctp:50
+msgid "Name:"
+msgstr "Nome"
+
+#: View/Users/index.ctp:54
+msgid "Filter posts"
+msgstr "Filtrar postagens"
+
+#: View/Users/index.ctp:54
+msgid "Filter"
+msgstr "Filtrar"
+
+#: View/Users/index.ctp:56
+msgid "Reset filter"
+msgstr "Resetar filtro"
+
+#: View/Users/index.ctp:122
+msgid "This user requires an email to reset his password"
+msgstr "Este usuário requer uma senha para resetar sua senha"
+
+#: View/Users/index.ctp:126
+msgid "Recover password"
+msgstr "Recuperar senha"
+
+#: View/Users/recover.ctp:4
+msgid "Password recover"
+msgstr "Recuperação de senha"
+
+#: View/Users/recover.ctp:9
+msgid "Easily recover your password"
+msgstr "Recupere sua senha com facilidade"
+
+#: View/Users/recover.ctp:25
+msgid "Token"
+msgstr "Token"
+
+#: View/Users/recover.ctp:31
+msgid "New Password"
+msgstr "Nova senha"
+
+#: View/Users/recover.ctp:38;63
+msgid "Recover"
+msgstr "Recuperar"
+
+#: View/Users/recover.ctp:44
+msgid "Type your email below"
+msgstr "Digite seu email abaixo"
+
+#: View/Users/recover.ctp:58
+msgid "your@email.com"
+msgstr "seu@email.com.br"
+
+#: package.json
+msgid "Options"
+msgstr "Opções"
+
+#: package.json
+msgid "List Users"
+msgstr "Listar"
+
+#: package.json
+msgid "Add Users"
+msgstr "Adicionar usuário"
+
+#: package.json
+msgid "Manage Roles"
+msgstr "Níveis"

@@ -22,7 +22,7 @@ class ContactController extends SystemAppController {
      */
     public function index() {
         
-        $this->set('pageTitle', __("Contact"));
+        $this->set('pageTitle', __d("system","Contact"));
         
         $this->layout = "default";
         

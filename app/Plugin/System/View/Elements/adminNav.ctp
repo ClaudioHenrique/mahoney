@@ -9,7 +9,7 @@
             </button>
             <?php
             echo $this->Html->link(
-                    $this->Html->image("System.mahoney-logo.png"), array('plugin' => false, 'controller' => 'site', 'action' => 'index'), array('title' => __('Visit website'), 'class' => 'navbar-brand', 'escape' => false)
+                    $this->Html->image("System.mahoney-logo.png"), array('plugin' => false, 'controller' => 'site', 'action' => 'index'), array('title' => __d('system','Visit website'), 'class' => 'navbar-brand', 'escape' => false)
             );
             ?>
         </div>
@@ -22,7 +22,7 @@
                 if (isset($plugin['menu'][$key]["child"])):
                 ?>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa <?= (isset($plugin['menu'][$key]["icon"]) ? $plugin['menu'][$key]["icon"] : ""); ?>"></i> <?= __(Inflector::humanize($key)); ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa <?= (isset($plugin['menu'][$key]["icon"]) ? $plugin['menu'][$key]["icon"] : ""); ?>"></i> <?= __d(strtolower($plugin["name"]),Inflector::humanize($key)); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <?php
                         foreach ($plugin['menu'][$key]["child"] as $key2 => $value2):
@@ -33,7 +33,7 @@
                             endif;
                             if($value2 != "icon"):
                                 ?>
-                                <li><?= $this->Html->link("<i class=\"fa ".(isset($value2["icon"]) ? $value2["icon"] : "")."\"></i> " . __(Inflector::humanize($key2)), (isset($value2["link"]) ? $value2["link"] : ""), array("escape" => false)); ?></li>
+                                <li><?= $this->Html->link("<i class=\"fa ".(isset($value2["icon"]) ? $value2["icon"] : "")."\"></i> " . __d(strtolower($plugin["name"]),Inflector::humanize($key2)), (isset($value2["link"]) ? $value2["link"] : ""), array("escape" => false)); ?></li>
                                 <?php
                             endif;
                         endforeach;
@@ -48,7 +48,7 @@
                     <?php
                     endif;
                     ?>
-                <li><?= $this->Html->link("<i class=\"fa ".(isset($plugin["menu"][$key]["icon"]) ? $plugin["menu"][$key]["icon"] : "")."\"></i> " . __(Inflector::humanize($key)), (isset($plugin['menu'][$key]["link"]) ? $plugin['menu'][$key]["link"] : ""), array("escape" => false)); ?></li>
+                <li><?= $this->Html->link("<i class=\"fa ".(isset($plugin["menu"][$key]["icon"]) ? $plugin["menu"][$key]["icon"] : "")."\"></i> " . __d(strtolower($plugin["name"]),Inflector::humanize($key)), (isset($plugin['menu'][$key]["link"]) ? $plugin['menu'][$key]["link"] : ""), array("escape" => false)); ?></li>
                     <?php
                 endif;
             endforeach;
@@ -61,9 +61,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?= AuthComponent::user()['username']; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><?= $this->Html->link("<i class=\"fa fa-asterisk\"></i> " . __('My profile'),"/system/users/detail/" . AuthComponent::user()['id'], array("escape" => false)); ?></li>
+                        <li><?= $this->Html->link("<i class=\"fa fa-asterisk\"></i> " . __d('system','My profile'),"/system/users/detail/" . AuthComponent::user()['id'], array("escape" => false)); ?></li>
                         <li class="divider"></li>
-                        <li><?= $this->Html->link("<i class=\"fa fa-power-off\"></i> " . __('Logout'),"/system/users/logout", array("escape" => false)); ?></li>
+                        <li><?= $this->Html->link("<i class=\"fa fa-power-off\"></i> " . __d('system','Logout'),"/system/users/logout", array("escape" => false)); ?></li>
                     </ul>
                 </li>
             </ul>

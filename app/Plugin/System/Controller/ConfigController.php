@@ -24,7 +24,7 @@ class ConfigController extends SystemAppController {
             $this->FileManager->commonExclude(LOGS . 'activity.log');
             CakeLog::write('activity', "Activity log deleted.");
         else:
-            throw new NotFoundException(__('The activity log does not exist!'));
+            throw new NotFoundException(__d('system','The activity log does not exist!'));
         endif;
         $this->redirect($this->referer());
     }

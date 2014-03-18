@@ -145,7 +145,7 @@ class PluginComponent extends Component {
 
                 return true;
             } catch (Exception $ex) {
-                throw new Exception(__("There is an error trying to save schema for") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+                throw new Exception(__d("system","There is an error trying to save schema for") . " '" . $plugin . "'. " . __d("system","The error message was") . ": " . $ex->getMessage());
             }
         endif;
         return false;
@@ -195,7 +195,7 @@ class PluginComponent extends Component {
                         $lastV = substr($value, 0, 3);
                     endif;
                 } catch (Exception $ex) {
-                    throw new Exception(__("There is an error trying to uninstall") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+                    throw new Exception(__d("system","There is an error trying to uninstall") . " '" . $plugin . "'. " . __d("system","The error message was") . ": " . $ex->getMessage());
                 }
             endforeach;
 
@@ -207,7 +207,7 @@ class PluginComponent extends Component {
 
                 return true;
             } catch (Exception $ex) {
-                throw new Exception(__("There is an error trying to save schema for") . " '" . $plugin . "'. " . __("The error message was") . ": " . $ex->getMessage());
+                throw new Exception(__d("system","There is an error trying to save schema for") . " '" . $plugin . "'. " . __d("system","The error message was") . ": " . $ex->getMessage());
             }
         endif;
 
