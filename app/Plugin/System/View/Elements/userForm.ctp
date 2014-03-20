@@ -14,13 +14,13 @@
         <label for="inputRole" class="col-sm-2 control-label"><?= __d('system','Role'); ?></label>
         <div class="col-sm-3">
             <?php
-            foreach (Configure::read("Role") as $key => $value):
+            foreach (Configure::read("SystemRole") as $key => $value):
                 if (AuthComponent::user()['role'] < $value):
-                    Configure::delete("Role.".$key);
+                    Configure::delete("SystemRole.".$key);
                 endif;
             endforeach;
             echo $this->Form->input('role', array(
-                'options' => array_flip(Configure::read("Role")),
+                'options' => array_map(function($val) { return __d(strtolower($this->plugin),$val); }, array_flip(Configure::read("SystemRole"))),
                 'class' => 'form-control',
                 'id' => 'inputRole'
             ));

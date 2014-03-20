@@ -38,13 +38,13 @@
                 <label for="inputRole" class="col-sm-3 control-label"><small><?= __d('system','Role'); ?></small></label>
                 <div class="col-sm-9">
                     <?php
-                    foreach (array_flip(Configure::read("Role")) as $key => $value):
+                    foreach (array_flip(Configure::read("SystemRole")) as $key => $value):
                         if (AuthComponent::user()['role'] < $key):
-                            Configure::delete("Role." . $value);
+                            Configure::delete("SystemRole." . $value);
                         endif;
                     endforeach;
                     echo $this->Form->input('role', array(
-                        'options' => array_flip(Configure::read("Role")),
+                        'options' => array_map(function($val) { return __d("system",$val); }, array_flip(Configure::read("SystemRole"))),
                         'class' => 'form-control',
                         'id' => 'inputRole'
                     ));

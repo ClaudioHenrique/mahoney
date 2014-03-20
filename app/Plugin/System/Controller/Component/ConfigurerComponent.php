@@ -26,7 +26,7 @@ class ConfigurerComponent extends Component {
             $configRequest = $this->Config->find("all");
             if(!empty($configRequest)):
                 foreach($configRequest as $key => $value):
-                    Configure::write(Inflector::humanize($value["Config"]["section"]) . "." . $value["Config"]["type"], $value["Config"]["value"]);
+                    Configure::write(Inflector::humanize($value["Config"]["plugin"]).Inflector::humanize($value["Config"]["section"]) . "." . $value["Config"]["type"], $value["Config"]["value"]);
                 endforeach;
             endif;
          } catch(Exception $ex) {

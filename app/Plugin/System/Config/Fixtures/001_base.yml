@@ -1,31 +1,16 @@
 system_config:
   1:
-    global: config
-    section: role
-    type: God
-    value: 5
-  2:
-    global: config
-    section: role
-    type: Admin
-    value: 4
-  3:
-    global: config
-    section: role
-    type: User
-    value: 1
-  4:
-    global: config
+    plugin: system
     section: user
     type: initialStatus
     value: 1
-  6:
-    global: config
+  2:
+    plugin: system
     section: email
     type: password
     value: 
-  7:
-    global: config
+  3:
+    plugin: system
     section: email
     type: transport
     value: Smtp

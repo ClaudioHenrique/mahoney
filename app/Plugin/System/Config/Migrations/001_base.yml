@@ -8,7 +8,7 @@ UP:
         type: string
         length: 25
     system_config:
-      global:
+      plugin:
         type: string 
         length: 25
       section:

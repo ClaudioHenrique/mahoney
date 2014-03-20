@@ -44,10 +44,10 @@ $this->Html->addCrumb(__d('system','Users'), array("plugin" => "system", "contro
         ?>
         <?= $this->Form->create('Filter', $options); ?>
         <div class="col-sm-3">
-            <?= $this->Form->input("email", array("label" => __d("system","Email:"), "type"=>"text", "class" => "form-control", "value" => (isset($_GET["email"]) ? $_GET["email"] : ""))) ?>
+            <?= $this->Form->input("email", array("label" => __d("system","Email").":", "type"=>"text", "class" => "form-control", "value" => (isset($_GET["email"]) ? $_GET["email"] : ""))) ?>
         </div>
         <div class="col-sm-5">
-            <?= $this->Form->input("name", array("label" => __d("system","Name:"), "class" => "form-control", "value" => (isset($_GET["name"]) ? $_GET["name"] : ""))) ?>
+            <?= $this->Form->input("name", array("label" => __d("system","Name").":", "class" => "form-control", "value" => (isset($_GET["name"]) ? $_GET["name"] : ""))) ?>
         </div>
         <div class="col-sm-2 text-right">
             <p>
@@ -96,7 +96,7 @@ $this->Html->addCrumb(__d('system','Users'), array("plugin" => "system", "contro
                     <?= $user['User']['id']; ?>
                 </td>
                 <td>
-                    <?= array_flip(Configure::read("Role"))[$user['User']['role']]; ?>
+                    <?= __d('system',array_flip(Configure::read('SystemRole'))[$user['User']['role']]); ?>
                 </td>
                 <td>
                     <?= $user['User']['name']; ?>

@@ -55,7 +55,7 @@ class InstallController extends SystemAppController {
                     $putConfig = array(
                         array(
                             "Config" => array(
-                                "global" => "config",
+                                "plugin" => "system",
                                 "section" => "siteinfo",
                                 "type" => "sitename",
                                 "value" => $requestData["Config"]["sitename"]
@@ -63,7 +63,7 @@ class InstallController extends SystemAppController {
                         ),
                         array(
                             "Config" => array(
-                                "global" => "config",
+                                "plugin" => "system",
                                 "section" => "email",
                                 "type" => "from",
                                 "value" => $requestData["Config"]["email"]
@@ -71,7 +71,7 @@ class InstallController extends SystemAppController {
                         ),
                         array(
                             "Config" => array(
-                                "global" => "config",
+                                "plugin" => "system",
                                 "section" => "email",
                                 "type" => "username",
                                 "value" => $requestData["Config"]["email"]
@@ -79,7 +79,7 @@ class InstallController extends SystemAppController {
                         ),
                         array(
                             "Config" => array(
-                                "global" => "config",
+                                "plugin" => "system",
                                 "section" => "email",
                                 "type" => "fromName",
                                 "value" => $requestData["Config"]["sitename"]
@@ -92,7 +92,7 @@ class InstallController extends SystemAppController {
                             $emailMergeConfig = array(
                                 array(
                                     "Config" => array(
-                                        "global" => "config",
+                                        "plugin" => "system",
                                         "section" => "email",
                                         "type" => "host",
                                         "value" => $value["host"]
@@ -100,10 +100,50 @@ class InstallController extends SystemAppController {
                                 ),
                                 array(
                                     "Config" => array(
-                                        "global" => "config",
+                                        "plugin" => "system",
                                         "section" => "email",
                                         "type" => "port",
                                         "value" => $value["port"]
+                                    )
+                                ),
+                                array (
+                                    "Config" => array(
+                                        "plugin" => "system",
+                                        "section" => "role",
+                                        "type" => __d("system","Manager"),
+                                        "value" => "5"
+                                    )
+                                ),
+                                array (
+                                    "Config" => array(
+                                        "plugin" => "system",
+                                        "section" => "role",
+                                        "type" => __d("system","Admin"),
+                                        "value" => "4"
+                                    )
+                                ),
+                                array (
+                                    "Config" => array(
+                                        "plugin" => "system",
+                                        "section" => "role",
+                                        "type" => __d("system","Employee"),
+                                        "value" => "3"
+                                    )
+                                ),
+                                array (
+                                    "Config" => array(
+                                        "plugin" => "system",
+                                        "section" => "role",
+                                        "type" => __d("system","Client"),
+                                        "value" => "2"
+                                    )
+                                ),
+                                array (
+                                    "Config" => array(
+                                        "plugin" => "system",
+                                        "section" => "role",
+                                        "type" => __d("system","User"),
+                                        "value" => "1"
                                     )
                                 )
                             );
