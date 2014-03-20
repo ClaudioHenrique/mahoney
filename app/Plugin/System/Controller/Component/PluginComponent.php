@@ -76,7 +76,8 @@ class PluginComponent extends Component {
             );
             return $schemaRequest;
         } catch (Exception $ex) {
-            CakeLog::write('activity', "Warning, trying to retrieve '" . $plugin . "' schema from database.");
+            
+            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to retrieve"), $plugin, sprintf(__d("system","%s migration schema"), sprintf(__d("system","plugin"))), $ex->getMessage()));
 
             $schemaRequest = [
                 "Schema" => array(
@@ -104,7 +105,8 @@ class PluginComponent extends Component {
             $lastV = substr(end($c), 0, 3);
             return intval((isset($schemaV[0]["Schema"]["version"]) && !empty($schemaV[0]["Schema"]["version"]) ? $schemaV[0]["Schema"]["version"] : 0)) < intval($lastV);
         else:
-            throw new Exception("Error");
+            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to open"), $a, sprintf(__d("system","path")), __d("system", "The specified file/folder don't exist")));
+            $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to open"), $a, __d("system","path")));
         endif;
     }
 
@@ -127,7 +129,8 @@ class PluginComponent extends Component {
                         $this->Migrations->down();
                         $this->Migrations->up();
                     } catch (Exception $ex) {
-                        throw new Exception($ex->getMessage());
+                        CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to migrate"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                        throw new Exception(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to migrate"), $plugin, __d("system","plugin")));
                     }
                     $lastV = substr($value, 0, 3);
                 endif;
@@ -145,7 +148,8 @@ class PluginComponent extends Component {
 
                 return true;
             } catch (Exception $ex) {
-                throw new Exception(__d("system","There is an error trying to save schema for") . " '" . $plugin . "'. " . __d("system","The error message was") . ": " . $ex->getMessage());
+                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to save"), $plugin, sprintf(__d("system","migration schema")), $ex->getMessage()));
+                throw new Exception(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to save"), $plugin, __d("system","migration schema")));
             }
         endif;
         return false;
@@ -195,7 +199,8 @@ class PluginComponent extends Component {
                         $lastV = substr($value, 0, 3);
                     endif;
                 } catch (Exception $ex) {
-                    throw new Exception(__d("system","There is an error trying to uninstall") . " '" . $plugin . "'. " . __d("system","The error message was") . ": " . $ex->getMessage());
+                    CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to uninstall"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                    throw new Exception(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to uninstall"), $plugin, __d("system","plugin")));
                 }
             endforeach;
 
@@ -207,7 +212,8 @@ class PluginComponent extends Component {
 
                 return true;
             } catch (Exception $ex) {
-                throw new Exception(__d("system","There is an error trying to save schema for") . " '" . $plugin . "'. " . __d("system","The error message was") . ": " . $ex->getMessage());
+                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to uninstall"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                throw new Exception(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to uninstall"), $plugin, __d("system","plugin")));
             }
         endif;
 
@@ -241,7 +247,6 @@ class PluginComponent extends Component {
             endforeach;
         endif;
         Configure::write("Plugin.count", $this->ACTIVATED_PLUGINS);
-
         return $this->PLUGINS;
     }
 

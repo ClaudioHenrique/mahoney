@@ -14,33 +14,33 @@ class FileManagerComponent extends Component {
         unlink($file);
     }
     
-    public function installZipFromWeb($fileName, $zipUrl, $path) {
-        try {
-            $fh = fopen($path . $fileName . '.zip', 'w');
-            $ch = curl_init();
-            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_URL, $zipUrl); 
-            curl_setopt($ch, CURLOPT_FILE, $fh); 
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // this will follow redirects
-            curl_exec($ch);
-            curl_close($ch);
-            fclose($fh);
-            
-            $zip = new ZipArchive;
-            if ($zip->open($path . $fileName . '.zip') === TRUE) {
-                $zip->extractTo($path);
-                $zip->close();
-                rename($path . "mahoney-".strtolower($fileName)."-master", $path . $fileName);
-                return true;
-            } else {
-                return __d("system","Cannot extract the zip.");
-            }
-            
-            return true;
-        } catch (Exception $ex) {
-            return $ex->getMessage();
-        }
-    }
+//    public function installZipFromWeb($fileName, $zipUrl, $path) {
+//        try {
+//            $fh = fopen($path . $fileName . '.zip', 'w');
+//            $ch = curl_init();
+//            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+//            curl_setopt($ch, CURLOPT_URL, $zipUrl); 
+//            curl_setopt($ch, CURLOPT_FILE, $fh); 
+//            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // this will follow redirects
+//            curl_exec($ch);
+//            curl_close($ch);
+//            fclose($fh);
+//            
+//            $zip = new ZipArchive;
+//            if ($zip->open($path . $fileName . '.zip') === TRUE) {
+//                $zip->extractTo($path);
+//                $zip->close();
+//                rename($path . "mahoney-".strtolower($fileName)."-master", $path . $fileName);
+//                return true;
+//            } else {
+//                return sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), AuthComponent::user()["username"], sprintf(__d("system","File Manager")), sprintf(__d("system","to unzip")), $path.$fileName, "");
+//            }
+//            
+//            return true;
+//        } catch (Exception $ex) {
+//            return $ex->getMessage();
+//        }
+//    }
     
     public function templateFile($file, $template, $filename = null) {
         if(is_file($file . ".template")):
@@ -58,9 +58,11 @@ class FileManagerComponent extends Component {
                 endif;
                 return true;
             } catch(Exception $ex) {
+                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to template"), $file.".template", sprintf(__d("system","file")), $ex->getMessage()));
                 return false;
             }
         else:
+            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to template"), $file.".template", sprintf(__d("system","file")), __d("system","The specified file/folder don't exist")));
             return false;
         endif;
     }
@@ -81,7 +83,8 @@ class FileManagerComponent extends Component {
             endforeach;
             rmdir($dir);
         } catch(Exception $ex) {
-            throw new Exception("Error trying to delete");
+            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to delete"), $dir, sprintf(__d("system","file/folder")), $ex->getMessage()));
+            throw new Exception(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to delete"), $dir, __d("system","file/folder")));
         }
     }
 

@@ -11,7 +11,7 @@
     echo $this->Form->create('User', $options);
     ?>
     <div class="form-group <?= $this->Form->isFieldError('User.role') ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputRole" class="col-sm-2 control-label"><?= __d('system','Role'); ?></label>
+        <label for="inputRole" class="col-sm-2 control-label"><?= __d("system","Role"); ?></label>
         <div class="col-sm-3">
             <?php
             foreach (Configure::read("SystemRole") as $key => $value):
@@ -36,9 +36,9 @@
         <div class='col-sm-9'><small><?= $this->Form->error('User.role', null, array('wrap' => 'label', 'class' => 'error')); ?></small></div>
     </div>
     <div class="form-group <?= $this->Form->isFieldError('User.name') ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputName" class="col-sm-2 control-label"><?= __d('system','Name'); ?></label>
+        <label for="inputName" class="col-sm-2 control-label"><?= __d("system","Name"); ?></label>
         <div class="col-sm-8">
-            <?= $this->Form->input('name', array('class' => 'form-control', 'placeholder' => __d('system','Name'), 'id' => 'inputName', 'required' => false)); ?>
+            <?= $this->Form->input('name', array('class' => 'form-control', 'placeholder' => __d("system","Name"), 'id' => 'inputName', 'required' => false)); ?>
             <?php
             if ($this->Form->isFieldError('User.name')):
                 ?>
@@ -50,9 +50,9 @@
         <div class='col-sm-2'><small><?= $this->Form->error('User.name', null, array('wrap' => 'label', 'class' => 'error')); ?></small></div>
     </div>
     <div class="form-group <?= $this->Form->isFieldError('User.email') ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputEmail" class="col-sm-2 control-label"><?= __d('system','Email'); ?></label>
+        <label for="inputEmail" class="col-sm-2 control-label"><?= __d("system","Email"); ?></label>
         <div class="col-sm-8">
-            <?= $this->Form->input('email', array('class' => 'form-control', 'placeholder' => __d('system','Email'), 'id' => 'inputEmail', 'required' => false)); ?>
+            <?= $this->Form->input('email', array('class' => 'form-control', 'placeholder' => __d("system","Email"), 'id' => 'inputEmail', 'required' => false)); ?>
             <?php
             if ($this->Form->isFieldError('User.email')):
                 ?>
@@ -64,9 +64,9 @@
         <div class='col-sm-2'><small><?= $this->Form->error('User.email', null, array('wrap' => 'label', 'class' => 'error')); ?></small></div>
     </div>
     <div class="form-group <?= $this->Form->isFieldError('User.username') ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputUser" class="col-sm-2 control-label"><?= __d('system','Username'); ?></label>
+        <label for="inputUser" class="col-sm-2 control-label"><?= __d("system","Username"); ?></label>
         <div class="col-sm-8">
-            <?= $this->Form->input('username', array('class' => 'form-control', 'placeholder' => __d('system','Username'), 'id' => 'inputUser')); ?>
+            <?= $this->Form->input('username', array('class' => 'form-control', 'placeholder' => __d("system","Username"), 'id' => 'inputUser')); ?>
             <?php
             if ($this->Form->isFieldError('User.username')):
                 ?>
@@ -78,9 +78,9 @@
         <div class='col-sm-2'><small><?= $this->Form->error('User.username', null, array('wrap' => 'label', 'class' => 'error')); ?></small></div>
     </div>
     <div class="form-group <?= $this->Form->isFieldError('User.password') ? 'has-error has-feedback' : ''; ?>">
-        <label for="inputPassword" class="col-sm-2 control-label"><?= __d('system','Password'); ?></label>
+        <label for="inputPassword" class="col-sm-2 control-label"><?= __d("system","Password"); ?></label>
         <div class="col-sm-8">
-            <?= $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __d('system','Password'), 'id' => 'inputPassword')); ?>
+            <?= $this->Form->input('password', array('class' => 'form-control', 'placeholder' => __d("system","Password"), 'id' => 'inputPassword')); ?>
             <?php
             if ($this->Form->isFieldError('User.password')):
                 ?>
@@ -93,7 +93,7 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <?= $this->Form->end(array('label' => __d('system','Save'), 'class' => 'btn btn-default')); ?>
+            <?= $this->Form->end(array('label' => __d("system","Save"), 'class' => 'btn btn-default')); ?>
         </div>
     </div>
 </div>

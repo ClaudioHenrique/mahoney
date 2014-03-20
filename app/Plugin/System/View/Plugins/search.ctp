@@ -1,11 +1,11 @@
 <?php
-$this->Html->addCrumb(__d('system','Plugins'), array("plugin" => "system", "controller" => "plugins", "action"=>"index"));
-$this->Html->addCrumb(__d('system','Search'), array("plugin" => "system", "controller" => "plugins", "action" => "search"));
+$this->Html->addCrumb(__d("system","Plugins"), array("plugin" => "system", "controller" => "plugins", "action"=>"index"));
+$this->Html->addCrumb(__d("system","Search"), array("plugin" => "system", "controller" => "plugins", "action" => "search"));
 ?>
 <div class="container">
     <div class="page-header">
-        <h1><?= __d('system','Search Plugins'); ?></h1>
-        <p><?= __d('system','Search for the official plugins'); ?></p>
+        <h1><?= __d("system","Search Plugins"); ?></h1>
+        <p><?= __d("system","Search for the official plugins"); ?></p>
     </div>
 <div class="row">
     <?php
@@ -19,7 +19,7 @@ $this->Html->addCrumb(__d('system','Search'), array("plugin" => "system", "contr
                 <div class="highlight">
                     <div class="row">
                         <div class="col-md-6">
-                            <?= $this->HTML->link(__d('system','Install'), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'install', $plugin['name']), array('class' => 'btn btn-success')); ?>
+                            <?= $this->HTML->link(sprintf(__d("system","Install")), array('plugin' => 'system', 'controller' => 'plugins', 'action' => 'install', $plugin['name']), array('class' => 'btn btn-success')); ?>
                         </div>
                     </div>
                 </div>

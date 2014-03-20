@@ -5,6 +5,8 @@ App::uses('System.SystemAppController', 'Controller');
 class ConfigController extends SystemAppController {
 
     public $uses = array('System.Config');
+    
+    public $components = array('System.FileManager');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -24,7 +26,7 @@ class ConfigController extends SystemAppController {
             $this->FileManager->commonExclude(LOGS . 'activity.log');
             CakeLog::write('activity', "Activity log deleted.");
         else:
-            throw new NotFoundException(__d('system','The activity log does not exist!'));
+            throw new NotFoundException(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), AuthComponent::user()["username"], sprintf(__d("system","Config")), __d("system", "to open"), sprintf(__d("system","the activity log")), __d("system","The specified file/folder don't exist")));
         endif;
         $this->redirect($this->referer());
     }

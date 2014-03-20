@@ -9,7 +9,7 @@
             </button>
             <?php
             echo $this->Html->link(
-                    $this->Html->image("System.mahoney-logo.png"), array('plugin' => false, 'controller' => 'site', 'action' => 'index'), array('title' => __d('system','Visit website'), 'class' => 'navbar-brand', 'escape' => false)
+                    $this->Html->image("System.mahoney-logo.png"), array('plugin' => false, 'controller' => 'site', 'action' => 'index'), array('title' => __d("system","Visit website"), 'class' => 'navbar-brand', 'escape' => false)
             );
             ?>
         </div>
@@ -61,9 +61,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?= AuthComponent::user()['username']; ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><?= $this->Html->link("<i class=\"fa fa-asterisk\"></i> " . __d('system','My profile'),"/system/users/detail/" . AuthComponent::user()['id'], array("escape" => false)); ?></li>
+                        <li><?= $this->Html->link("<i class=\"fa fa-asterisk\"></i> " . __d("system","My profile"),"/system/users/detail/" . AuthComponent::user()['id'], array("escape" => false)); ?></li>
                         <li class="divider"></li>
-                        <li><?= $this->Html->link("<i class=\"fa fa-power-off\"></i> " . __d('system','Logout'),"/system/users/logout", array("escape" => false)); ?></li>
+                        <li><?= $this->Html->link("<i class=\"fa fa-power-off\"></i> " . __d("system","Logout"),"/system/users/logout", array("escape" => false)); ?></li>
                     </ul>
                 </li>
             </ul>

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mahoney - Core plugin\n"
-"POT-Creation-Date: 2014-03-19 23:07+0100\n"
-"PO-Revision-Date: 2014-03-19 19:08-0300\n"
+"POT-Creation-Date: 2014-03-20 21:24+0100\n"
+"PO-Revision-Date: 2014-03-20 17:24-0300\n"
 "Last-Translator: \n"
 "Language-Team: Alexandre Cordeiro Moraes <kalvinmoraes@gmail.com>\n"
 "Language: pt_BR\n"
@@ -14,8 +14,38 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: List Users;Add Users;Manage Roles\n"
 
-#: Controller/ConfigController.php:27
-msgid "The activity log does not exist!"
+#: Controller/ConfigController.php:29
+#: Controller/InstallController.php:46;154;170;216;229
+#: Controller/PluginsController.php:27;32;51;55;69;87;91;112;120;124;137
+#: Controller/UsersController.php:19;52;123;146;164;171;194
+#: Controller/Component/ConfigurerComponent.php:32
+#: Controller/Component/FileManagerComponent.php:61;65;86
+#: Controller/Component/MailerComponent.php:43
+#: Controller/Component/PluginComponent.php:80;108;132;151;202;215
+msgid "[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"
+msgstr ""
+
+#: Controller/ConfigController.php:29
+#: Controller/Component/ConfigurerComponent.php:32;33 View/Config/index.ctp:2
+#: View/Install/index.ctp:2
+msgid "Config"
+msgstr "Configurar"
+
+#: Controller/ConfigController.php:29
+#: Controller/Component/PluginComponent.php:108;109
+msgid "to open"
+msgstr ""
+
+#: Controller/ConfigController.php:29
+#, fuzzy
+msgid "the activity log"
+msgstr "Log de atividade"
+
+#: Controller/ConfigController.php:29
+#: Controller/Component/FileManagerComponent.php:65
+#: Controller/Component/PluginComponent.php:108
+#, fuzzy
+msgid "The specified file/folder don't exist"
 msgstr "O log de atividades não existe"
 
 #: Controller/ContactController.php:25
@@ -26,7 +56,7 @@ msgstr "Contato"
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: Controller/DashboardController.php:24 Controller/UsersController.php:290
+#: Controller/DashboardController.php:24 Controller/UsersController.php:185
 #: View/Users/login.ctp:2
 msgid "Login"
 msgstr "Login"
@@ -40,9 +70,24 @@ msgstr "Documentação"
 msgid "Installation"
 msgstr "Instalação"
 
-#: Controller/InstallController.php:46
-msgid "Unable to install database. Try again."
-msgstr "Impossível instalar o banco de dados. Tente novamente"
+#: Controller/InstallController.php:46;154;170;216
+#, fuzzy
+msgid "Database"
+msgstr "O nome de usuário para conexão ao banco de dados"
+
+#: Controller/InstallController.php:46;154
+#: Controller/UsersController.php:123;124
+#: Controller/Component/PluginComponent.php:151;152
+#, fuzzy
+msgid "to save"
+msgstr "Salvar"
+
+#: Controller/InstallController.php:46;154
+#, fuzzy
+msgid "data into the database"
+msgstr ""
+"Impossível setar configurações do banco de dados. Cheque sua conexão com o "
+"banco de dados"
 
 #: Controller/InstallController.php:113
 msgid "Manager"
@@ -64,16 +109,19 @@ msgstr "Cliente"
 msgid "User"
 msgstr "Usuário"
 
-#: Controller/InstallController.php:154
-msgid "Unable to set config properties to database. Try again."
-msgstr "Impossível setar as configurações do banco de dados. Tente novamente"
+#: Controller/InstallController.php:170
+#, fuzzy
+msgid "to create"
+msgstr "Impossível criar o arquivo de configuração de banco de dados"
 
 #: Controller/InstallController.php:170
-msgid "Unable to create admin user. Try again."
+#, fuzzy
+msgid "the admin user"
 msgstr "Impossível criar o usuário admin. Tente novamente"
 
 #: Controller/InstallController.php:174
-msgid "Mahoney successfully installed. Login to continue."
+#, fuzzy
+msgid "Mahoney successfully installed! Login to continue."
 msgstr "Mahoney instalado com sucesso. Faça login para continuar"
 
 #: Controller/InstallController.php:195
@@ -81,232 +129,291 @@ msgid "This field must not be empty."
 msgstr "Este campo não pode ficar vazio"
 
 #: Controller/InstallController.php:198
-msgid "The characters length for this field must be between 4 and 25."
+#, fuzzy
+msgid "The characters length for this field must be between %f and %t."
 msgstr "A sequencia de caracteres deve conter entre 4 e 25 caracteres"
 
 #: Controller/InstallController.php:202
-msgid "Put a valid email address."
+msgid "This field requires a valid %f."
+msgstr ""
+
+#: Controller/InstallController.php:202
+#, fuzzy
+msgid "email address"
 msgstr "Coloque um endereço de email válido"
 
-#: Controller/InstallController.php:215
-msgid "Unable to connect to database."
+#: Controller/InstallController.php:216 Controller/UsersController.php:194
+#, fuzzy
+msgid "to connect"
 msgstr "Impossível conectar ao banco de dados"
 
-#: Controller/InstallController.php:228
-msgid "Unable to create database config files."
+#: Controller/InstallController.php:216
+#, fuzzy
+msgid "to database"
+msgstr "O nome de usuário para conexão ao banco de dados"
+
+#: Controller/InstallController.php:229
+#: Controller/Component/FileManagerComponent.php:61;65;86
+msgid "Component"
+msgstr ""
+
+#: Controller/InstallController.php:229
+#: Controller/Component/FileManagerComponent.php:61;65
+msgid "to template"
+msgstr ""
+
+#: Controller/InstallController.php:229
+#, fuzzy
+msgid "the database configuration files"
 msgstr "Impossível criar o arquivo de configuração de banco de dados"
 
-#: Controller/InstallController.php:238
+#: Controller/InstallController.php:239
 msgid "Unable to create security tokens in core file."
 msgstr "Impossível criar os tokens de segurança no arquivo de core"
 
-#: Controller/PluginsController.php:24
-msgid "was uninstalled successfully"
-msgstr "foi desinstalado com sucesso"
+#: Controller/PluginsController.php:24;48;65;84;109;134
+#: Controller/UsersController.php:120;142;168;191
+msgid "[%s] (User: %s; IP: %s) The '%s' %s was %s with success."
+msgstr ""
 
-#: Controller/PluginsController.php:26;75
-msgid "Error at disable plugin"
-msgstr "Erro ao desativar o plugin"
-
-#: Controller/PluginsController.php:26;75;103
-msgid "the error was the following"
-msgstr "o erro foi seguinte"
-
-#: Controller/PluginsController.php:30;49;60;78
-msgid "You cannot disable"
-msgstr "Você não pode desativar"
-
-#: Controller/PluginsController.php:46
-msgid "Error trying to reset the plugin named"
-msgstr "Erro tentando resetar o plugin"
-
-#: Controller/PluginsController.php:103
-msgid "Error at enable plugin"
-msgstr "Erro ao ativar o plugin"
-
-#: Controller/PluginsController.php:106
-msgid "You cannot enable"
-msgstr "Você não pode ativar"
-
-#: Controller/PluginsController.php:116
-msgid "deleted the plugin"
+#: Controller/PluginsController.php:24;27;32;48;51;55;65;69;84;87;91;109;112;120;124;134;137
+#: Controller/Component/PluginComponent.php:80;108;132;151;202;215
+#, fuzzy
+msgid "Plugin"
 msgstr "deletou o plugin"
 
-#: Controller/PluginsController.php:117
-msgid "Plugin named"
-msgstr "Plugin"
+#: Controller/PluginsController.php:24;25;27;28;32;33;48;49;51;52;55;56;65;66;69;70;84;85;87;88;91;92;109;110;112;113;120;121;124;125;134;135;137;138
+#: Controller/Component/PluginComponent.php:80;132;133;202;203;215;216
+#, fuzzy
+msgid "plugin"
+msgstr "deletou o plugin"
 
-#: Controller/PluginsController.php:117
-msgid "deleted successfully."
-msgstr "deletado com sucesso"
+#: Controller/PluginsController.php:24;25
+#, fuzzy
+msgid "uninstalled"
+msgstr "foi desinstalado com sucesso"
 
-#: Controller/PluginsController.php:119
-msgid "You cannot delete"
-msgstr "Você não pode deletar"
+#: Controller/PluginsController.php:25;49;66;85;110;135
+#: Controller/UsersController.php:121;143;169
+msgid "The '%s' %s was %s with success."
+msgstr ""
 
-#: Controller/PluginsController.php:131
-msgid " installed with success"
-msgstr "instalado com sucesso"
+#: Controller/PluginsController.php:27;28;32;33
+#: Controller/Component/PluginComponent.php:202;203;215;216
+#, fuzzy
+msgid "to uninstall"
+msgstr "Desinstalar"
 
-#: Controller/PluginsController.php:133
-msgid "Cannot install "
-msgstr "Impossível instalar"
+#: Controller/PluginsController.php:28;33;52;56;70;88;92;113;121;125;138
+#: Controller/UsersController.php:20;124;147;165;172
+#: Controller/Component/FileManagerComponent.php:87
+#: Controller/Component/MailerComponent.php:44
+#: Controller/Component/PluginComponent.php:109;133;152;203;216
+#, fuzzy
+msgid "Error trying %s the '%s' %s."
+msgstr "Erro tentando resetar o plugin"
 
-#: Controller/PluginsController.php:156 View/Plugins/index.ctp:2;6
+#: Controller/PluginsController.php:32;55;69;91;124;137
+#: Controller/UsersController.php:19;123;146;164;171
+msgid "Access Denied"
+msgstr ""
+
+#: Controller/PluginsController.php:48;49
+#, fuzzy
+msgid "reseted"
+msgstr "Resetar"
+
+#: Controller/PluginsController.php:51;52;55;56
+#, fuzzy
+msgid "to reset"
+msgstr "Resetar"
+
+#: Controller/PluginsController.php:65;66
+#, fuzzy
+msgid "updated"
+msgstr "Sua postagem foi atualizada"
+
+#: Controller/PluginsController.php:69;70
+#, fuzzy
+msgid "to update"
+msgstr "Atualizar"
+
+#: Controller/PluginsController.php:84;85
+#, fuzzy
+msgid "disabled"
+msgstr "Desativar"
+
+#: Controller/PluginsController.php:87;88;91;92
+#, fuzzy
+msgid "to disable"
+msgstr "Desativar"
+
+#: Controller/PluginsController.php:109;110
+#, fuzzy
+msgid "enabled"
+msgstr "Ativar"
+
+#: Controller/PluginsController.php:112;113;120;121;124;125
+#, fuzzy
+msgid "to enable"
+msgstr "Ativar"
+
+#: Controller/PluginsController.php:134;135
+#: Controller/UsersController.php:168;169
+#, fuzzy
+msgid "deleted"
+msgstr "A categoria não pode ser deletada"
+
+#: Controller/PluginsController.php:137;138
+#: Controller/UsersController.php:164;165;171;172
+#: Controller/Component/FileManagerComponent.php:86;87
+#, fuzzy
+msgid "to delete"
+msgstr "Deletar"
+
+#: Controller/PluginsController.php:175 View/Plugins/index.ctp:2;6
 #: View/Plugins/search.ctp:2
 msgid "Plugins"
 msgstr "Plugins"
 
-#: Controller/UsersController.php:19
-msgid "You cannot modify users with higher role than you"
-msgstr "Você não pode modificar usuários com maior hierarquia que você"
-
-#: Controller/UsersController.php:48
-msgid "Successfully batch"
-msgstr "Ação em lotes concluída"
-
-#: Controller/UsersController.php:48
-msgid "users"
-msgstr "usuários"
-
-#: Controller/UsersController.php:51
-msgid "Cannot batch"
-msgstr "Não foi possível executar a ação em lotes"
-
-#: Controller/UsersController.php:51
-msgid "Try again"
-msgstr "Tente novamente"
-
-#: Controller/UsersController.php:55
-msgid "You must select at least 1 user to batch."
-msgstr "Você precisa selecionar ao menos 1 usuário para ações em lote"
-
-#: Controller/UsersController.php:62 View/Users/recover.ctp:8
-msgid "Password recovery"
-msgstr "Recuperação de senha"
-
-#: Controller/UsersController.php:92
-msgid "About password change"
-msgstr "Sobre a mudança de senha"
-
-#: Controller/UsersController.php:94
-msgid "Thank you! We've sent you an email with the next steps."
-msgstr "Obrigado! Mandamos um email à você com os próximos passos à seguir"
-
-#: Controller/UsersController.php:99
-msgid ""
-"The email with steps to recover your password cannot be sent. Please try "
-"again."
-msgstr ""
-"O email com os dados de recuperação não puderam ser enviados. Tente novamente"
-
-#: Controller/UsersController.php:103
-msgid "Your token cannot be generated right now. Please try again."
-msgstr "Seu token não pode ser gerado agora. Tente novamente"
-
-#: Controller/UsersController.php:108
-msgid "Thank you for your request. Check your email to know how to proceed."
-msgstr ""
-"Obrigado por sua requisição. Cheque seu email para saber como prosseguir"
-
-#: Controller/UsersController.php:129
-msgid "Password successfully recovered. Login to continue."
-msgstr "Senha recuperada com sucesso. Logue-se para continuar"
-
-#: Controller/UsersController.php:133;136
-msgid "There was a problem saving your new password. Can you recover it again?"
-msgstr "Houve um problema salvando sua senha. Tente novamente"
-
-#: Controller/UsersController.php:139
-msgid "Sorry, we can't find any request with that token code."
-msgstr "Desculpe, não encontramos nenhuma requisição com esse token"
-
-#: Controller/UsersController.php:158 View/Elements/dashWidget.ctp:3
-#: View/Users/add.ctp:2 View/Users/detail.ctp:2 View/Users/edit.ctp:2
-#: View/Users/index.ctp:2;6 View/Users/recover.ctp:3 View/Users/roles.ctp:2
+#: Controller/UsersController.php:19;48;52;120;123;142;146;164;168;171;191;194
+#: View/Elements/dashWidget.ctp:3;71;73 View/Users/add.ctp:2;3
+#: View/Users/detail.ctp:2 View/Users/edit.ctp:2 View/Users/index.ctp:2
+#: View/Users/recover.ctp:3 View/Users/roles.ctp:2
 msgid "Users"
 msgstr "Usuários"
 
-#: Controller/UsersController.php:184;244;271
-msgid "Invalid user"
-msgstr "Usuário inválido"
+#: Controller/UsersController.php:19;20
+#, fuzzy
+msgid "to modify"
+msgstr "Você não pode modificar usuários com maior hierarquia que você"
 
-#: Controller/UsersController.php:187
+#: Controller/UsersController.php:19;20;95;120;121;123;124;137;142;143;146;147;161;164;165;168;169;171;172;191;194
+#, fuzzy
+msgid "user"
+msgstr "Usuário"
+
+#: Controller/UsersController.php:48
+msgid "[%s] (User: %s; IP: %s) The '%s' batch has modified %s occurrences."
+msgstr ""
+
+#: Controller/UsersController.php:49
+msgid "The '%s' batch has modified %s occurrecies."
+msgstr ""
+
+#: Controller/UsersController.php:52;53
+msgid "%s occurrences"
+msgstr ""
+
+#: Controller/UsersController.php:53
+msgid "Error trying to batch '%s' %s."
+msgstr ""
+
+#: Controller/UsersController.php:71 View/Users/index.ctp:6
+msgid "List Users"
+msgstr "Listar"
+
+#: Controller/UsersController.php:95;137;161
+#, fuzzy
+msgid "Invalid %s"
+msgstr "Categoria inválida"
+
+#: Controller/UsersController.php:99
 msgid "profile"
 msgstr "perfil"
 
-#: Controller/UsersController.php:203 View/Elements/dashWidget.ctp:69
-#: View/Users/roles.ctp:3;6
-msgid "Manage roles"
+#: Controller/UsersController.php:106 View/Users/roles.ctp:3;6
+msgid "Manage Roles"
 msgstr "Níveis"
 
-#: Controller/UsersController.php:220 View/Elements/dashWidget.ctp:69
-#: View/Users/add.ctp:3 View/Users/index.ctp:149
-msgid "Add user"
+#: Controller/UsersController.php:113
+msgid "Add Users"
 msgstr "Adicionar usuário"
 
-#: Controller/UsersController.php:228
-msgid "The user has been saved"
-msgstr "O usuário foi salvo"
+#: Controller/UsersController.php:120;121
+msgid "added"
+msgstr ""
 
-#: Controller/UsersController.php:231
-msgid "The user could not be saved. Please, try again."
-msgstr "O usuário não pode ser salvo. Tente novamente"
-
-#: Controller/UsersController.php:250
-msgid "The user has been edited"
+#: Controller/UsersController.php:142;143
+#, fuzzy
+msgid "edited"
 msgstr "O usuário foi editado"
 
-#: Controller/UsersController.php:253
-msgid "The user could not be edited. Please, try again."
-msgstr "O usuário não pode ser editado. Tente novamente"
+#: Controller/UsersController.php:146;147
+#, fuzzy
+msgid "to edit"
+msgstr "Editar"
 
-#: Controller/UsersController.php:268
-msgid "Are you freaking insane? You cannot delete god."
-msgstr "Você está maluco? Você não pode deletar Deus"
-
-#: Controller/UsersController.php:275
-msgid "User deleted"
-msgstr "Usuário deletado"
-
-#: Controller/UsersController.php:277
-msgid "User was not deleted"
-msgstr "Usuário deletado"
-
-#: Controller/UsersController.php:280
+#: Controller/UsersController.php:175
 msgid "It was good fight by your side young padawan."
 msgstr "Foi bom lutar ao seu lado jovem padawan"
 
-#: Controller/UsersController.php:300
-msgid "Invalid username or password, try again"
+#: Controller/UsersController.php:191
+msgid "connected"
+msgstr ""
+
+#: Controller/UsersController.php:194;195
+#, fuzzy
+msgid "Invalid username or password"
 msgstr "Usuário ou senha inválidos. Tente novamente"
 
-#: Controller/Component/ConfigurerComponent.php:33
-msgid ""
-"Unable to set config data from database. Check your database connection."
+#: Controller/Component/ConfigurerComponent.php:32;33
+msgid "to apply"
 msgstr ""
-"Impossível setar configurações do banco de dados. Cheque sua conexão com o "
-"banco de dados"
 
-#: Controller/Component/FileManagerComponent.php:36
-msgid "Cannot extract the zip."
-msgstr "Impossível extrair o arquivo zip"
+#: Controller/Component/ConfigurerComponent.php:32;33
+#, fuzzy
+msgid "to the environment"
+msgstr ""
+"O nome da máquina. Para configuração baseada em ambiente de desenvolvimento"
 
-#: Controller/Component/PluginComponent.php:148;210
-msgid "There is an error trying to save schema for"
+#: Controller/Component/ConfigurerComponent.php:33
+msgid "Error trying %s the '%s' %s. Details: %e."
+msgstr ""
+
+#: Controller/Component/FileManagerComponent.php:61;65
+#, fuzzy
+msgid "file"
+msgstr "Impossível criar os tokens de segurança no arquivo de core"
+
+#: Controller/Component/FileManagerComponent.php:86;87
+msgid "file/folder"
+msgstr ""
+
+#: Controller/Component/MailerComponent.php:43
+msgid "Mailer"
+msgstr ""
+
+#: Controller/Component/MailerComponent.php:43;44
+msgid "to send"
+msgstr ""
+
+#: Controller/Component/MailerComponent.php:43;44
+#, fuzzy
+msgid "email"
+msgstr "Email:"
+
+#: Controller/Component/PluginComponent.php:80
+msgid "to retrieve"
+msgstr ""
+
+#: Controller/Component/PluginComponent.php:80
+#, fuzzy
+msgid "%s migration schema"
 msgstr "Houve um erro ao salvar o esquema para"
 
-#: Controller/Component/PluginComponent.php:148;198;210
-msgid "The error message was"
-msgstr "O erro foi"
+#: Controller/Component/PluginComponent.php:108;109
+msgid "path"
+msgstr ""
 
-#: Controller/Component/PluginComponent.php:198
-msgid "There is an error trying to uninstall"
-msgstr "Houve um erro ao tentar desinstalar"
+#: Controller/Component/PluginComponent.php:132;133
+msgid "to migrate"
+msgstr ""
 
-#: View/Config/index.ctp:2 View/Install/index.ctp:2
-msgid "Config"
-msgstr "Configurar"
+#: Controller/Component/PluginComponent.php:151;152
+#, fuzzy
+msgid "migration schema"
+msgstr "Houve um erro ao salvar o esquema para"
 
 #: View/Dashboard/index.ctp:4
 msgid "Welcome to your dashboard!"
@@ -364,40 +471,56 @@ msgstr "Senha"
 msgid "Role"
 msgstr "Nível"
 
-#: View/Elements/dashWidget.ctp:63
+#: View/Elements/dashWidget.ctp:65
 msgid "Add"
 msgstr "Adicionar"
 
-#: View/Elements/dashWidget.ctp:69
-msgid "List users"
-msgstr "Listar"
+#: View/Elements/dashWidget.ctp:71
+#, fuzzy
+msgid "List %s"
+msgstr "Listar postagens"
 
-#: View/Elements/dashWidget.ctp:76
+#: View/Elements/dashWidget.ctp:72
+#, fuzzy
+msgid "Manage %s"
+msgstr "Gerenciar hierarquia"
+
+#: View/Elements/dashWidget.ctp:72
+#, fuzzy
+msgid "Roles"
+msgstr "Gerenciar hierarquia"
+
+#: View/Elements/dashWidget.ctp:73 View/Users/add.ctp:3
+#, fuzzy
+msgid "Add %s"
+msgstr "Adicionar"
+
+#: View/Elements/dashWidget.ctp:80
 msgid "Activity Log"
 msgstr "Log de atividade"
 
-#: View/Elements/dashWidget.ctp:79 View/Plugins/index.ctp:8
+#: View/Elements/dashWidget.ctp:83 View/Plugins/index.ctp:8
 #: View/Plugins/search.ctp:3
 msgid "Search"
 msgstr "Procura"
 
-#: View/Elements/dashWidget.ctp:82
+#: View/Elements/dashWidget.ctp:86
 msgid "Showing the last 100 activities"
 msgstr "Mostrando últimas 100 atividades"
 
-#: View/Elements/dashWidget.ctp:86
+#: View/Elements/dashWidget.ctp:90
 msgid "There is no activity yet."
 msgstr "Não há atividades no momento"
 
-#: View/Elements/dashWidget.ctp:94
+#: View/Elements/dashWidget.ctp:98
 msgid "Date"
 msgstr "Data"
 
-#: View/Elements/dashWidget.ctp:97
+#: View/Elements/dashWidget.ctp:101
 msgid "Activity"
 msgstr "Atividade"
 
-#: View/Elements/dashWidget.ctp:145
+#: View/Elements/dashWidget.ctp:149
 msgid "Clean Activity Log"
 msgstr "Limpar log de atividade"
 
@@ -413,16 +536,12 @@ msgstr "Perdeu sua senha?"
 msgid "Need help?"
 msgstr "Precisa de ajuda?"
 
-#: View/Elements/loginForm.ctp:17
-msgid "contact"
-msgstr "Contato"
-
 #: View/Elements/loginForm.ctp:18
 msgid "Sign in"
 msgstr "Entrar"
 
 #: View/Elements/userForm.ctp:39;41 View/Install/index.ctp:52
-#: View/Users/index.ctp:74
+#: View/Users/index.ctp:50;74
 msgid "Name"
 msgstr "Nome"
 
@@ -689,10 +808,6 @@ msgstr "Com selecionados:"
 msgid "Select"
 msgstr "Selecione"
 
-#: View/Users/index.ctp:50
-msgid "Name:"
-msgstr "Nome"
-
 #: View/Users/index.ctp:54
 msgid "Filter posts"
 msgstr "Filtrar postagens"
@@ -713,8 +828,17 @@ msgstr "Este usuário requer uma senha para resetar sua senha"
 msgid "Recover password"
 msgstr "Recuperar senha"
 
+#: View/Users/index.ctp:149
+msgid "Add user"
+msgstr "Adicionar usuário"
+
 #: View/Users/recover.ctp:4
-msgid "Password recover"
+#, fuzzy
+msgid "Password Recover"
+msgstr "Recuperação de senha"
+
+#: View/Users/recover.ctp:8
+msgid "Password recovery"
 msgstr "Recuperação de senha"
 
 #: View/Users/recover.ctp:9
@@ -786,17 +910,141 @@ msgstr "A senha deve conter 5 ou mais caracteres"
 msgid "Please enter a valid role"
 msgstr "Por favor digite um nível existente"
 
+#~ msgid "Unable to install database. Try again."
+#~ msgstr "Impossível instalar o banco de dados. Tente novamente"
+
+#~ msgid "Unable to set config properties to database. Try again."
+#~ msgstr ""
+#~ "Impossível setar as configurações do banco de dados. Tente novamente"
+
+#~ msgid "Unable to create admin user. Try again."
+#~ msgstr "Impossível criar o usuário admin. Tente novamente"
+
+#~ msgid "was uninstalled successfully"
+#~ msgstr "foi desinstalado com sucesso"
+
+#~ msgid "Error at disable plugin"
+#~ msgstr "Erro ao desativar o plugin"
+
+#~ msgid "the error was the following"
+#~ msgstr "o erro foi seguinte"
+
+#~ msgid "You cannot disable"
+#~ msgstr "Você não pode desativar"
+
+#~ msgid "Error at enable plugin"
+#~ msgstr "Erro ao ativar o plugin"
+
+#~ msgid "You cannot enable"
+#~ msgstr "Você não pode ativar"
+
+#~ msgid "deleted the plugin"
+#~ msgstr "deletou o plugin"
+
+#~ msgid "Plugin named"
+#~ msgstr "Plugin"
+
+#~ msgid "deleted successfully."
+#~ msgstr "deletado com sucesso"
+
+#~ msgid "You cannot delete"
+#~ msgstr "Você não pode deletar"
+
+#~ msgid " installed with success"
+#~ msgstr "instalado com sucesso"
+
+#~ msgid "Cannot install "
+#~ msgstr "Impossível instalar"
+
+#~ msgid "You cannot modify users with higher role than you"
+#~ msgstr "Você não pode modificar usuários com maior hierarquia que você"
+
+#~ msgid "Successfully batch"
+#~ msgstr "Ação em lotes concluída"
+
+#~ msgid "Cannot batch"
+#~ msgstr "Não foi possível executar a ação em lotes"
+
+#~ msgid "Try again"
+#~ msgstr "Tente novamente"
+
+#~ msgid "You must select at least 1 user to batch."
+#~ msgstr "Você precisa selecionar ao menos 1 usuário para ações em lote"
+
+#~ msgid "About password change"
+#~ msgstr "Sobre a mudança de senha"
+
+#~ msgid "Thank you! We've sent you an email with the next steps."
+#~ msgstr "Obrigado! Mandamos um email à você com os próximos passos à seguir"
+
+#~ msgid ""
+#~ "The email with steps to recover your password cannot be sent. Please try "
+#~ "again."
+#~ msgstr ""
+#~ "O email com os dados de recuperação não puderam ser enviados. Tente "
+#~ "novamente"
+
+#~ msgid "Your token cannot be generated right now. Please try again."
+#~ msgstr "Seu token não pode ser gerado agora. Tente novamente"
+
+#~ msgid "Thank you for your request. Check your email to know how to proceed."
+#~ msgstr ""
+#~ "Obrigado por sua requisição. Cheque seu email para saber como prosseguir"
+
+#~ msgid "Password successfully recovered. Login to continue."
+#~ msgstr "Senha recuperada com sucesso. Logue-se para continuar"
+
+#~ msgid ""
+#~ "There was a problem saving your new password. Can you recover it again?"
+#~ msgstr "Houve um problema salvando sua senha. Tente novamente"
+
+#~ msgid "Sorry, we can't find any request with that token code."
+#~ msgstr "Desculpe, não encontramos nenhuma requisição com esse token"
+
+#~ msgid "The user has been saved"
+#~ msgstr "O usuário foi salvo"
+
+#~ msgid "The user could not be saved. Please, try again."
+#~ msgstr "O usuário não pode ser salvo. Tente novamente"
+
+#~ msgid "The user has been edited"
+#~ msgstr "O usuário foi editado"
+
+#~ msgid "The user could not be edited. Please, try again."
+#~ msgstr "O usuário não pode ser editado. Tente novamente"
+
+#~ msgid "Are you freaking insane? You cannot delete god."
+#~ msgstr "Você está maluco? Você não pode deletar Deus"
+
+#~ msgid "User was not deleted"
+#~ msgstr "Usuário deletado"
+
+#~ msgid ""
+#~ "Unable to set config data from database. Check your database connection."
+#~ msgstr ""
+#~ "Impossível setar configurações do banco de dados. Cheque sua conexão com "
+#~ "o banco de dados"
+
+#~ msgid "Cannot extract the zip."
+#~ msgstr "Impossível extrair o arquivo zip"
+
+#~ msgid "There is an error trying to save schema for"
+#~ msgstr "Houve um erro ao salvar o esquema para"
+
+#~ msgid "The error message was"
+#~ msgstr "O erro foi"
+
+#~ msgid "There is an error trying to uninstall"
+#~ msgstr "Houve um erro ao tentar desinstalar"
+
+#~ msgid "contact"
+#~ msgstr "Contato"
+
+#~ msgid "Name:"
+#~ msgstr "Nome"
+
 #~ msgid "Email:"
 #~ msgstr "Email"
 
 #~ msgid "Options"
 #~ msgstr "Opções"
-
-#~ msgid "List Users"
-#~ msgstr "Listar"
-
-#~ msgid "Add Users"
-#~ msgstr "Adicionar usuário"
-
-#~ msgid "Manage Roles"
-#~ msgstr "Níveis"

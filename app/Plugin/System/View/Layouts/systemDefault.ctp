@@ -69,7 +69,7 @@
                         <p class="text-muted"><?= "<a href=\"".$mahoneyPlugins[0]["data"]["homepage"]."\" target=\"_blank\">Mahoney</a> " . $mahoneyPlugins[0]["data"]["version"] . " - " . date("Y"); ?></p>
                     </div>
                     <div class="col-xs-6">
-                       <p class="text-muted text-right"><?= $this->Html->image('System.cake.power.gif') ?> | <?= $this->Html->link(__d("system","help"), array("plugin" => "system", "controller" => "docs")); ?> | <?= $this->Html->link(__d("system","privacy"), array("plugin" => "system", "controller" => "docs", "action" => "#privacy")); ?> | <?= $this->Html->link(__d("system","about"), array("plugin" => "system", "controller" => "docs", "action" => "#about")); ?></p>
+                       <p class="text-muted text-right"><?= $this->Html->image('System.cake.power.gif') ?> | <?= $this->Html->link(sprintf(__d("system","help")), array("plugin" => "system", "controller" => "docs")); ?> | <?= $this->Html->link(sprintf(__d("system","privacy")), array("plugin" => "system", "controller" => "docs", "action" => "#privacy")); ?> | <?= $this->Html->link(sprintf(__d("system","about")), array("plugin" => "system", "controller" => "docs", "action" => "#about")); ?></p>
                     </div>
                 </div>
             </div>

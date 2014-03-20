@@ -26,7 +26,7 @@ class InstallController extends SystemAppController {
 
     public function index($type = null) {
         
-        $pageTitle = __d('system','Installation');
+        $pageTitle = __d("system","Installation");
         $this->set('pageTitle', $pageTitle);
         
         if (file_exists(APP . 'Config' . DS . 'installed')):
@@ -43,7 +43,7 @@ class InstallController extends SystemAppController {
                     $this->uses = array('System.Config', 'System.User');
 
                     if (!$this->Plugin->update("System")):
-                        $this->Session->setFlash(__d("system","Unable to install database. Try again."));
+                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to save"), sprintf(__d("system","data into the database")), $this->ModelName->invalidFields()));
                         $this->redirect("/install");
                     endif;
 
@@ -110,7 +110,7 @@ class InstallController extends SystemAppController {
                                     "Config" => array(
                                         "plugin" => "system",
                                         "section" => "role",
-                                        "type" => __d("system","Manager"),
+                                        "type" => sprintf(__d("system","Manager")),
                                         "value" => "5"
                                     )
                                 ),
@@ -118,7 +118,7 @@ class InstallController extends SystemAppController {
                                     "Config" => array(
                                         "plugin" => "system",
                                         "section" => "role",
-                                        "type" => __d("system","Admin"),
+                                        "type" => sprintf(__d("system","Admin")),
                                         "value" => "4"
                                     )
                                 ),
@@ -126,7 +126,7 @@ class InstallController extends SystemAppController {
                                     "Config" => array(
                                         "plugin" => "system",
                                         "section" => "role",
-                                        "type" => __d("system","Employee"),
+                                        "type" => sprintf(__d("system","Employee")),
                                         "value" => "3"
                                     )
                                 ),
@@ -134,7 +134,7 @@ class InstallController extends SystemAppController {
                                     "Config" => array(
                                         "plugin" => "system",
                                         "section" => "role",
-                                        "type" => __d("system","Client"),
+                                        "type" => sprintf(__d("system","Client")),
                                         "value" => "2"
                                     )
                                 ),
@@ -142,7 +142,7 @@ class InstallController extends SystemAppController {
                                     "Config" => array(
                                         "plugin" => "system",
                                         "section" => "role",
-                                        "type" => __d("system","User"),
+                                        "type" => sprintf(__d("system","User")),
                                         "value" => "1"
                                     )
                                 )
@@ -151,7 +151,7 @@ class InstallController extends SystemAppController {
                         endif;
                     endforeach;
                     if (!$this->Config->saveMany($putConfig)):
-                        $this->Session->setFlash(__d("system","Unable to set config properties to database. Try again."));
+                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to save"), sprintf(__d("system","data into the database")), $this->Config->invalidFields()));
                         $this->redirect("/install");
                     endif;
 
@@ -167,11 +167,11 @@ class InstallController extends SystemAppController {
                         )
                     );
                     if (!$this->User->save($putUser)):
-                        $this->Session->setFlash(__d("system","Unable to create admin user. Try again."));
+                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to create"), sprintf(__d("system","the admin user")), $this->Config->invalidFields()));
                         $this->redirect("/install");
                     endif;
 
-                    $this->Session->setFlash(__d("system","Mahoney successfully installed. Login to continue."));
+                    $this->Session->setFlash(sprintf(__d("system","Mahoney successfully installed! Login to continue.")));
 
                     $fp = fopen(APP . 'Config' . DS . 'installed', "wb");
                     fclose($fp);
@@ -195,11 +195,11 @@ class InstallController extends SystemAppController {
                                 $inputErrors[$key] = __d("system","This field must not be empty.");
                             endif;
                             if (strlen($value) > 25 || strlen($value) < 4):
-                                $inputErrors[$key] = __d("system","The characters length for this field must be between 4 and 25.");
+                                $inputErrors[$key] = sprintf(__d("system","The characters length for this field must be between %f and %t."), "4","25");
                             endif;
                             if ($key == "email"):
                                 if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                                    $inputErrors[$key] = __d("system","Put a valid email address.");
+                                    $inputErrors[$key] = sprintf(__d("system","This field requires a valid %f."), __d("system","email address"));
                                 }
                             endif;
                         endif;
@@ -212,7 +212,8 @@ class InstallController extends SystemAppController {
                         try {
                             $dbh = new PDO('mysql:host=' . $this->request->data["Config"]["databasehost"] . ';dbname=' . $this->request->data["Config"]["databasename"], $this->request->data["Config"]["databaseuser"], $this->request->data["Config"]["databasepassword"]);
                         } catch (PDOException $ex) {
-                            array_push($formErrors, __d("system","Unable to connect to database."));
+                            
+                            array_push($formErrors, sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to connect"), sprintf(__d("system","to database")), $ex->getMessage()));
                         }
 
                         try {
@@ -225,7 +226,7 @@ class InstallController extends SystemAppController {
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . 'default.php');
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . $this->request->data["Config"]["hostname"] . '.php');
                         } catch (Exception $ex) {
-                            array_push($formErrors, __d("system","Unable to create database config files."));
+                            array_push($formErrors, sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to template"), sprintf(__d("system","the database configuration files")), $ex->getMessage()));
                         }
 
                         try {

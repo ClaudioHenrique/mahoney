@@ -18,10 +18,10 @@ class DashboardController extends SystemAppController {
         
         if (AuthComponent::user()):
             $render = "index";
-            $pageTitle = __d('system','Dashboard');
+            $pageTitle = __d("system","Dashboard");
         else:
             $render = "/Users/login";
-            $pageTitle = __d('system','Login');
+            $pageTitle = __d("system","Login");
         endif;
         
         $this->set(compact('pageTitle'));

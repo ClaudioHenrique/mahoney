@@ -40,8 +40,8 @@ class MailerComponent extends Component {
             $this->Email->subject($subject);
             $this->Email->send();
         } catch(Exception $ex) {
-            CakeLog::write('activity', "Error: Trying to send email for '" . $to . "'.");
-            throw new Exception($ex->getMessage());
+            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), AuthComponent::user()["username"], sprintf(__d("system","Mailer")), __d("system", "to send"), $to, sprintf(__d("system","email")), $ex->getMessage()));
+            throw new Exception(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to send"), $to, __d("system","email")));
         }
     }
     
