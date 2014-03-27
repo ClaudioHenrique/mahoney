@@ -21,15 +21,15 @@ class PluginsController extends SystemAppController {
 
             try {
                 unlink(str_replace("{plugin}", $plugin, $this->Plugin->ACTIVE_PLUGIN_FILE));
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], $plugin, sprintf(__d("system","plugin")), __d("system", "uninstalled")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], $plugin, sprintf(__d("system","plugin")), __d("system", "uninstalled")));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $plugin, sprintf(__d("system","plugin")), __d("system", "uninstalled")));
             } catch (Exception $ex) {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to uninstall"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to uninstall"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
                 $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to uninstall"), $plugin, __d("system","plugin")));
             }
 
         else:
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to uninstall"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to uninstall"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
             $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to uninstall"), $plugin, __d("system","plugin")));
         endif;
         $this->redirect($this->referer());
@@ -45,14 +45,14 @@ class PluginsController extends SystemAppController {
             try {
                 $this->Plugin->uninstall($plugin);
                 $this->Plugin->update($plugin);
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "reseted")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "reseted")));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $plugin, sprintf(__d("system","plugin")), __d("system", "reseted")));
             } catch (Exception $ex) {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to reset"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to reset"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
                 $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to reset"), $plugin, __d("system","plugin")));
             }
         else:
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to reset"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to reset"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
             $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to reset"), $plugin, __d("system","plugin")));
         endif;
         $this->redirect($this->referer());
@@ -62,11 +62,11 @@ class PluginsController extends SystemAppController {
         if (!in_array($plugin, $this->Plugin->DENY_LIST) && is_dir($this->Plugin->PLUGIN_FOLDER . $plugin)):
             if ($this->Plugin->isOutdated($plugin)):
                 $this->Plugin->update($plugin);
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "updated")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "updated")));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $plugin, sprintf(__d("system","plugin")), __d("system", "updated")));
             endif;
         else:
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to update"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to update"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
             $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to update"), $plugin, __d("system","plugin")));
         endif;
         $this->redirect($this->referer());
@@ -81,14 +81,14 @@ class PluginsController extends SystemAppController {
         if (!in_array($plugin, $this->Plugin->DENY_LIST) && is_dir($this->Plugin->PLUGIN_FOLDER . $plugin)):
             try {
                 unlink(str_replace("{plugin}", $plugin, $this->Plugin->ACTIVE_PLUGIN_FILE));
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "disabled")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "disabled")));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $plugin, sprintf(__d("system","plugin")), __d("system", "disabled")));
             } catch (Exception $ex) {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to disable"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to disable"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
                 $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to disable"), $plugin, __d("system","plugin")));
             }
         else:
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to disable"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to disable"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
             $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to disable"), $plugin, __d("system","plugin")));
         endif;
         $this->redirect($this->referer());
@@ -106,10 +106,10 @@ class PluginsController extends SystemAppController {
                 if ($this->Plugin->isOutdated($plugin)):
                     try {
                         $this->Plugin->update($plugin);
-                        CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "enabled")));
+                        //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "enabled")));
                         $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $plugin, sprintf(__d("system","plugin")), __d("system", "enabled")));
                     } catch(Exception $ex) {
-                        CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to enable"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                        //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to enable"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
                         $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to enable"), $plugin, __d("system","plugin")));
                     }
                 endif;
@@ -117,11 +117,11 @@ class PluginsController extends SystemAppController {
                 $fp = fopen(str_replace("{plugin}", $plugin, $this->Plugin->ACTIVE_PLUGIN_FILE), "wb");
                 fclose($fp);
             } catch (Exception $ex) {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to enable"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to enable"), $plugin, sprintf(__d("system","plugin")), $ex->getMessage()));
                 $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to enable"), $plugin, __d("system","plugin")));
             }
         else:
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to enable"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to enable"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
             $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to enable"), $plugin, __d("system","plugin")));
         endif;
         $this->redirect($this->referer());
@@ -131,10 +131,10 @@ class PluginsController extends SystemAppController {
         if (!in_array($plugin, $this->Plugin->DENY_LIST) && is_dir($this->Plugin->PLUGIN_FOLDER . $plugin)):
             $this->Plugin->uninstall($plugin);
             $this->FileManager->recursiveExclude(APP . 'Plugin' . DS . $plugin);
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "deleted")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Plugin")), $plugin, sprintf(__d("system","plugin")), __d("system", "deleted")));
             $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $plugin, sprintf(__d("system","plugin")), __d("system", "deleted")));
         else:
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to delete"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Plugin")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to delete"), $plugin, sprintf(__d("system","plugin")), __d("system", "Access Denied")));
             $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to delete"), $plugin, __d("system","plugin")));
         endif;
         $this->redirect($this->referer());

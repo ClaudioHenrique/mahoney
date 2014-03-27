@@ -51,9 +51,9 @@ $this->Html->addCrumb(__d("system","Users"), array("plugin" => "system", "contro
         </div>
         <div class="col-sm-2 text-right">
             <p>
-            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Filter posts") ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-filter"></i> ' . sprintf(__d("system","Filter")), array('type'=>'submit')), array('plugin' => 'system','controller' => 'users', 'action' => 'index'), array("escape" => false)) ?></span>
+            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Filter users") ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-filter"></i> ' . sprintf(__d("system","Filter")), array('type'=>'submit','class'=>'gbutton')), array('plugin' => 'system','controller' => 'users', 'action' => 'index'), array("escape" => false)) ?></span>
             </p>
-            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Reset filter") ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-trash-o"></i> ' . sprintf(__d("system","Reset")), array('type'=>'button')), array('plugin' => 'system','controller' => 'users', 'action' => 'index'), array("escape" => false)) ?></span>
+            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Reset filter") ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-trash-o"></i> ' . sprintf(__d("system","Reset")), array('type'=>'button','class'=>'gbutton')), array('plugin' => 'system','controller' => 'users', 'action' => 'index'), array("escape" => false)) ?></span>
         </div>
     </div>
     <hr/>
@@ -111,7 +111,7 @@ $this->Html->addCrumb(__d("system","Users"), array("plugin" => "system", "contro
                     <?php
                     if(AuthComponent::user()['role'] >= $user['User']['role']):
                         ?>
-                    <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Edit") . " " . $user["User"]["username"]; ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-edit"></i>', array("type"=>"button")), array("plugin"=>"system","controller"=>"users","action"=>"edit", $user['User']['id']), array("escape" => false)); ?></span>
+                    <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Edit") . " " . $user["User"]["username"]; ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-edit"></i>', array("type"=>"button",'class'=>'gbutton')), array("plugin"=>"system","controller"=>"users","action"=>"edit", $user['User']['id']), array("escape" => false)); ?></span>
                         <?php
                     endif;
                     ?>
@@ -119,11 +119,11 @@ $this->Html->addCrumb(__d("system","Users"), array("plugin" => "system", "contro
                     if(AuthComponent::user()['role'] >= $user['User']['role']):
                         if($user['User']['email'] == null):
                             ?>
-                            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","This user requires an email to reset his password"); ?>"><?= $this->Form->button('<i class="fa fa-refresh"></i>', array('class' => 'disabled',"escape" => false)) ?></span>
+                            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","This user requires an email to reset his password"); ?>"><?= $this->Form->button('<i class="fa fa-refresh"></i>', array('class' => 'disabled gbutton',"escape" => false)) ?></span>
                             <?php
                         else:
                             ?>
-                            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Recover password"); ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-refresh"></i>', array("type"=>"button")), array("plugin"=>"system","controller"=>"users","action"=>"recover", $user['User']['id']), array("escape" => false)) ?></span>
+                            <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Recover password"); ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-refresh"></i>', array("type"=>"button",'class'=>'gbutton')), array("plugin"=>"system","controller"=>"users","action"=>"recover", $user['User']['id']), array("escape" => false)) ?></span>
                             <?php
                         endif;
                     endif;
@@ -131,7 +131,7 @@ $this->Html->addCrumb(__d("system","Users"), array("plugin" => "system", "contro
                     <?php
                     if(AuthComponent::user()['role'] >= $user['User']['role']):
                         ?>
-                        <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Delete") . " " . $user["User"]["username"]; ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-trash-o"></i>', array("type"=>"button")), array('plugin' => 'system','controller' => 'users', 'action' => 'delete', $user['User']['id']), array("escape" => false)) ?></span>
+                        <span class="tooltipElement" data-toggle="tooltip" data-original-title="<?= __d("system","Delete") . " " . $user["User"]["username"]; ?>"><?= $this->Html->link($this->Form->button('<i class="fa fa-trash-o"></i>', array("type"=>"button",'class'=>'gbutton')), array('plugin' => 'system','controller' => 'users', 'action' => 'delete', $user['User']['id']), array("escape" => false)) ?></span>
                         <?php
                     endif;
                     ?>

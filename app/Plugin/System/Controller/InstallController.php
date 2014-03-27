@@ -43,7 +43,7 @@ class InstallController extends SystemAppController {
                     $this->uses = array('System.Config', 'System.User');
 
                     if (!$this->Plugin->update("System")):
-                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to save"), sprintf(__d("system","data into the database")), $this->ModelName->invalidFields()));
+                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to save"), sprintf(__d("system","data into the database")), $this->ModelName->invalidFields()));
                         $this->redirect("/install");
                     endif;
 
@@ -151,7 +151,7 @@ class InstallController extends SystemAppController {
                         endif;
                     endforeach;
                     if (!$this->Config->saveMany($putConfig)):
-                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to save"), sprintf(__d("system","data into the database")), $this->Config->invalidFields()));
+                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to save"), sprintf(__d("system","data into the database")), $this->Config->invalidFields()));
                         $this->redirect("/install");
                     endif;
 
@@ -167,7 +167,7 @@ class InstallController extends SystemAppController {
                         )
                     );
                     if (!$this->User->save($putUser)):
-                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to create"), sprintf(__d("system","the admin user")), $this->Config->invalidFields()));
+                        $this->Session->setFlash(sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to create"), sprintf(__d("system","the admin user")), $this->Config->invalidFields()));
                         $this->redirect("/install");
                     endif;
 
@@ -213,7 +213,7 @@ class InstallController extends SystemAppController {
                             $dbh = new PDO('mysql:host=' . $this->request->data["Config"]["databasehost"] . ';dbname=' . $this->request->data["Config"]["databasename"], $this->request->data["Config"]["databaseuser"], $this->request->data["Config"]["databasepassword"]);
                         } catch (PDOException $ex) {
                             
-                            array_push($formErrors, sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to connect"), sprintf(__d("system","to database")), $ex->getMessage()));
+                            array_push($formErrors, sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Database")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to connect"), sprintf(__d("system","to database")), $ex->getMessage()));
                         }
 
                         try {
@@ -226,7 +226,7 @@ class InstallController extends SystemAppController {
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . 'default.php');
                             $this->FileManager->templateFile(APP . 'Config' . DS . 'Environment' . DS . 'default.php', $databaseTemplate, APP . 'Config' . DS . 'Environment' . DS . $this->request->data["Config"]["hostname"] . '.php');
                         } catch (Exception $ex) {
-                            array_push($formErrors, sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to template"), sprintf(__d("system","the database configuration files")), $ex->getMessage()));
+                            array_push($formErrors, sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to template"), sprintf(__d("system","the database configuration files")), $ex->getMessage()));
                         }
 
                         try {

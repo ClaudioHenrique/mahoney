@@ -29,7 +29,7 @@ class ConfigurerComponent extends Component {
                 endforeach;
             endif;
         } catch (Exception $ex) {
-            CakeLog::write("activity", __d("system", "[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s", __d("system", "Config"), AuthComponent::user()["username"], __d("system", "to apply"), __d("configuration variable"), __d("system", "to the environment"), $ex->getMessage()));
+            //CakeLog::write("activity", __d("system", "[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s", __d("system", "Config"), AuthComponent::user()["username"], __d("system", "to apply"), __d("configuration variable"), __d("system", "to the environment"), $ex->getMessage()));
             throw new Exception(sprintf(__d("system", "Error trying %s the '%s' %s. Details: %e."), __d("system", "Config"), __d("system", "to apply"), __d("configuration variable"), __d("system", "to the environment")));
         }
     }

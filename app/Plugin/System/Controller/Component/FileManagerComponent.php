@@ -58,11 +58,11 @@ class FileManagerComponent extends Component {
                 endif;
                 return true;
             } catch(Exception $ex) {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to template"), $file.".template", sprintf(__d("system","file")), $ex->getMessage()));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to template"), $file.".template", sprintf(__d("system","file")), $ex->getMessage()));
                 return false;
             }
         else:
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to template"), $file.".template", sprintf(__d("system","file")), __d("system","The specified file/folder don't exist")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to template"), $file.".template", sprintf(__d("system","file")), __d("system","The specified file/folder don't exist")));
             return false;
         endif;
     }
@@ -83,7 +83,7 @@ class FileManagerComponent extends Component {
             endforeach;
             rmdir($dir);
         } catch(Exception $ex) {
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to delete"), $dir, sprintf(__d("system","file/folder")), $ex->getMessage()));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Component")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to delete"), $dir, sprintf(__d("system","file/folder")), $ex->getMessage()));
             throw new Exception(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to delete"), $dir, __d("system","file/folder")));
         }
     }

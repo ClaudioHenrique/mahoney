@@ -16,7 +16,7 @@ class UsersController extends SystemAppController {
             if($this->User->read(null, $id)):
                 $userToModify = $this->User->read(null, $id);
                 if($user["role"] < $userToModify["User"]["role"]):
-                    CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to modify"), $userToModify["User"]["username"], sprintf(__d("system","user")), __d("system", "Access Denied")));
+                    //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to modify"), $userToModify["User"]["username"], sprintf(__d("system","user")), __d("system", "Access Denied")));
                     $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to modify"), $userToModify["User"]["username"], __d("system","user")));
                     return false;
                 endif;
@@ -45,11 +45,11 @@ class UsersController extends SystemAppController {
                 foreach($this->request->data["Batch"] as $key => $value):
                     $this->User->delete($value['id']);
                 endforeach;
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' batch has modified %s occurrences."), sprintf(__d("system","Users")), $action, $count));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' batch has modified %s occurrences."), sprintf(__d("system","Users")), $action, $count));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' batch has modified %s occurrecies."), $action, $count));
                 $this->redirect($this->referer());
             } catch(Exception $ex) {           
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], $action, sprintf(__d("system","%s occurrences"), $count), $ex->getMessage()));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], $action, sprintf(__d("system","%s occurrences"), $count), $ex->getMessage()));
                 $this->Session->setFlash(sprintf(__d("system","Error trying to batch '%s' %s."), $action, sprintf(__d("system","%s occurrences"), $count)));
                 $this->redirect($this->referer());
             }
@@ -117,10 +117,10 @@ class UsersController extends SystemAppController {
         if ($this->request->is('POST')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {                
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system", "added")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system", "added")));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system", "added")));
             } else {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to save"), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system","Access Denied")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to save"), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system","Access Denied")));
                 $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to save"), $this->request->data["User"]["username"], __d("system","user")));
             }
             if ($type == "quick"):
@@ -139,11 +139,11 @@ class UsersController extends SystemAppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->request->data["User"]["id"] = $id;
             if ($this->User->save($this->request->data)) {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system", "edited")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system", "edited")));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system", "edited")));
                 $this->redirect(array("plugin"=>"system","controller"=>"users","action"=>"index"));
             } else {
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to edit"), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system","Access Denied")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to edit"), $this->request->data["User"]["username"], sprintf(__d("system","user")), __d("system","Access Denied")));
                 $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to edit"), $this->request->data["User"]["username"], __d("system","user")));
             }
         } else {
@@ -161,14 +161,14 @@ class UsersController extends SystemAppController {
             throw new NotFoundException(sprintf(__d("system","Invalid %s"), __d("system","user")));
         endif;
         if ($id == 1):
-            CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to delete"), "#".$id, sprintf(__d("system","user")), __d("system", "Access Denied")));
+            //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to delete"), "#".$id, sprintf(__d("system","user")), __d("system", "Access Denied")));
             $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to delete"), "#".$id, __d("system","user")));
         else:
             if ($this->User->delete()):
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], "#".$id, sprintf(__d("system","user")), __d("system", "deleted")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], "#".$id, sprintf(__d("system","user")), __d("system", "deleted")));
                 $this->Session->setFlash(sprintf(__d("system","The '%s' %s was %s with success."), "#".$id, sprintf(__d("system","user")), __d("system", "deleted")));
             else:
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to delete"), "#".$id, sprintf(__d("system","user")), __d("system", "Access Denied")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to delete"), "#".$id, sprintf(__d("system","user")), __d("system", "Access Denied")));
                 $this->Session->setFlash(sprintf(__d("system","Error trying %s the '%s' %s."), __d("system", "to delete"), "#".$id, __d("system","user")));
             endif;
             if ($userId["id"] == $id):
@@ -188,10 +188,10 @@ class UsersController extends SystemAppController {
 
         if ($this->request->is('POST')):
             if ($this->Auth->login()):
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), AuthComponent::user()['username'], sprintf(__d("system","user")), __d("system", "connected")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) The '%s' %s was %s with success."), sprintf(__d("system","Users")), AuthComponent::user()['username'], sprintf(__d("system","user")), __d("system", "connected")));
                 $this->redirect($this->referer());
             else:
-                CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REQUEST_ADDR"], __d("system", "to connect"), $this->request->data['User']['username'], sprintf(__d("system","user")), __d("system", "Invalid username or password")));
+                //CakeLog::write("activity", sprintf(__d("system","[%s] (User: %s; IP: %s) Error trying %s '%s' %s. Details: %s"), sprintf(__d("system","Users")), AuthComponent::user()["username"], $_SERVER["REMOTE_ADDR"], __d("system", "to connect"), $this->request->data['User']['username'], sprintf(__d("system","user")), __d("system", "Invalid username or password")));
                 $this->Session->setFlash(sprintf(__d("system", "Invalid username or password")));
                 $this->redirect($this->Auth->redirect());
             endif;
